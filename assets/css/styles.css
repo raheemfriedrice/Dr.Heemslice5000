@@ -1151,6 +1151,13 @@ button {
   color: var(--clr-accent);
 }
 
+.footer__credit {
+  font-size: 0.65rem;
+  color: var(--clr-border);
+  letter-spacing: 0.08em;
+  font-style: italic;
+}
+
 /* =====================================================
    RESPONSIVE
    ===================================================== */
