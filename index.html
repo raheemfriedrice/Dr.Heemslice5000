@@ -3,27 +3,259 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SnackMaster RICE</title>
+  <meta name="description" content="Dr. Heemslice 5000 — SnackMaster RICE. Official home of the brand." />
+  <meta property="og:title" content="SnackMaster RICE | Dr. Heemslice 5000" />
+  <meta property="og:description" content="Official home of Dr. Heemslice 5000 and the SnackMaster RICE brand." />
+  <meta property="og:type" content="website" />
+  <title>SnackMaster RICE | Dr. Heemslice 5000</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
 
-  <header>
-    <h1>SnackMaster RICE</h1>
-    <nav>
-      <a href="index.html">Home</a>
-    </nav>
-  </header>
+  <!-- ======== NAV ======== -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo">
+        <span class="nav__logo-sm">SMR</span>
+        <span class="nav__logo-full">SnackMaster<span class="accent"> RICE</span></span>
+      </a>
+      <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#about"   class="nav__link">About</a></li>
+        <li><a href="#work"    class="nav__link">Work</a></li>
+        <li><a href="#media"   class="nav__link">Media</a></li>
+        <li><a href="#contact" class="nav__link">Contact</a></li>
+        <li><a href="oo0/"    class="nav__link nav__link--cta">Enter</a></li>
+      </ul>
+    </div>
+  </nav>
 
-  <main>
-    <section class="hero">
-      <h2>Welcome</h2>
-      <p>Site coming soon.</p>
-    </section>
-  </main>
+  <!-- ======== HERO ======== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg">
+      <div class="hero__noise"></div>
+      <div class="hero__gradient"></div>
+    </div>
+    <div class="hero__content">
+      <p class="hero__eyebrow reveal">Est. 2024 &mdash; The Brand</p>
+      <h1 class="hero__title reveal">
+        <span class="hero__title-line">Dr.</span>
+        <span class="hero__title-line accent-block">Heemslice</span>
+        <span class="hero__title-line">5000</span>
+      </h1>
+      <p class="hero__sub reveal">
+        SnackMaster RICE &mdash; Built different. Moving different.
+      </p>
+      <div class="hero__actions reveal">
+        <a href="#work" class="btn btn--primary">See the Work</a>
+        <a href="#contact" class="btn btn--ghost">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero__scroll-hint">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
 
-  <footer>
-    <p>&copy; 2026 SnackMaster RICE</p>
+  <!-- ======== MARQUEE ======== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>SnackMaster RICE</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>Dr. Heemslice 5000</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>The Brand</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>Built Different</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>SnackMaster RICE</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>Dr. Heemslice 5000</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>The Brand</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>Built Different</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>SnackMaster RICE</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>Dr. Heemslice 5000</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>The Brand</span>
+      <span class="marquee__dot">&#9632;</span>
+      <span>Built Different</span>
+      <span class="marquee__dot">&#9632;</span>
+    </div>
+  </div>
+
+  <!-- ======== ABOUT ======== -->
+  <section class="section about" id="about">
+    <div class="container">
+      <div class="about__grid">
+        <div class="about__text">
+          <p class="section__label reveal">001 &mdash; About</p>
+          <h2 class="section__title reveal">The Man.<br/>The Brand.<br/>The Legend.</h2>
+          <p class="about__body reveal">
+            Dr. Heemslice 5000 is more than a name &mdash; it's a frequency.
+            Operating at the intersection of culture, creativity, and craft,
+            SnackMaster RICE is the umbrella for everything built under this vision.
+          </p>
+          <p class="about__body reveal">
+            From the ground up. No shortcuts. No fakes. Every move is intentional,
+            every product is personal, every release is a statement.
+          </p>
+          <a href="oo0/" class="btn btn--primary reveal">Full Story &rarr;</a>
+        </div>
+        <div class="about__visual">
+          <div class="about__card reveal">
+            <div class="about__card-inner">
+              <span class="about__card-num">5000</span>
+              <span class="about__card-label">The Level</span>
+            </div>
+          </div>
+          <div class="about__stats">
+            <div class="stat reveal">
+              <span class="stat__num" data-count="100">0</span>
+              <span class="stat__suffix">%</span>
+              <span class="stat__label">Independent</span>
+            </div>
+            <div class="stat reveal">
+              <span class="stat__num" data-count="24">0</span>
+              <span class="stat__suffix">/7</span>
+              <span class="stat__label">On the grind</span>
+            </div>
+            <div class="stat reveal">
+              <span class="stat__num" data-count="0">0</span>
+              <span class="stat__suffix">%</span>
+              <span class="stat__label">Compromising</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== WORK ======== -->
+  <section class="section work" id="work">
+    <div class="container">
+      <p class="section__label reveal">002 &mdash; Work</p>
+      <h2 class="section__title reveal">What We Build</h2>
+      <div class="work__grid">
+
+        <div class="work__card reveal" tabindex="0">
+          <div class="work__card-num">01</div>
+          <h3 class="work__card-title">Music &amp; Sound</h3>
+          <p class="work__card-body">
+            Original production, releases, and sonic experiments.
+            Every track is a blueprint.
+          </p>
+          <span class="work__card-arrow">&rarr;</span>
+        </div>
+
+        <div class="work__card reveal" tabindex="0">
+          <div class="work__card-num">02</div>
+          <h3 class="work__card-title">Brand &amp; Creative</h3>
+          <p class="work__card-body">
+            Visual identity, merch, and creative direction.
+            The aesthetic is the message.
+          </p>
+          <span class="work__card-arrow">&rarr;</span>
+        </div>
+
+        <div class="work__card reveal" tabindex="0">
+          <div class="work__card-num">03</div>
+          <h3 class="work__card-title">Content &amp; Media</h3>
+          <p class="work__card-body">
+            Videos, drops, and platform presence.
+            Built to be seen and heard.
+          </p>
+          <span class="work__card-arrow">&rarr;</span>
+        </div>
+
+        <div class="work__card reveal" tabindex="0">
+          <div class="work__card-num">04</div>
+          <h3 class="work__card-title">Collabs &amp; Network</h3>
+          <p class="work__card-body">
+            Strategic moves with the right people.
+            The network is the net worth.
+          </p>
+          <span class="work__card-arrow">&rarr;</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== MEDIA ======== -->
+  <section class="section media" id="media">
+    <div class="container">
+      <p class="section__label reveal">003 &mdash; Media</p>
+      <h2 class="section__title reveal">Latest Drops</h2>
+      <div class="media__grid">
+        <div class="media__placeholder reveal">
+          <div class="media__placeholder-inner">
+            <span class="media__placeholder-icon">&#9654;</span>
+            <span class="media__placeholder-label">Video / Music Drop</span>
+            <span class="media__placeholder-sub">Coming Soon</span>
+          </div>
+        </div>
+        <div class="media__placeholder reveal">
+          <div class="media__placeholder-inner">
+            <span class="media__placeholder-icon">&#9654;</span>
+            <span class="media__placeholder-label">Video / Music Drop</span>
+            <span class="media__placeholder-sub">Coming Soon</span>
+          </div>
+        </div>
+        <div class="media__placeholder reveal">
+          <div class="media__placeholder-inner">
+            <span class="media__placeholder-icon">&#9654;</span>
+            <span class="media__placeholder-label">Video / Music Drop</span>
+            <span class="media__placeholder-sub">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+      <p class="media__note reveal">
+        Drops load here. Swap placeholders for YouTube embeds, SoundCloud players, or image cards when content is ready.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======== CONTACT ======== -->
+  <section class="section contact" id="contact">
+    <div class="container">
+      <div class="contact__inner">
+        <p class="section__label reveal">004 &mdash; Contact</p>
+        <h2 class="section__title reveal">Let's Build.</h2>
+        <p class="contact__sub reveal">
+          Business inquiries, collabs, bookings &mdash; come correct.
+        </p>
+        <a href="mailto:hello@snackmasterrice.com" class="contact__email reveal">
+          hello@snackmasterrice.com
+        </a>
+        <div class="contact__socials reveal">
+          <a href="#" class="social-link" aria-label="Instagram">IG</a>
+          <a href="#" class="social-link" aria-label="Twitter/X">X</a>
+          <a href="#" class="social-link" aria-label="YouTube">YT</a>
+          <a href="#" class="social-link" aria-label="SoundCloud">SC</a>
+          <a href="#" class="social-link" aria-label="TikTok">TT</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <span class="footer__logo">SnackMaster<span class="accent"> RICE</span></span>
+        <span class="footer__copy">&copy; 2026 Dr. Heemslice 5000. All rights reserved.</span>
+        <a href="#hero" class="footer__top">Back to Top &uarr;</a>
+      </div>
+    </div>
   </footer>
 
   <script src="assets/js/main.js"></script>
