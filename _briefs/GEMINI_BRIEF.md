@@ -243,6 +243,8 @@ or support calls-to-action appear in any generated copy, captions, or overlays.
 ---
 
 ## PRIVACY NOTE
+> Full policy: see `_briefs/PRIVACY_POLICY.md`
+
 
 Only the following identities are approved for use in generated assets:
 - **Dr. Heemslice 5000** — primary persona (approved)
