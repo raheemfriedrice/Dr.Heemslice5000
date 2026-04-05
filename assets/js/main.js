@@ -214,44 +214,7 @@
   });
 
   /* ==================================================
-     8. NOTIFY FORM — email capture
-     ================================================== */
-  const notifyForm = document.getElementById("notifyForm");
-  const notifyMsg  = document.getElementById("notifyMsg");
-
-  if (notifyForm && notifyMsg) {
-    notifyForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const emailInput = document.getElementById("notifyEmail");
-      const email = emailInput?.value?.trim();
-
-      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        notifyMsg.textContent = "Enter a valid email address.";
-        notifyMsg.className = "notify__msg error";
-        return;
-      }
-
-      // Store locally until a backend/service is wired
-      const stored = JSON.parse(localStorage.getItem("smr_notify") || "[]");
-      if (!stored.includes(email)) {
-        stored.push(email);
-        localStorage.setItem("smr_notify", JSON.stringify(stored));
-      }
-
-      notifyMsg.textContent = "You're on the list. First to know.";
-      notifyMsg.className = "notify__msg success";
-      notifyForm.reset();
-
-      // Clear message after 5s
-      setTimeout(() => {
-        notifyMsg.textContent = "";
-        notifyMsg.className = "notify__msg";
-      }, 5000);
-    });
-  }
-
-  /* ==================================================
-     10. MARQUEE — pause on hover/focus (accessibility)
+     8. MARQUEE — pause on hover/focus (accessibility)
      ================================================== */
   const marqueeTrack = document.querySelector(".marquee__track");
   if (marqueeTrack) {
@@ -265,7 +228,7 @@
   }
 
   /* ==================================================
-     11. CURSOR GLOW — follows mouse in hero section
+     9. CURSOR GLOW — follows mouse in hero section
      ================================================== */
   if (heroEl && heroGlow && window.matchMedia("(pointer: fine)").matches) {
     heroEl.addEventListener("mousemove", (e) => {
@@ -283,7 +246,7 @@
   }
 
   /* ==================================================
-     12. HERO TITLE PARALLAX — subtle mouse tracking
+     10. HERO TITLE PARALLAX — subtle mouse tracking
      ================================================== */
   if (heroEl && window.matchMedia("(pointer: fine)").matches) {
     const titleLines = heroEl.querySelectorAll(".hero__title-line");
