@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#080808"/>
+  <rect x="6" y="6" width="1188" height="618" rx="2" fill="none" stroke="#222" stroke-width="1"/>
+  <!-- Accent glow -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="80%" r="50%">
+      <stop offset="0%" stop-color="#ff6b00" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ff6b00" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <!-- Eyebrow -->
+  <text x="600" y="190" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="600" font-size="18" fill="#ff6b00" letter-spacing="8">EST. 2024 — THE BRAND</text>
+  <!-- Title -->
+  <text x="600" y="300" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="700" font-size="80" fill="#f0f0f0" letter-spacing="2">DR.</text>
+  <text x="600" y="380" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="700" font-size="80" fill="none" stroke="#ff6b00" stroke-width="2" letter-spacing="3">HEEMSLICE</text>
+  <text x="600" y="460" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="700" font-size="80" fill="#f0f0f0" letter-spacing="2">5000</text>
+  <!-- Bottom line -->
+  <text x="600" y="540" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="400" font-size="16" fill="#888" letter-spacing="6">SNACKMASTER RICE</text>
+</svg>

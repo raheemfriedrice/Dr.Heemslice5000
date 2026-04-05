@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <rect width="180" height="180" rx="22" fill="#080808"/>
+  <rect x="4" y="4" width="172" height="172" rx="18" fill="none" stroke="#ff6b00" stroke-width="3"/>
+  <text x="90" y="75" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="700" font-size="42" fill="#ff6b00" letter-spacing="2">SMR</text>
+  <line x1="40" y1="90" x2="140" y2="90" stroke="#222" stroke-width="2"/>
+  <text x="90" y="125" text-anchor="middle" font-family="'Helvetica Neue',Arial,sans-serif" font-weight="300" font-size="20" fill="#888" letter-spacing="6">5000</text>
+</svg>

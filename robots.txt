@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://raheemfriedrice.github.io/Dr.Heemslice5000/sitemap.xml

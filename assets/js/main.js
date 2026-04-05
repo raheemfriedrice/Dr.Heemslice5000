@@ -1,33 +1,64 @@
 /* =====================================================
    SnackMaster RICE — Main JS
    Dr. Heemslice 5000
+   v2.0 — Full Send Edition
    ===================================================== */
 
 (function () {
   "use strict";
 
   /* ---- DOM References ---- */
-  const nav       = document.getElementById("nav");
-  const burger    = document.getElementById("burger");
-  const navLinks  = document.getElementById("navLinks");
-  const reveals   = document.querySelectorAll(".reveal");
-  const statNums  = document.querySelectorAll(".stat__num[data-count]");
+  const nav        = document.getElementById("nav");
+  const burger     = document.getElementById("burger");
+  const navLinks   = document.getElementById("navLinks");
+  const reveals    = document.querySelectorAll(".reveal");
+  const statNums   = document.querySelectorAll(".stat__num[data-count]");
   const navLinkEls = document.querySelectorAll(".nav__link:not(.nav__link--cta)");
+  const loader     = document.getElementById("loader");
+  const heroEl     = document.getElementById("hero");
+  const heroGlow   = document.getElementById("heroGlow");
+
+  /* ==================================================
+     0. PAGE LOADER
+     ================================================== */
+  function dismissLoader() {
+    if (!loader) return;
+    loader.classList.add("done");
+    document.body.style.overflow = "";
+  }
+
+  if (loader) {
+    document.body.style.overflow = "hidden";
+    // Dismiss after animation completes (1.4s) or on load, whichever is later
+    window.addEventListener("load", () => {
+      setTimeout(dismissLoader, 1200);
+    });
+    // Safety net: dismiss after 3s no matter what
+    setTimeout(dismissLoader, 3000);
+  }
 
   /* ==================================================
      1. NAV — scroll state
      ================================================== */
+  let ticking = false;
+
   function onScroll() {
-    if (window.scrollY > 40) {
-      nav.classList.add("scrolled");
-    } else {
-      nav.classList.remove("scrolled");
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        if (window.scrollY > 40) {
+          nav.classList.add("scrolled");
+        } else {
+          nav.classList.remove("scrolled");
+        }
+        updateActiveNavLink();
+        ticking = false;
+      });
+      ticking = true;
     }
-    updateActiveNavLink();
   }
 
   window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll(); // run once on load
+  onScroll();
 
   /* ==================================================
      2. MOBILE NAV — burger toggle
@@ -37,26 +68,31 @@
       const isOpen = navLinks.classList.toggle("open");
       burger.classList.toggle("open", isOpen);
       burger.setAttribute("aria-expanded", String(isOpen));
-      document.body.style.overflow = isOpen ? "hidden" : "";
+      // Don't override loader overflow
+      if (!loader || loader.classList.contains("done")) {
+        document.body.style.overflow = isOpen ? "hidden" : "";
+      }
     });
 
-    // Close nav when a link is clicked
     navLinks.querySelectorAll("a").forEach(link => {
       link.addEventListener("click", () => {
         navLinks.classList.remove("open");
         burger.classList.remove("open");
         burger.setAttribute("aria-expanded", "false");
-        document.body.style.overflow = "";
+        if (!loader || loader.classList.contains("done")) {
+          document.body.style.overflow = "";
+        }
       });
     });
 
-    // Close nav on outside click
     document.addEventListener("click", (e) => {
       if (!nav.contains(e.target) && navLinks.classList.contains("open")) {
         navLinks.classList.remove("open");
         burger.classList.remove("open");
         burger.setAttribute("aria-expanded", "false");
-        document.body.style.overflow = "";
+        if (!loader || loader.classList.contains("done")) {
+          document.body.style.overflow = "";
+        }
       }
     });
   }
@@ -65,6 +101,7 @@
      3. ACTIVE NAV LINK — highlights current section
      ================================================== */
   function updateActiveNavLink() {
+    if (!navLinkEls.length) return;
     const scrollPos = window.scrollY + 120;
     const sections  = ["hero", "about", "work", "media", "contact"];
 
@@ -76,7 +113,9 @@
 
     navLinkEls.forEach(link => {
       const href = link.getAttribute("href");
-      link.classList.toggle("active", href === `#${current}`);
+      if (href && href.startsWith("#")) {
+        link.classList.toggle("active", href === `#${current}`);
+      }
     });
   }
 
@@ -86,9 +125,8 @@
   if ("IntersectionObserver" in window) {
     const revealObserver = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry, i) => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
-            // Stagger siblings that reveal together
             const siblings = Array.from(
               entry.target.parentElement.querySelectorAll(".reveal:not(.visible)")
             );
@@ -108,7 +146,6 @@
 
     reveals.forEach(el => revealObserver.observe(el));
   } else {
-    // Fallback: show everything immediately
     reveals.forEach(el => el.classList.add("visible"));
   }
 
@@ -123,7 +160,6 @@
     function step(now) {
       const elapsed  = now - start;
       const progress = Math.min(elapsed / duration, 1);
-      // ease out quad
       const eased    = 1 - (1 - progress) * (1 - progress);
       el.textContent = Math.round(eased * target);
       if (progress < 1) requestAnimationFrame(step);
@@ -189,6 +225,51 @@
     marqueeEl.addEventListener("mouseleave", () => {
       marqueeTrack.style.animationPlayState = "running";
     });
+  }
+
+  /* ==================================================
+     9. CURSOR GLOW — follows mouse in hero section
+     ================================================== */
+  if (heroEl && heroGlow && window.matchMedia("(pointer: fine)").matches) {
+    heroEl.addEventListener("mousemove", (e) => {
+      const rect = heroEl.getBoundingClientRect();
+      heroGlow.style.left = (e.clientX - rect.left) + "px";
+      heroGlow.style.top  = (e.clientY - rect.top)  + "px";
+      if (!heroGlow.classList.contains("active")) {
+        heroGlow.classList.add("active");
+      }
+    });
+
+    heroEl.addEventListener("mouseleave", () => {
+      heroGlow.classList.remove("active");
+    });
+  }
+
+  /* ==================================================
+     10. HERO TITLE PARALLAX — subtle mouse tracking
+     ================================================== */
+  if (heroEl && window.matchMedia("(pointer: fine)").matches) {
+    const titleLines = heroEl.querySelectorAll(".hero__title-line");
+    if (titleLines.length) {
+      heroEl.addEventListener("mousemove", (e) => {
+        const rect = heroEl.getBoundingClientRect();
+        const cx = (e.clientX - rect.left) / rect.width  - 0.5; // -0.5 to 0.5
+        const cy = (e.clientY - rect.top)  / rect.height - 0.5;
+
+        titleLines.forEach(line => {
+          const factor = parseFloat(getComputedStyle(line).getPropertyValue("--parallax")) || 0;
+          const x = cx * factor * 100;
+          const y = cy * factor * 60;
+          line.style.transform = `translate(${x}px, ${y}px)`;
+        });
+      });
+
+      heroEl.addEventListener("mouseleave", () => {
+        titleLines.forEach(line => {
+          line.style.transform = "translate(0, 0)";
+        });
+      });
+    }
   }
 
 })();
