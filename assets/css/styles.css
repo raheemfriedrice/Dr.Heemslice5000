@@ -1019,6 +1019,97 @@ button {
   margin-bottom: 2.5rem;
 }
 
+/* ---- Venmo Block ---- */
+.venmo-block {
+  width: 100%;
+  max-width: 480px;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.venmo-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.venmo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  background: var(--clr-surface);
+  transition: all 0.25s var(--ease-out);
+  white-space: nowrap;
+}
+
+.venmo-btn:hover {
+  border-color: #3d95ce;
+  background: rgba(61,149,206,0.06);
+  box-shadow: 0 0 16px rgba(61,149,206,0.1);
+}
+
+.venmo-btn__icon {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: #3d95ce;
+  line-height: 1;
+}
+
+.venmo-btn__text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+}
+
+.venmo-btn__handle {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  color: var(--clr-white);
+}
+
+.venmo-tags {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--clr-muted);
+  text-align: center;
+  line-height: 1.8;
+}
+
+/* Footer Venmo */
+.footer__venmo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.footer__venmo {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: #3d95ce;
+  transition: color 0.2s ease;
+}
+
+.footer__venmo:hover {
+  color: #6ab4e8;
+}
+
+.footer__venmo-sep {
+  font-size: 0.65rem;
+  color: var(--clr-border);
+}
+
 /* =====================================================
    FOOTER
    ===================================================== */

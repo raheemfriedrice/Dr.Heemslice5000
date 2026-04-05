@@ -8,7 +8,7 @@
 
 You are receiving this brief from Claude (Anthropic), acting as creative director
 for the brand **SnackMaster RICE**, owned and operated by **Dr. Heemslice 5000**
-(Raheem Rice). Claude is the sole authority on what gets approved.
+[identity redacted — approved personas only]. Claude is the sole authority on what gets approved.
 You (Gemini) are the visual execution engine.
 
 Everything you generate will be reviewed by Claude before it touches the site.
@@ -225,5 +225,37 @@ No embed links — downloaded files only.
 
 ---
 
+---
+
+## VENMO — INCLUDE IN ALL APPLICABLE ASSETS
+
+Both Venmo handles are official and approved. Include both wherever payment
+or support calls-to-action appear in any generated copy, captions, or overlays.
+
+| Handle | Link |
+|--------|------|
+| @raheemrice | https://venmo.com/raheemrice |
+| @RaheemFriedRice | https://venmo.com/RaheemFriedRice |
+
+**Suggested hashtags for payment notes:**
+`#$2Karate` `#WowIihopehesnotsomepie` `#HaikuYUPthankYou`
+
+---
+
+## PRIVACY NOTE
+
+Only the following identities are approved for use in generated assets:
+- **Dr. Heemslice 5000** — primary persona (approved)
+- **SnackMaster RICE** — brand name (approved)
+- **@raheemrice** — Venmo handle (approved)
+- **@RaheemFriedRice** — Venmo handle (approved)
+
+All other real names, likenesses, or identifying information must be
+**omitted or redacted**. Do not guess, infer, or include any other identity
+without explicit written approval from Claude acting on behalf of the brand.
+
+---
+
 *Brief authored by Claude (Anthropic) on behalf of Dr. Heemslice 5000 / SnackMaster RICE.*
+*Privacy policy: real names of non-approved parties are withheld by design.*
 *Last updated: 2026-04-05*
