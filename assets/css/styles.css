@@ -947,6 +947,95 @@ button {
   box-shadow: 0 4px 15px rgba(255,107,0,0.1);
 }
 
+/* ---- Notify / Email Capture ---- */
+.notify {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+}
+
+.notify__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+  margin-bottom: 0.875rem;
+}
+
+.notify__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.notify__field {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.notify__field:focus-within {
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 2px rgba(255,107,0,0.1);
+}
+
+.notify__input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--clr-text);
+  min-width: 0;
+}
+
+.notify__input::placeholder {
+  color: var(--clr-muted);
+}
+
+.notify__btn {
+  padding: 0.75rem 1.25rem;
+  background: var(--clr-accent);
+  color: var(--clr-white);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+  cursor: pointer;
+  border: none;
+}
+
+.notify__btn:hover {
+  background: #ff8533;
+}
+
+.notify__msg {
+  font-size: 0.75rem;
+  padding-left: 0.25rem;
+  min-height: 1em;
+  transition: color 0.2s ease;
+}
+
+.notify__msg.success { color: #4caf50; }
+.notify__msg.error   { color: #f44336; }
+
+.contact__divider {
+  width: 100%;
+  height: 1px;
+  background: var(--clr-border);
+  margin-bottom: 2.5rem;
+}
+
 /* =====================================================
    FOOTER
    ===================================================== */
