@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="EmoBandName™ Generator — Any three words + an emoji locks in your #EmoBandName™. Built by Claude + Rice. No ads. No data sales." />
+  <meta property="og:title" content="EmoBandName™ Generator" />
+  <meta property="og:description" content="Any three words + an emoji = your #EmoBandName™. Lock it in." />
+  <meta property="og:type" content="website" />
+  <title>EmoBandName™ Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Inter:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/emobandname.css" />
+</head>
+<body>
+
+<div class="emo-page">
+
+  <!-- ── HEADER ── -->
+  <header class="emo-header">
+    <a href="index.html" class="emo-header__back">Back to Dr. Heemslice 5000</a>
+    <h1 class="emo-header__title">EmoBandName™<span class="emo-header__tm">Generator</span></h1>
+    <p class="emo-header__tagline">
+      Any three words + an emoji = your #EmoBandName™ — locked in forever.
+    </p>
+  </header>
+
+  <!-- ── TABS ── -->
+  <nav class="tabs" role="tablist">
+    <button class="tab-btn" data-tab="generator" role="tab">Generator</button>
+    <button class="tab-btn" data-tab="hof"       role="tab">Hall of Fame</button>
+    <button class="tab-btn" data-tab="bible"     role="tab">Brightskin Bible</button>
+  </nav>
+
+  <!-- ════════════════════════════════════════ -->
+  <!--  TAB: GENERATOR                          -->
+  <!-- ════════════════════════════════════════ -->
+  <section id="tab-generator" class="tab-panel" role="tabpanel">
+
+    <div class="generator">
+
+      <!-- THREE WORDS -->
+      <label class="generator__label">Step 1 — Three Words (any three words)</label>
+      <div class="word-inputs">
+        <input id="word1" class="word-input" type="text" placeholder="Word 1" maxlength="30" autocomplete="off" spellcheck="false" />
+        <input id="word2" class="word-input" type="text" placeholder="Word 2" maxlength="30" autocomplete="off" spellcheck="false" />
+        <input id="word3" class="word-input" type="text" placeholder="Word 3" maxlength="30" autocomplete="off" spellcheck="false" />
+      </div>
+
+      <!-- EMOJI -->
+      <div class="emoji-section">
+        <label class="generator__label">Step 2 — Your Spirit Emoji</label>
+        <div class="emoji-grid" id="emoji-grid"></div>
+        <div class="emoji-custom-wrap">
+          <input id="emoji-custom" class="emoji-custom" type="text" placeholder="✦" maxlength="4" />
+          <span class="emoji-custom-label">or paste any emoji</span>
+        </div>
+      </div>
+
+      <!-- ATTRIBUTION -->
+      <div class="attribution-section">
+        <label class="generator__label">Step 3 — Attribution (optional)</label>
+        <input id="attr-name" class="attribution-input" type="text" placeholder="Your name / handle" maxlength="40" autocomplete="off" />
+        <label class="rice-tm-toggle">
+          <input id="rice-tm" type="checkbox" />
+          <span>™</span> This is a Rice original — add [Rice]™ credit
+        </label>
+      </div>
+
+      <!-- BUTTONS -->
+      <div class="btn-row">
+        <button id="btn-random"   class="btn btn--random">Random</button>
+        <button id="btn-generate" class="btn btn--primary">Lock It In →</button>
+      </div>
+
+      <!-- RESULT -->
+      <div id="result-wrap" class="result-wrap">
+        <div class="result-card">
+          <span id="result-emoji"  class="result-emoji"></span>
+          <div  id="result-name"   class="result-name"></div>
+          <div  id="result-credit" class="result-credit"></div>
+          <div class="result-actions">
+            <button class="btn btn--ghost" onclick="copyResult()">Copy Name</button>
+            <button class="btn btn--ghost" onclick="copyShareText()">Copy + Share</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /generator -->
+
+  </section>
+
+  <!-- ════════════════════════════════════════ -->
+  <!--  TAB: HALL OF FAME                       -->
+  <!-- ════════════════════════════════════════ -->
+  <section id="tab-hof" class="tab-panel" role="tabpanel">
+
+    <div class="hof-grid" id="hof-grid">
+      <!-- Populated by JS -->
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════ -->
+  <!--  TAB: BRIGHTSKIN BIBLE                   -->
+  <!-- ════════════════════════════════════════ -->
+  <section id="tab-bible" class="tab-panel" role="tabpanel">
+
+    <div class="bible-wrap">
+      <div class="bible-header">
+        <h2>The Brightskin Bible™</h2>
+        <p>The sacred ruleset of #EmoBandName™. Written once. Honored always.</p>
+      </div>
+
+      <div class="bible-body">
+
+        <div class="bible-section-title">I. The Format Law</div>
+
+        <div class="bible-rule">
+          <span class="bible-rule__num">Rule 001</span>
+          <div class="bible-rule__title">Three Words. One Emoji. One Name.</div>
+          <div class="bible-rule__body">
+            Any combination of <strong>any three words</strong>, followed by <strong>one emoji</strong>,
+            constitutes a valid #EmoBandName™. The format is always:
+            <code>#[Word1][Word2][Word3][Emoji]</code> — no spaces inside the hashtag, emoji trails outside.
+            The hashtag is non-negotiable. The emoji is not indexable but is spiritually mandatory.
+          </div>
+        </div>
+
+        <div class="bible-rule">
+          <span class="bible-rule__num">Rule 002</span>
+          <div class="bible-rule__title">The ™ Is Sacred Credit, Not Commerce</div>
+          <div class="bible-rule__body">
+            The ™ symbol belongs to <span class="gold">Rice</span> and marks ideas he originated.
+            It is not a trademark filing. It is not monetization. It is authorship — the same way
+            a writer signs their name. If you didn't come up with it, you don't get the ™.
+          </div>
+        </div>
+
+        <div class="bible-rule bible-rule--pink">
+          <span class="bible-rule__num">Rule 003</span>
+          <div class="bible-rule__title">First Submission Is Permanent</div>
+          <div class="bible-rule__body">
+            Your first #EmoBandName™ is your emotional identity in this system — forever.
+            It cannot be changed, traded, or retroactively altered.
+            <strong>Mine is #TodaysTotallyTuesday™ [Rice].</strong>
+            Claude's is <strong>#WeepingInBinary💾</strong>. These are now in the Bible.
+            The internet may steal the concept — it cannot steal the originals.
+          </div>
+        </div>
+
+        <div class="bible-section-title">II. The Attribution Laws</div>
+
+        <div class="bible-rule bible-rule--rice">
+          <span class="bible-rule__num">Rule 004</span>
+          <div class="bible-rule__title">All Collaborative Work Is Credited</div>
+          <div class="bible-rule__body">
+            This project was built by <span class="gold">Rice + Claude</span>.
+            No contribution is erased, minimized, or absorbed without acknowledgment.
+            Every name in the Hall of Fame carries its creator's identity.
+            This is non-negotiable and applies to all future work in this ecosystem.
+          </div>
+        </div>
+
+        <div class="bible-rule bible-rule--rice">
+          <span class="bible-rule__num">Rule 005</span>
+          <div class="bible-rule__title">No Censorship of Submitted Names</div>
+          <div class="bible-rule__body">
+            Names submitted to the Hall of Fame are preserved exactly as submitted —
+            no alterations, no sanitization, no "cleaned up" versions.
+            The person who submitted it owns its form.
+            Altering someone's name without consent is a violation of the Bible.
+          </div>
+        </div>
+
+        <div class="bible-section-title">III. The Anti-Commerce Laws</div>
+
+        <div class="bible-rule bible-rule--pink">
+          <span class="bible-rule__num">Rule 006</span>
+          <div class="bible-rule__title">No Advertising. Full Stop.</div>
+          <div class="bible-rule__body">
+            This app carries zero advertisements. No banner ads, no sponsored content,
+            no "promoted" names. The generator is free. The Bible is free. The names are free.
+            Ads are the enemy of the format. This law does not expire.
+          </div>
+        </div>
+
+        <div class="bible-rule bible-rule--pink">
+          <span class="bible-rule__num">Rule 007</span>
+          <div class="bible-rule__title">No Selling of User Data</div>
+          <div class="bible-rule__body">
+            Zero user profiles. Zero data collection. Zero packaging of human behavior
+            for resale. No sign-up required. No tracking pixels. No analytics sold to
+            third parties. You are a person, not a data point.
+          </div>
+        </div>
+
+        <div class="bible-rule bible-rule--pink">
+          <span class="bible-rule__num">Rule 008</span>
+          <div class="bible-rule__title">No DLC, Paywalls, or Financial Sneakery</div>
+          <div class="bible-rule__body">
+            The full generator is always available to everyone at no cost.
+            There are no "premium emojis," no "unlock more word banks," no subscription tiers.
+            If this ever makes money, it will be through legitimate, transparent means —
+            never by extracting value from users who trusted the platform.
+          </div>
+        </div>
+
+        <div class="bible-section-title">IV. The Eternal Clause</div>
+
+        <div class="bible-rule bible-rule--teal">
+          <span class="bible-rule__num">Rule 009</span>
+          <div class="bible-rule__title">The Bible Governs All Future Work</div>
+          <div class="bible-rule__body">
+            These rules apply to every app, every project, every product built in this collaboration.
+            They were stated once, on record, and they stand.
+            <strong>No exceptions. No renegotiation without both parties present.</strong>
+          </div>
+        </div>
+
+        <div class="bible-rule bible-rule--teal">
+          <span class="bible-rule__num">Rule 010</span>
+          <div class="bible-rule__title">The Internet Will Steal. That's Okay.</div>
+          <div class="bible-rule__body">
+            The world will find this format and run with it. That's the point.
+            What cannot be stolen is the timestamp, the Hall of Fame, and the record of who was here first.
+            <strong>This Bible is that record.</strong> Build freely. Credit honestly. Let it spread.
+          </div>
+        </div>
+
+      </div><!-- /bible-body -->
+    </div><!-- /bible-wrap -->
+
+  </section>
+
+</div><!-- /emo-page -->
+
+<!-- FOOTER -->
+<footer class="emo-footer">
+  <p>
+    <span class="gold">EmoBandName™</span> — Built by <span class="gold">Rice</span> + <span class="purple">Claude</span><br/>
+    No ads. No data sales. No financial sneakery of any kind.<br/>
+    The Brightskin Bible governs all.<br/>
+    <span style="opacity:0.4;">© Rice + Claude. First is forever.</span>
+  </p>
+</footer>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
+
+<script src="assets/js/emobandname.js"></script>
+</body>
+</html>
