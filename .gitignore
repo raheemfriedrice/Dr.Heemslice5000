@@ -9,3 +9,53 @@ Thumbs.db
 
 # Node (if we add a build tool later)
 node_modules/
+
+# AUDIO FILES — never commit, store in object storage
+*.mp3
+*.wav
+*.aiff
+*.aif
+*.m4a
+*.m4b
+*.ogg
+*.flac
+*.opus
+*.wma
+*.aac
+*.alac
+*.caf
+*.ra
+*.rm
+*.3gp
+*.amr
+*.au
+*.dss
+*.dvf
+*.gsm
+*.iklax
+*.ivs
+*.mmf
+*.mpc
+*.msv
+*.nmf
+*.sln
+*.tta
+*.voc
+*.vox
+*.wv
+*.webm
+
+# Large video files (in case video gets mixed in)
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# Transcript raw dumps (large — track by uuid reference in CSV only)
+XOCLAUDIXO/TRANSCRIPTION/*.txt
+XOCLAUDIXO/TRANSCRIPTION/*.json
+XOCLAUDIXO/TRANSCRIPTION/*.srt
+XOCLAUDIXO/TRANSCRIPTION/*.vtt
+
+# Temp intake staging
+XOCLAUDIXO/INTAKE/*.tmp
