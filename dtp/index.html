@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="#DrownthatPuppy™ — A gentle tool to help you decide: Hot or Cold?" />
+  <title>#DrownthatPuppy™ | Dr. Heemslice 5000</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="stylesheet" href="dtp.css" />
+</head>
+<body class="dtp-page">
+
+  <!-- ======== NAV ======== -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a href="../index.html" class="nav__logo">
+        <span class="nav__logo-sm">SMR</span>
+        <span class="nav__logo-full">SnackMaster<span class="accent"> RICE</span></span>
+      </a>
+      <button class="nav__burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="../index.html#about"   class="nav__link">About</a></li>
+        <li><a href="../index.html#work"    class="nav__link">Work</a></li>
+        <li><a href="../index.html#media"   class="nav__link">Media</a></li>
+        <li><a href="../index.html#contact" class="nav__link">Contact</a></li>
+        <li><a href="../index.html"         class="nav__link nav__link--cta">&larr; Home</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ======== HERO ======== -->
+  <section class="dtp-hero">
+    <div class="hero__bg">
+      <div class="hero__noise"></div>
+      <div class="dtp-hero__gradient"></div>
+    </div>
+    <div class="dtp-hero__content">
+      <p class="hero__eyebrow reveal">A Tool by Dr. Heemslice 5000</p>
+      <h1 class="dtp-hero__title reveal">
+        #Drown<br/>
+        <span class="dtp-title-tm">that<span class="dtp-tm">™</span></span><br/>
+        <span class="accent-block">Puppy</span>
+      </h1>
+      <p class="dtp-hero__sub reveal">
+        You've been patient. You've been kind.<br/>
+        Now let's figure out — hot water or cold?
+      </p>
+      <button class="btn btn--primary reveal" id="startBtn">
+        Let's Figure This Out &darr;
+      </button>
+    </div>
+    <div class="hero__scroll-hint">
+      <span>Scroll</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ======== TOOL ======== -->
+  <section class="dtp-tool" id="dtp-tool">
+    <div class="container">
+
+      <!-- INTRO CARD -->
+      <div class="dtp-card dtp-intro reveal" id="dtp-intro">
+        <p class="dtp-card__label">Before We Begin</p>
+        <h2 class="dtp-card__title">You're not wrong for wondering.</h2>
+        <p class="dtp-card__body">
+          Good boys are complicated. They're not bad people — they just caught feelings
+          and now the dynamic is... a lot. You don't have to be mean about it.
+          But you don't have to keep carrying it either.
+        </p>
+        <p class="dtp-card__body">
+          Answer five honest questions and we'll tell you whether to pour it
+          <span class="dtp-hot-text">hot</span> — a clear, kind conversation —
+          or <span class="dtp-cold-text">cold</span> — some necessary distance.
+        </p>
+        <button class="btn btn--primary" id="quizStartBtn">Start the Quiz</button>
+      </div>
+
+      <!-- QUIZ WRAPPER -->
+      <div class="dtp-quiz" id="dtp-quiz" hidden>
+
+        <!-- Progress Bar -->
+        <div class="dtp-progress" aria-label="Quiz progress">
+          <div class="dtp-progress__bar" id="progressBar"></div>
+        </div>
+        <p class="dtp-progress__label"><span id="qNum">1</span> of 5</p>
+
+        <!-- Questions -->
+        <div class="dtp-questions" id="dtp-questions">
+
+          <!-- Q1 -->
+          <div class="dtp-question" data-q="1">
+            <p class="dtp-q__num">01</p>
+            <h3 class="dtp-q__text">How long has this good boy been lingering?</h3>
+            <div class="dtp-options">
+              <button class="dtp-option" data-q="1" data-value="0">Just showed up — under a month</button>
+              <button class="dtp-option" data-q="1" data-value="1">Been around a minute — 1 to 3 months</button>
+              <button class="dtp-option" data-q="1" data-value="2">He's been stationed here — 3 to 12 months</button>
+              <button class="dtp-option" data-q="1" data-value="3">This is a whole long-term situation — over a year</button>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="dtp-question" data-q="2" hidden>
+            <p class="dtp-q__num">02</p>
+            <h3 class="dtp-q__text">When you've pulled back, how does he handle it?</h3>
+            <div class="dtp-options">
+              <button class="dtp-option" data-q="2" data-value="0">He respects it and genuinely gives space</button>
+              <button class="dtp-option" data-q="2" data-value="1">Backs off a little, but finds his way back</button>
+              <button class="dtp-option" data-q="2" data-value="2">He actually gets more intense when I pull back</button>
+              <button class="dtp-option" data-q="2" data-value="3">Doesn't seem to notice or register it at all</button>
+            </div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="dtp-question" data-q="3" hidden>
+            <p class="dtp-q__num">03</p>
+            <h3 class="dtp-q__text">Outside of these feelings, does he genuinely add something good to your life?</h3>
+            <div class="dtp-options">
+              <button class="dtp-option" data-q="3" data-value="0">Yes — he's actually a good person in my corner</button>
+              <button class="dtp-option" data-q="3" data-value="1">Sometimes, when things aren't weird</button>
+              <button class="dtp-option" data-q="3" data-value="2">Not really, if I'm honest</button>
+              <button class="dtp-option" data-q="3" data-value="3">No. The "friendship" is mostly just him hoping</button>
+            </div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="dtp-question" data-q="4" hidden>
+            <p class="dtp-q__num">04</p>
+            <h3 class="dtp-q__text">Has he been told — directly or through very clear signals — that it's not happening?</h3>
+            <div class="dtp-options">
+              <button class="dtp-option" data-q="4" data-value="1">I've dropped hints, pretty obvious ones</button>
+              <button class="dtp-option" data-q="4" data-value="0">Not directly yet — I haven't addressed it</button>
+              <button class="dtp-option" data-q="4" data-value="2">I've been crystal clear with him</button>
+              <button class="dtp-option" data-q="4" data-value="3">He's been told before and still hasn't gotten it</button>
+            </div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="dtp-question" data-q="5" hidden>
+            <p class="dtp-q__num">05</p>
+            <h3 class="dtp-q__text">Honestly — how are you feeling about managing this?</h3>
+            <div class="dtp-options">
+              <button class="dtp-option" data-q="5" data-value="0">It's manageable — I just want to handle it right</button>
+              <button class="dtp-option" data-q="5" data-value="1">Slightly drained by it</button>
+              <button class="dtp-option" data-q="5" data-value="2">Pretty tired of navigating it</button>
+              <button class="dtp-option" data-q="5" data-value="3">Completely over it — I just needed permission</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- RESULTS -->
+      <div class="dtp-result" id="dtp-result" hidden>
+
+        <!-- HOT result -->
+        <div class="dtp-result__card dtp-result--hot" id="result-hot" hidden>
+          <div class="dtp-result__temp-badge dtp-badge--hot">
+            <span class="dtp-badge__icon">&#9650;</span>
+            <span class="dtp-badge__label">Hot Water</span>
+          </div>
+          <h2 class="dtp-result__title">He needs the heat.</h2>
+          <p class="dtp-result__verdict">Pour it warm &mdash; direct, but kind.</p>
+          <p class="dtp-result__body">
+            This one actually has some real value as a person in your world &mdash;
+            he just got his signals crossed. A clear, caring conversation gives
+            you both a reset without burning it all down. You don't have to lose
+            him as a human. You just have to redirect the energy.
+          </p>
+          <p class="dtp-result__body">
+            Say it plainly. Say it once. Say it with kindness.
+            Hot water is still water &mdash; it moves things.
+          </p>
+          <div class="dtp-result__tip">
+            <span class="dtp-tip__label">What that sounds like:</span>
+            <span class="dtp-tip__text">
+              "I genuinely value you as a person. I want us to be clear with each other
+              so nothing gets weird. It's not like that for me, and I don't think it's
+              going to be &mdash; but that doesn't mean you're not important."
+            </span>
+          </div>
+          <button class="btn btn--ghost dtp-restart" id="restartBtnHot">Take it again</button>
+        </div>
+
+        <!-- COLD result -->
+        <div class="dtp-result__card dtp-result--cold" id="result-cold" hidden>
+          <div class="dtp-result__temp-badge dtp-badge--cold">
+            <span class="dtp-badge__icon">&#9660;</span>
+            <span class="dtp-badge__label">Cold Water</span>
+          </div>
+          <h2 class="dtp-result__title">Time to cool it down.</h2>
+          <p class="dtp-result__verdict">Go cold &mdash; your peace comes first.</p>
+          <p class="dtp-result__body">
+            You've been patient. You've been kind. You've given this more of your
+            energy than it deserved. Cold water doesn't mean cruel &mdash; it means clear.
+          </p>
+          <p class="dtp-result__body">
+            Create the distance you need. Stop engaging with the hope.
+            Let your absence say what another conversation won't.
+            You don't owe anyone unlimited access to you.
+            Some situations don't need more words &mdash; they just need space.
+          </p>
+          <div class="dtp-result__tip">
+            <span class="dtp-tip__label">What that looks like:</span>
+            <span class="dtp-tip__text">
+              Shorter replies. Less availability. No mixed signals.
+              Not because you're being mean &mdash; because you're being honest
+              with yourself about what this is.
+            </span>
+          </div>
+          <button class="btn btn--ghost dtp-restart" id="restartBtnCold">Take it again</button>
+        </div>
+
+        <!-- LUKEWARM result -->
+        <div class="dtp-result__card dtp-result--lukewarm" id="result-lukewarm" hidden>
+          <div class="dtp-result__temp-badge dtp-badge--lukewarm">
+            <span class="dtp-badge__icon">&#9644;</span>
+            <span class="dtp-badge__label">Lukewarm</span>
+          </div>
+          <h2 class="dtp-result__title">Somewhere in the middle.</h2>
+          <p class="dtp-result__verdict">One real conversation &mdash; then you'll know.</p>
+          <p class="dtp-result__body">
+            This one's sitting in a gray zone. The situation isn't urgent, but
+            it's not nothing either. One direct, honest conversation will tell
+            you everything you need to know about how this goes.
+          </p>
+          <p class="dtp-result__body">
+            If he hears you and adjusts, the warm approach worked.
+            If he doesn't, you'll have all the clarity you need to go cold.
+            Either way &mdash; you come out knowing exactly where you stand.
+            And that's worth more than staying comfortable in the gray.
+          </p>
+          <div class="dtp-result__tip">
+            <span class="dtp-tip__label">One thing to remember:</span>
+            <span class="dtp-tip__text">
+              You're not responsible for managing his feelings.
+              You're only responsible for being honest about yours.
+              That's it. That's the whole job.
+            </span>
+          </div>
+          <button class="btn btn--ghost dtp-restart" id="restartBtnLukewarm">Take it again</button>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======== FOOTER ======== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <span class="footer__logo">SnackMaster<span class="accent"> RICE</span></span>
+        <span class="footer__copy">&copy; 2026 Dr. Heemslice 5000. All rights reserved.</span>
+        <a href="../index.html" class="footer__top">&larr; Back to Home</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+  <script src="dtp.js"></script>
+</body>
+</html>
