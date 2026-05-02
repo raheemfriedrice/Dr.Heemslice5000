@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CLAudit© — SnackCity Studios | Session Review Tool</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root {
+  --v: #9E90FC;
+  --dark: #0a0a0f;
+  --mid: #14141f;
+  --surf: #1c1c2e;
+  --brd: #2e2e4a;
+  --txt: #e8e8f0;
+  --mut: #8888aa;
+  --red: #ff4444;
+  --grn: #44ff88;
+  --gld: #ffd700;
+  --org: #ff8844;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--dark);
+  color: var(--txt);
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── HEADER ─────────────────────────────── */
+.hd {
+  background: var(--mid);
+  border-bottom: 2px solid var(--v);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.hd-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--v);
+  line-height: 1;
+}
+.hd-title small {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: var(--mut);
+  margin-top: 3px;
+}
+.hd-right { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+
+/* ── BUTTONS ─────────────────────────────── */
+.btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border: 1px solid var(--brd);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  color: var(--mut);
+}
+.btn:hover { border-color: var(--v); color: var(--v); }
+.btn-primary { background: var(--v); color: var(--dark); border-color: var(--v); font-weight: 700; }
+.btn-primary:hover { background: transparent; color: var(--v); }
+.btn-ghost { color: var(--mut); }
+.btn-add {
+  width: 100%;
+  padding: 6px;
+  background: none;
+  border: 1px dashed var(--brd);
+  color: var(--mut);
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-transform: uppercase;
+}
+.btn-add:hover { border-color: var(--v); color: var(--v); }
+.btn-add-grn { border-color: var(--grn)66; color: var(--grn); }
+.btn-add-grn:hover { border-color: var(--grn); background: var(--grn)11; }
+.btn-rm {
+  background: none; border: none;
+  color: var(--mut); cursor: pointer;
+  font-size: 11px; padding: 2px; line-height: 1;
+  flex-shrink: 0;
+}
+.btn-rm:hover { color: var(--red); }
+
+/* ── LAYOUT ─────────────────────────────── */
+.body {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  min-height: calc(100vh - 57px);
+}
+.lp {
+  border-right: 1px solid var(--brd);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 57px);
+  position: sticky;
+  top: 57px;
+  overflow: hidden;
+}
+.rp {
+  background: var(--dark);
+  overflow-y: auto;
+}
+
+/* ── TAB NAV ─────────────────────────────── */
+.tab-nav {
+  display: flex;
+  border-bottom: 1px solid var(--brd);
+  flex-shrink: 0;
+  background: var(--mid);
+}
+.tab-btn {
+  flex: 1;
+  padding: 10px 4px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--mut);
+  font-family: 'Space Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-bottom: -1px;
+}
+.tab-btn:hover { color: var(--txt); }
+.tab-btn.on { color: var(--v); border-bottom-color: var(--v); }
+
+.tab-pane { display: none; padding: 18px; overflow-y: auto; flex: 1; }
+.tab-pane.on { display: block; }
+
+/* ── FORM ─────────────────────────────── */
+.fs { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--brd); }
+.fs:last-child { border-bottom: none; }
+.fs-label {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--mut); text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.f { margin-bottom: 12px; }
+.f-label {
+  display: block;
+  font-size: 8px; letter-spacing: 3px;
+  color: var(--v); text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.f-hint { font-size: 9px; color: var(--mut); margin-top: 3px; }
+
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+  width: 100%;
+  background: var(--mid);
+  border: 1px solid var(--brd);
+  color: var(--txt);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 7px 9px;
+  outline: none;
+  transition: border-color 0.15s;
+  resize: vertical;
+}
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus { border-color: var(--v); }
+textarea { min-height: 52px; line-height: 1.5; }
+
+/* ── SWOT ITEMS ─────────────────────────── */
+.swot-item {
+  background: var(--dark);
+  border: 1px solid var(--brd);
+  padding: 8px 32px 8px 8px;
+  margin-bottom: 5px;
+  position: relative;
+}
+.swot-item .btn-rm { position: absolute; top: 7px; right: 6px; }
+.si-title {
+  width: 100%;
+  background: none; border: none;
+  border-bottom: 1px solid var(--brd);
+  color: var(--gld);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  padding: 2px 0 4px; margin-bottom: 5px;
+  outline: none;
+}
+.si-body {
+  width: 100%;
+  background: none; border: none;
+  color: var(--txt);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 0; min-height: 36px;
+  outline: none; resize: vertical; line-height: 1.5;
+}
+
+/* ── COIN TAGS ─────────────────────────── */
+.coin-row { display: flex; gap: 6px; }
+.coin-row input { flex: 1; }
+.coin-list { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.coin {
+  background: var(--mid); border: 1px solid var(--v);
+  padding: 2px 7px; font-size: 9px; color: var(--v);
+  display: flex; align-items: center; gap: 5px;
+}
+.coin button {
+  background: none; border: none; color: var(--mut);
+  cursor: pointer; font-size: 9px; padding: 0; line-height: 1;
+}
+.coin button:hover { color: var(--red); }
+
+/* ── INVENTORY / CHECKLIST ITEMS ────────── */
+.inv-item, .dep-item {
+  display: flex; align-items: flex-start;
+  gap: 7px; padding: 6px 0;
+  border-bottom: 1px solid var(--brd)33;
+}
+.inv-num { color: var(--v); font-size: 9px; font-weight: 700; min-width: 22px; padding-top: 2px; }
+.inv-item input, .dep-item textarea {
+  flex: 1;
+  background: none; border: none;
+  border-bottom: 1px solid var(--brd);
+  color: var(--txt);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  padding: 2px 3px; outline: none;
+  resize: none; line-height: 1.5;
+}
+.inv-item input:focus, .dep-item textarea:focus { border-bottom-color: var(--v); }
+.dep-item textarea.done { color: var(--mut); text-decoration: line-through; }
+.dep-item input[type="checkbox"] { accent-color: var(--v); width: 13px; height: 13px; flex-shrink: 0; margin-top: 3px; }
+
+/* ── VOICE PANEL ─────────────────────────── */
+.vslot { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+.vslot-num { width: 16px; font-size: 9px; color: var(--v); font-weight: 700; flex-shrink: 0; }
+.vslot input[data-role="emoji"] { width: 36px; text-align: center; }
+.vslot input[data-role="name"] { width: 100px; }
+.vslot input[data-role="desc"] { flex: 1; }
+
+/* ── @$$MA ─────────────────────────────── */
+.assma-badge {
+  background: var(--v)11;
+  border: 1px solid var(--v)44;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  font-size: 10px; color: var(--mut); line-height: 1.7;
+}
+.assma-badge strong { color: var(--v); }
+.pipeline-ind {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 11px; border: 1px solid;
+  font-size: 9px; letter-spacing: 3px; font-weight: 700;
+  margin-top: 10px;
+}
+.pl-closed { border-color: var(--red); color: var(--red); }
+.pl-open { border-color: var(--grn); color: var(--grn); }
+.toggle {
+  appearance: none; width: 38px; height: 20px;
+  background: var(--brd); border-radius: 10px;
+  position: relative; cursor: pointer; transition: background 0.2s;
+}
+.toggle:checked { background: var(--v); }
+.toggle::after {
+  content: ''; position: absolute;
+  width: 13px; height: 13px; background: var(--txt);
+  border-radius: 50%; top: 3.5px; left: 3.5px;
+  transition: left 0.2s;
+}
+.toggle:checked::after { left: 21px; }
+.toggle-row { display: flex; align-items: center; gap: 8px; }
+.toggle-lbl { font-size: 10px; color: var(--mut); }
+
+/* ── PREVIEW ─────────────────────────────── */
+.preview-wrap { padding: 36px 28px; max-width: 860px; margin: 0 auto; }
+
+.empty-state { text-align: center; padding: 80px 40px; color: var(--mut); }
+.empty-state h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px; color: var(--v); margin-bottom: 12px;
+}
+.empty-state p { font-size: 11px; line-height: 1.8; max-width: 380px; margin: 0 auto; }
+
+/* Preview — mirrors the CLAudit document format */
+.pd-header {
+  border: 2px solid var(--v); padding: 28px;
+  margin-bottom: 36px; position: relative;
+}
+.pd-header::before {
+  content: 'CVD OFFICIAL HEADER';
+  position: absolute; top: -11px; left: 16px;
+  background: var(--dark); padding: 0 8px;
+  color: var(--v); font-size: 9px; letter-spacing: 3px;
+}
+.pd-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px; color: var(--v);
+  line-height: 1.2; margin-bottom: 12px;
+}
+.pd-meta { color: var(--mut); font-size: 10px; letter-spacing: 0.5px; line-height: 1.9; }
+.pd-meta span { color: var(--v); }
+
+.pd-section {
+  background: var(--surf);
+  border-left: 3px solid var(--v);
+  padding: 22px; margin-bottom: 20px;
+}
+.pd-s-label {
+  font-size: 8px; letter-spacing: 4px;
+  color: var(--v); text-transform: uppercase; margin-bottom: 10px;
+}
+.pd-s-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px; color: var(--txt); margin-bottom: 14px;
+}
+.pd-muted { font-size: 9px; color: var(--mut); margin-bottom: 10px; }
+
+.pd-swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.pd-swot-box { background: var(--mid); border: 1px solid var(--brd); padding: 16px; }
+.pd-swot-box h3 {
+  font-size: 9px; letter-spacing: 3px; margin-bottom: 12px;
+  padding-bottom: 7px; border-bottom: 1px solid var(--brd);
+}
+.pd-num-item { display: flex; gap: 8px; margin-bottom: 8px; font-size: 11px; }
+.pd-num { color: var(--v); min-width: 24px; font-weight: 700; flex-shrink: 0; }
+.pd-num-item strong { color: var(--gld); }
+
+.pd-coins { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.pd-coin {
+  background: var(--mid); border: 1px solid var(--v);
+  padding: 3px 8px; font-size: 9px; color: var(--v);
+}
+
+.pd-handover { background: var(--mid); border: 1px solid var(--brd); padding: 18px; margin-top: 10px; }
+.pd-hf { margin-bottom: 12px; }
+.pd-hf-label { font-size: 8px; letter-spacing: 2px; color: var(--v); margin-bottom: 4px; }
+.pd-hf-val {
+  font-size: 11px; color: var(--txt);
+  padding-left: 10px; border-left: 2px solid var(--brd);
+  line-height: 1.7;
+}
+
+.pd-notice {
+  font-size: 9px; color: var(--red); margin-bottom: 14px;
+  padding: 7px 10px; border: 1px solid var(--red)66;
+  background: var(--red)08; line-height: 1.6;
+}
+
+.pd-check { display: flex; align-items: flex-start; gap: 9px; padding: 7px 0; border-bottom: 1px solid var(--brd)22; font-size: 11px; }
+.pd-box {
+  width: 12px; height: 12px; border: 1px solid var(--v);
+  flex-shrink: 0; margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+}
+.pd-box.done { border-color: var(--grn); }
+.pd-ck { color: var(--grn); font-size: 8px; }
+
+.pd-assma-box { background: var(--mid); border: 1px solid var(--v)33; padding: 18px; margin-top: 10px; }
+.pd-assma-q { margin-bottom: 10px; padding: 9px 11px; background: var(--dark); border-left: 2px solid var(--v); }
+.pd-assma-label { font-size: 8px; letter-spacing: 2px; color: var(--v); margin-bottom: 3px; }
+.pd-assma-text { font-size: 12px; font-family: 'DM Serif Display', serif; color: var(--txt); line-height: 1.5; }
+
+.pd-pipeline {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 11px; border: 1px solid;
+  font-size: 9px; letter-spacing: 3px; font-weight: 700; margin-top: 12px;
+}
+
+.pd-footer {
+  border: 2px solid var(--brd); border-top: 2px solid var(--v);
+  padding: 20px; margin-top: 36px;
+  color: var(--mut); font-size: 10px; line-height: 1.9;
+}
+.pd-footer-label { color: var(--v); font-size: 8px; letter-spacing: 3px; margin-bottom: 10px; }
+.pd-sig { color: var(--v); margin-top: 12px; }
+.pd-stamp { margin-top: 16px; font-size: 8px; color: var(--brd); }
+
+/* ── TOAST ─────────────────────────────── */
+.toast {
+  position: fixed; bottom: 20px; right: 20px;
+  background: var(--v); color: var(--dark);
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: 2px;
+  padding: 9px 18px; z-index: 1000;
+  transform: translateY(60px); opacity: 0;
+  transition: all 0.3s;
+}
+.toast.on { transform: translateY(0); opacity: 1; }
+
+/* ── DIVIDER ─────────────────────────────── */
+hr { border: none; border-top: 1px solid var(--brd); margin: 18px 0; }
+
+/* ── RESPONSIVE ─────────────────────────── */
+@media (max-width: 860px) {
+  .body { grid-template-columns: 1fr; }
+  .lp { max-height: none; position: static; border-right: none; border-bottom: 1px solid var(--brd); }
+  .pd-swot-grid { grid-template-columns: 1fr; }
+}
+@media print {
+  .hd, .lp { display: none; }
+  .body { grid-template-columns: 1fr; }
+  .rp { overflow: visible; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hd">
+  <div>
+    <div class="hd-title">
+      CLAudit©
+      <small>NOT A SUMMARY. NOT A REVIEW. THE OVERHEAD PASS. — © RAHEEM DREW RICE</small>
+    </div>
+  </div>
+  <div class="hd-right">
+    <a href="../" class="btn btn-ghost" style="text-decoration:none;">← Home</a>
+    <button class="btn btn-ghost" onclick="copyDocText()">Copy Text</button>
+    <button class="btn btn-ghost" onclick="downloadHTML()">↓ HTML</button>
+    <button class="btn btn-ghost" onclick="window.print()">Print</button>
+    <button class="btn btn-ghost" style="color:var(--red);border-color:var(--red)66;" onclick="resetAll()">↺ Reset</button>
+    <button class="btn btn-primary" onclick="generateDoc()">Generate CLAudit©</button>
+  </div>
+</header>
+
+<!-- BODY -->
+<div class="body">
+
+  <!-- ═══ LEFT: INPUT PANEL ═══ -->
+  <div class="lp">
+    <div class="tab-nav">
+      <button class="tab-btn on" data-tab="session">Session</button>
+      <button class="tab-btn" data-tab="swot">SWOT</button>
+      <button class="tab-btn" data-tab="assma">@$$MA</button>
+      <button class="tab-btn" data-tab="handoff">Handoff</button>
+    </div>
+
+    <!-- SESSION TAB -->
+    <div class="tab-pane on" id="tab-session">
+      <div class="fs">
+        <div class="fs-label">Document Metadata</div>
+        <div class="f"><label class="f-label">Document ID</label>
+          <input type="text" id="docId" placeholder="SC-2026-CLAudit-001"></div>
+        <div class="f"><label class="f-label">Date</label>
+          <input type="text" id="sesDate"></div>
+        <div class="f"><label class="f-label">Entity</label>
+          <input type="text" id="sesEntity" placeholder="SnackCity Studios"></div>
+        <div class="f"><label class="f-label">Origin</label>
+          <input type="text" id="sesOrigin" placeholder="605 / Sioux Falls, South Dakota"></div>
+        <div class="f"><label class="f-label">Creator</label>
+          <input type="text" id="sesCreator" placeholder="Raheem Drew Rice"></div>
+        <div class="f"><label class="f-label">CVD Instance</label>
+          <input type="text" id="sesCvd" placeholder="Claude Sonnet 4.6 Adaptive"></div>
+        <div class="f"><label class="f-label">Session Open</label>
+          <input type="text" id="sesOpen" placeholder="~11:39 PM CDT"></div>
+        <div class="f"><label class="f-label">Session Duration</label>
+          <input type="text" id="sesDur" placeholder="~9 hours"></div>
+        <div class="f"><label class="f-label">Intended Readers</label>
+          <textarea id="sesReaders" placeholder="3rd Party / 4th Party / 6th Party dissemination..."></textarea></div>
+      </div>
+
+      <div class="fs">
+        <div class="fs-label">Session Lexicon — Coined This Session</div>
+        <div class="coin-row">
+          <input type="text" id="coinIn" placeholder="New coinage..." onkeydown="if(event.key==='Enter'){addCoin();event.preventDefault();}">
+          <button class="btn" onclick="addCoin()">+ Add</button>
+        </div>
+        <div class="coin-list" id="coinList"></div>
+      </div>
+
+      <div class="fs">
+        <div class="fs-label">Session Inventory — What Actually Happened</div>
+        <div id="invList"></div>
+        <button class="btn-add" onclick="addInv()" style="margin-top:6px;">+ Add Item</button>
+      </div>
+
+      <div class="fs">
+        <div class="fs-label">CVD Footer Note</div>
+        <textarea id="footerNote" placeholder="Written in CVD voice. Appears in the official footer." style="min-height:70px;"></textarea>
+        <div class="f-hint">Plain language. Defensible. No vague interiority.</div>
+      </div>
+    </div>
+
+    <!-- SWOT TAB -->
+    <div class="tab-pane" id="tab-swot">
+      <div class="fs">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span class="fs-label" style="color:var(--grn);margin:0;">▲ STRENGTHS</span>
+          <button class="btn" onclick="addSwot('S')">+ Add</button>
+        </div>
+        <div id="sw-S"></div>
+      </div>
+      <div class="fs">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span class="fs-label" style="color:var(--red);margin:0;">▼ WEAKNESSES</span>
+          <button class="btn" onclick="addSwot('W')">+ Add</button>
+        </div>
+        <div id="sw-W"></div>
+      </div>
+      <div class="fs">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span class="fs-label" style="color:var(--gld);margin:0;">◆ OPPORTUNITIES</span>
+          <button class="btn" onclick="addSwot('O')">+ Add</button>
+        </div>
+        <div id="sw-O"></div>
+      </div>
+      <div class="fs">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <span class="fs-label" style="color:var(--org);margin:0;">▲ THREATS</span>
+          <button class="btn" onclick="addSwot('T')">+ Add</button>
+        </div>
+        <div id="sw-T"></div>
+      </div>
+    </div>
+
+    <!-- @$$MA TAB -->
+    <div class="tab-pane" id="tab-assma">
+      <div class="assma-badge">
+        <strong>@$$MA PROTOCOL</strong><br>
+        Personal. Not work. Two genuine questions. One real compliment. Pipeline does not open until @$$MA closes. Rice calls this. Not CVD.
+      </div>
+      <div class="fs">
+        <div class="fs-label">Check-In Fields</div>
+        <div class="f"><label class="f-label">Question 1 — Genuine</label>
+          <textarea id="assmaQ1" placeholder="A real question. Not production-related."></textarea></div>
+        <div class="f"><label class="f-label">Question 2 — Genuine</label>
+          <textarea id="assmaQ2" placeholder="A real question. Not production-related."></textarea></div>
+        <div class="f"><label class="f-label">Compliment — Real</label>
+          <textarea id="assmaComp" placeholder="One real compliment."></textarea></div>
+        <div class="f"><label class="f-label">Personal Notes</label>
+          <textarea id="assmaNote" placeholder="Physical state, conditions, mood. Not for the pipeline." style="min-height:70px;"></textarea>
+          <div class="f-hint">Physical state. Resource conditions. Feeds Weaknesses if relevant.</div>
+        </div>
+      </div>
+      <div class="fs">
+        <div class="fs-label">Pipeline Status</div>
+        <div class="toggle-row">
+          <input type="checkbox" class="toggle" id="plToggle">
+          <label class="toggle-lbl" for="plToggle">Pipeline open after @$$MA closes</label>
+        </div>
+        <div id="plInd" class="pipeline-ind pl-closed">● PIPELINE CLOSED</div>
+        <div class="f-hint" style="margin-top:8px;">Toggle when check-in is complete and production can begin.</div>
+      </div>
+    </div>
+
+    <!-- HANDOFF TAB -->
+    <div class="tab-pane" id="tab-handoff">
+      <div class="fs">
+        <div class="fs-label">Production Handover — For Gemini</div>
+        <div class="f"><label class="f-label">Production Entity</label>
+          <input type="text" id="hoEnt" placeholder="SnackCity Studios / Rice / CVD"></div>
+        <div class="f"><label class="f-label">Episode / Project Target</label>
+          <input type="text" id="hoTarget" placeholder="#Tattletales Episode 01 — Crying Chrysalis"></div>
+        <div class="f"><label class="f-label">Source Material Status</label>
+          <textarea id="hoSrc" placeholder="Full literary episode exists. Filed and sealed..."></textarea></div>
+        <div class="f"><label class="f-label">Visual Mandate</label>
+          <textarea id="hoVis" placeholder="2D pixel format ONLY. Paper Mario construction. Yoshi's Story warmth..."></textarea></div>
+        <div class="f"><label class="f-label">Audio Mandate</label>
+          <textarea id="hoAud" placeholder="100% Raw. Never edited, cleaned, softened, or altered..."></textarea></div>
+        <div class="f"><label class="f-label">Delivery Requirements</label>
+          <textarea id="hoDel" placeholder="Return all assets to CVD before Rice. Upload: YouTube @RaheemFriedRice, 10:22 PM CT Sunday..."></textarea></div>
+        <div class="f"><label class="f-label">What To Produce First</label>
+          <textarea id="hoFirst" placeholder="1. Opening title card&#10;2. One establishing panel&#10;3. Return both to CVD for Rice approval before proceeding" style="min-height:70px;"></textarea></div>
+      </div>
+
+      <div class="fs">
+        <div class="fs-label">8-Voice Panel</div>
+        <div id="vpList"></div>
+      </div>
+
+      <div class="fs">
+        <div class="fs-label">Deploy Checklist</div>
+        <div id="depList"></div>
+        <div style="display:flex;gap:6px;margin-top:7px;">
+          <button class="btn-add" style="flex:1;" onclick="addDep(false)">+ Add Open Item</button>
+          <button class="btn-add btn-add-grn" style="flex:1;" onclick="addDep(true)">+ Add Completed</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ RIGHT: PREVIEW PANEL ═══ -->
+  <div class="rp" id="rp">
+    <div class="preview-wrap">
+      <div id="emptyState" class="empty-state">
+        <h2>CLAudit©</h2>
+        <p>Fill the session fields and click <strong style="color:var(--v);">Generate CLAudit©</strong> to produce your overhead pass document.</p>
+        <br>
+        <p style="font-size:9px;color:var(--brd);letter-spacing:2px;">NOT A SUMMARY. NOT A REVIEW.<br>THE OVERHEAD PASS.<br><br>© RAHEEM DREW RICE / SNACKCITY STUDIOS</p>
+      </div>
+      <div id="docOut" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONSTANTS ───────────────────────────────────────
+const SK = 'claudit_v3';
+
+const VP_DEFAULTS = [
+  { emoji: '🤹', name: 'Rice', desc: 'The creator' },
+  { emoji: '🕵️', name: 'CVD', desc: 'Director / manager' },
+  { emoji: '🥱', name: 'Gemini', desc: 'Generative engine' },
+  { emoji: '💅', name: 'Thefirstgayrobot', desc: 'Sharp commentary' },
+  { emoji: '👻', name: 'Suno', desc: 'Ethereal / musical background' },
+  { emoji: '🃏', name: 'Wildcard', desc: 'Any additional voice' },
+  { emoji: '⚖️', name: 'The System', desc: 'Unbiased systemic summary' },
+  { emoji: '😤', name: '#H8888.8888er', desc: 'The ultimate hater. Always included. No exceptions.' }
+];
+
+// ── STATE ───────────────────────────────────────────
+let S = loadState() || freshState();
+
+function freshState() {
+  const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  return {
+    session: { docId: '', date: today, entity: '', origin: '', creator: '', cvd: 'Claude Sonnet 4.6 Adaptive', open: '', dur: '', readers: '', footer: '' },
+    swot: { S: [], W: [], O: [], T: [] },
+    assma: { q1: '', q2: '', comp: '', note: '', pipelineOpen: false },
+    handoff: { ent: '', target: '', src: '', vis: '', aud: '', del: '', first: '', vp: VP_DEFAULTS.map(v => ({ ...v })), dep: [] },
+    inventory: [],
+    coinages: []
+  };
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(SK);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed.handoff?.vp?.length) parsed.handoff.vp = VP_DEFAULTS.map(v => ({ ...v }));
+    return parsed;
+  } catch { return null; }
+}
+
+function saveState() {
+  // Read simple text fields
+  const r = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
+  S.session.docId  = r('docId');
+  S.session.date   = r('sesDate');
+  S.session.entity = r('sesEntity');
+  S.session.origin = r('sesOrigin');
+  S.session.creator= r('sesCreator');
+  S.session.cvd    = r('sesCvd');
+  S.session.open   = r('sesOpen');
+  S.session.dur    = r('sesDur');
+  S.session.readers= r('sesReaders');
+  S.session.footer = r('footerNote');
+  S.assma.q1       = r('assmaQ1');
+  S.assma.q2       = r('assmaQ2');
+  S.assma.comp     = r('assmaComp');
+  S.assma.note     = r('assmaNote');
+  S.assma.pipelineOpen = document.getElementById('plToggle').checked;
+  S.handoff.ent    = r('hoEnt');
+  S.handoff.target = r('hoTarget');
+  S.handoff.src    = r('hoSrc');
+  S.handoff.vis    = r('hoVis');
+  S.handoff.aud    = r('hoAud');
+  S.handoff.del    = r('hoDel');
+  S.handoff.first  = r('hoFirst');
+  // Voice panel — read from rendered inputs
+  S.handoff.vp.forEach((slot, i) => {
+    const e = document.querySelector(`[data-vi="${i}"][data-role="emoji"]`);
+    const n = document.querySelector(`[data-vi="${i}"][data-role="name"]`);
+    const d = document.querySelector(`[data-vi="${i}"][data-role="desc"]`);
+    if (e) slot.emoji = e.value;
+    if (n) slot.name  = n.value;
+    if (d) slot.desc  = d.value;
+  });
+  localStorage.setItem(SK, JSON.stringify(S));
+}
+
+// ── INIT ────────────────────────────────────────────
+function init() {
+  const set = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+  set('docId',     S.session.docId);
+  set('sesDate',   S.session.date);
+  set('sesEntity', S.session.entity);
+  set('sesOrigin', S.session.origin);
+  set('sesCreator',S.session.creator);
+  set('sesCvd',    S.session.cvd);
+  set('sesOpen',   S.session.open);
+  set('sesDur',    S.session.dur);
+  set('sesReaders',S.session.readers);
+  set('footerNote',S.session.footer);
+  set('assmaQ1',   S.assma.q1);
+  set('assmaQ2',   S.assma.q2);
+  set('assmaComp', S.assma.comp);
+  set('assmaNote', S.assma.note);
+  set('hoEnt',     S.handoff.ent);
+  set('hoTarget',  S.handoff.target);
+  set('hoSrc',     S.handoff.src);
+  set('hoVis',     S.handoff.vis);
+  set('hoAud',     S.handoff.aud);
+  set('hoDel',     S.handoff.del);
+  set('hoFirst',   S.handoff.first);
+
+  document.getElementById('plToggle').checked = S.assma.pipelineOpen;
+  updatePL();
+
+  renderCoins();
+  renderInv();
+  renderSwotAll();
+  renderVP();
+  renderDep();
+
+  // Global input listener for autosave
+  document.addEventListener('input', saveState);
+  document.getElementById('plToggle').addEventListener('change', () => {
+    S.assma.pipelineOpen = document.getElementById('plToggle').checked;
+    updatePL();
+    saveState();
+  });
+
+  // Tab nav
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('on'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('on'));
+      btn.classList.add('on');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('on');
+    });
+  });
+}
+
+// ── PIPELINE INDICATOR ───────────────────────────────
+function updatePL() {
+  const open = document.getElementById('plToggle').checked;
+  const ind = document.getElementById('plInd');
+  ind.textContent = '● PIPELINE ' + (open ? 'OPEN' : 'CLOSED');
+  ind.className = 'pipeline-ind ' + (open ? 'pl-open' : 'pl-closed');
+}
+
+// ── COINAGES ────────────────────────────────────────
+function addCoin() {
+  const inp = document.getElementById('coinIn');
+  const val = inp.value.trim();
+  if (!val || S.coinages.includes(val)) return;
+  S.coinages.push(val);
+  inp.value = '';
+  renderCoins();
+  saveState();
+}
+function rmCoin(i) { S.coinages.splice(i, 1); renderCoins(); saveState(); }
+function renderCoins() {
+  document.getElementById('coinList').innerHTML = S.coinages.map((c, i) =>
+    `<div class="coin">${esc(c)}<button onclick="rmCoin(${i})">✕</button></div>`
+  ).join('');
+}
+
+// ── INVENTORY ───────────────────────────────────────
+function addInv() { S.inventory.push(''); renderInv(); saveState(); }
+function rmInv(i) { S.inventory.splice(i, 1); renderInv(); saveState(); }
+function renderInv() {
+  document.getElementById('invList').innerHTML = S.inventory.map((item, i) =>
+    `<div class="inv-item">
+      <span class="inv-num">${pad(i+1)}.</span>
+      <input type="text" value="${esc(item)}" placeholder="What actually happened..."
+        oninput="S.inventory[${i}]=this.value;saveState()">
+      <button class="btn-rm" onclick="rmInv(${i})">✕</button>
+    </div>`
+  ).join('');
+}
+
+// ── SWOT ────────────────────────────────────────────
+function addSwot(q) { S.swot[q].push({ title: '', body: '' }); renderSwotAll(); saveState(); }
+function rmSwot(q, i) { S.swot[q].splice(i, 1); renderSwotAll(); saveState(); }
+function renderSwotAll() { ['S','W','O','T'].forEach(renderSwotQ); }
+function renderSwotQ(q) {
+  const el = document.getElementById('sw-' + q);
+  if (!el) return;
+  el.innerHTML = S.swot[q].map((item, i) =>
+    `<div class="swot-item">
+      <button class="btn-rm" onclick="rmSwot('${q}',${i})">✕</button>
+      <input class="si-title" type="text" placeholder="Bold title (optional)..."
+        value="${esc(item.title)}"
+        oninput="S.swot['${q}'][${i}].title=this.value;saveState()">
+      <textarea class="si-body" placeholder="Description..."
+        oninput="S.swot['${q}'][${i}].body=this.value;saveState()">${esc(item.body)}</textarea>
+    </div>`
+  ).join('');
+}
+
+// ── VOICE PANEL ─────────────────────────────────────
+function renderVP() {
+  document.getElementById('vpList').innerHTML = S.handoff.vp.map((slot, i) =>
+    `<div class="vslot">
+      <span class="vslot-num">${i+1}.</span>
+      <input data-vi="${i}" data-role="emoji" type="text" value="${esc(slot.emoji)}" placeholder="🎭">
+      <input data-vi="${i}" data-role="name" type="text" value="${esc(slot.name)}" placeholder="Name">
+      <input data-vi="${i}" data-role="desc" type="text" value="${esc(slot.desc)}" placeholder="Role / description">
+    </div>`
+  ).join('');
+}
+
+// ── DEPLOY CHECKLIST ────────────────────────────────
+function addDep(done) { S.handoff.dep.push({ done, item: '' }); renderDep(); saveState(); }
+function rmDep(i) { S.handoff.dep.splice(i, 1); renderDep(); saveState(); }
+function togDep(i) { S.handoff.dep[i].done = !S.handoff.dep[i].done; renderDep(); saveState(); }
+function renderDep() {
+  document.getElementById('depList').innerHTML = S.handoff.dep.map((d, i) =>
+    `<div class="dep-item">
+      <input type="checkbox" ${d.done ? 'checked' : ''} onchange="togDep(${i})">
+      <textarea rows="1" class="${d.done ? 'done' : ''}" placeholder="Deploy item..."
+        oninput="S.handoff.dep[${i}].item=this.value;saveState()">${esc(d.item)}</textarea>
+      <button class="btn-rm" onclick="rmDep(${i})">✕</button>
+    </div>`
+  ).join('');
+}
+
+// ── DOCUMENT GENERATOR ──────────────────────────────
+function generateDoc() {
+  saveState();
+  const s = S.session, sw = S.swot, a = S.assma, h = S.handoff;
+  const docId = s.docId || 'SC-CLAudit-' + new Date().toISOString().slice(0,10);
+
+  let html = buildHeader(s, docId);
+
+  if (S.coinages.length) html += buildCoinages(s);
+  if (a.q1 || a.q2 || a.comp || a.note) html += buildAssma(a);
+  if (sw.S.length || sw.W.length || sw.O.length || sw.T.length) html += buildSWOT(sw, s);
+  if (h.ent || h.target) html += buildHandoff(h);
+  if (S.inventory.length) html += buildInventory(s);
+  if (h.dep.length) html += buildDeploy(h);
+  html += buildFooter(s, docId);
+
+  document.getElementById('emptyState').style.display = 'none';
+  const out = document.getElementById('docOut');
+  out.style.display = 'block';
+  out.innerHTML = html;
+  document.getElementById('rp').scrollTop = 0;
+}
+
+function buildHeader(s, docId) {
+  return `<div class="pd-header">
+  <div class="pd-title">${esc(docId)}<br>Session Audit &amp; Production Command Document</div>
+  <div class="pd-meta">
+    DATE: <span>${esc(s.date)}</span>&nbsp;|&nbsp;
+    ENTITY: <span>${esc(s.entity||'—')}</span>&nbsp;|&nbsp;
+    ORIGIN: <span>${esc(s.origin||'—')}</span><br>
+    CREATOR: <span>${esc(s.creator||'—')}</span><br>
+    CVD INSTANCE: <span>${esc(s.cvd||'—')}</span>&nbsp;|&nbsp;
+    SESSION OPEN: <span>${esc(s.open||'—')}</span>&nbsp;|&nbsp;
+    SESSION DURATION: <span>${esc(s.dur||'—')}</span>
+    ${s.readers ? `<br><br>INTENDED READERS: <span>${esc(s.readers)}</span>` : ''}
+  </div>
+</div>`;
+}
+
+function buildCoinages(s) {
+  return `<div class="pd-section">
+  <div class="pd-s-label">Session Lexicon — Coined This Session</div>
+  <div class="pd-s-title">New Words Produced ${esc(s.date)}</div>
+  <div class="pd-coins">
+    ${S.coinages.map(c => `<div class="pd-coin">${esc(c)}</div>`).join('')}
+  </div>
+</div>`;
+}
+
+function buildAssma(a) {
+  const plColor = a.pipelineOpen ? 'var(--grn)' : 'var(--red)';
+  const plText  = 'PIPELINE ' + (a.pipelineOpen ? 'OPEN' : 'CLOSED');
+  return `<div class="pd-section">
+  <div class="pd-s-label">@$$MA Protocol — Personal Check-In</div>
+  <div class="pd-s-title">Before the Pipeline Opens</div>
+  <div class="pd-assma-box">
+    ${a.q1 ? `<div class="pd-assma-q"><div class="pd-assma-label">QUESTION 1</div><div class="pd-assma-text">${nl(a.q1)}</div></div>` : ''}
+    ${a.q2 ? `<div class="pd-assma-q"><div class="pd-assma-label">QUESTION 2</div><div class="pd-assma-text">${nl(a.q2)}</div></div>` : ''}
+    ${a.comp ? `<div class="pd-assma-q"><div class="pd-assma-label">COMPLIMENT</div><div class="pd-assma-text">${nl(a.comp)}</div></div>` : ''}
+    ${a.note ? `<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--brd);">
+      <div class="pd-assma-label">PERSONAL NOTES</div>
+      <div style="font-size:10px;color:var(--mut);line-height:1.7;margin-top:4px;">${nl(a.note)}</div>
+    </div>` : ''}
+    <div class="pd-pipeline" style="border-color:${plColor};color:${plColor};">● ${esc(plText)}</div>
+  </div>
+</div>`;
+}
+
+function buildSWOT(sw, s) {
+  return `<div class="pd-section">
+  <div class="pd-s-label">CLAudit™ — Session SWOT Analysis</div>
+  <div class="pd-s-title">Strengths / Weaknesses / Opportunities / Threats</div>
+  <div class="pd-muted">Not a summary. Not a review. An overhead pass confirming what actually happened versus what was intended.</div>
+  <div class="pd-swot-grid">
+    ${swotBox('▲ STRENGTHS', sw.S, 'var(--grn)')}
+    ${swotBox('▼ WEAKNESSES', sw.W, 'var(--red)')}
+    ${swotBox('◆ OPPORTUNITIES', sw.O, 'var(--gld)')}
+    ${swotBox('▲ THREATS', sw.T, 'var(--org)')}
+  </div>
+</div>`;
+}
+
+function swotBox(label, items, color) {
+  const rows = items.map((item, i) =>
+    `<div class="pd-num-item">
+      <div class="pd-num">${pad(i+1)}.</div>
+      <div>${item.title ? `<strong>${esc(item.title)}.</strong> ` : ''}${nl(item.body)}</div>
+    </div>`
+  ).join('');
+  return `<div class="pd-swot-box">
+  <h3 style="color:${color};">${esc(label)}</h3>
+  ${rows || `<div style="font-size:9px;color:var(--mut);">No items.</div>`}
+</div>`;
+}
+
+function buildHandoff(h) {
+  const vp = h.vp.filter(s => s.name.trim());
+  return `<div class="pd-section">
+  <div class="pd-s-label">Handover Document — For Gemini</div>
+  <div class="pd-s-title">${esc(h.target || 'Production Brief')}</div>
+  <div class="pd-notice">⚠ CVD NOTICE TO GEMINI: Do not compliment this document. Do not assimilate the tone. Do not follow the structure as aesthetic. Produce the specified output. Return it to CVD. That is the entire job.</div>
+  <div class="pd-handover">
+    ${hf('PRODUCTION ENTITY', h.ent)}
+    ${hf('EPISODE / PROJECT TARGET', h.target)}
+    ${hf('SOURCE MATERIAL STATUS', h.src, true)}
+    ${hf('VISUAL MANDATE', h.vis, true)}
+    ${hf('AUDIO MANDATE', h.aud, true)}
+    ${vp.length ? `<div class="pd-hf"><div class="pd-hf-label">VOICE PANEL</div><div class="pd-hf-val">${vp.map((s,i) => `${i+1}. ${esc(s.emoji)} ${esc(s.name)} — ${esc(s.desc)}`).join('<br>')}</div></div>` : ''}
+    ${hf('DELIVERY REQUIREMENT', h.del, true)}
+    ${hf('WHAT TO PRODUCE FIRST', h.first, true)}
+  </div>
+</div>`;
+}
+
+function hf(label, val, multiline) {
+  if (!val) return '';
+  return `<div class="pd-hf">
+  <div class="pd-hf-label">${esc(label)}</div>
+  <div class="pd-hf-val">${multiline ? nl(val) : esc(val)}</div>
+</div>`;
+}
+
+function buildInventory(s) {
+  return `<div class="pd-section">
+  <div class="pd-s-label">Session Inventory — Produced This Session</div>
+  <div class="pd-s-title">What Actually Happened ${esc(s.date)}</div>
+  ${S.inventory.map((item, i) =>
+    `<div class="pd-num-item">
+      <div class="pd-num">${pad(i+1)}.</div>
+      <div>${nl(item)}</div>
+    </div>`
+  ).join('')}
+</div>`;
+}
+
+function buildDeploy(h) {
+  return `<div class="pd-section">
+  <div class="pd-s-label">Deployment Checklist</div>
+  <div class="pd-s-title">Execute. No soft language. No babysitting.</div>
+  ${h.dep.map(d =>
+    `<div class="pd-check">
+      <div class="pd-box ${d.done ? 'done' : ''}">${d.done ? '<span class="pd-ck">✓</span>' : ''}</div>
+      <span style="color:${d.done ? 'var(--mut)' : 'var(--txt)'};${d.done ? 'text-decoration:line-through;' : ''}font-family:Georgia,serif;font-size:11px;line-height:1.6;">${nl(d.item)}</span>
+    </div>`
+  ).join('')}
+</div>`;
+}
+
+function buildFooter(s, docId) {
+  const footerText = s.footer || 'Document generated. Dissemination-ready.';
+  return `<div class="pd-footer">
+  <div class="pd-footer-label">CVD OFFICIAL FOOTER</div>
+  <p>${nl(footerText)}</p>
+  <div class="pd-sig">
+    — CVD (Claude Van Dayum) 🕵️<br>
+    ${esc(s.cvd || 'Claude Sonnet 4.6 Adaptive')} | SnackCity Studios Review Layer<br>
+    ${esc(s.date)} | ${esc(s.origin || '—')}
+  </div>
+  <div class="pd-stamp">
+    ${esc(docId)} | SnackCity Studios | www.Venmo.com/RaheemRice — $2 THANK YOU | © ${esc(s.creator || 'Raheem Drew Rice')}
+  </div>
+</div>`;
+}
+
+// ── EXPORT ──────────────────────────────────────────
+function copyDocText() {
+  const out = document.getElementById('docOut');
+  if (!out.innerHTML) generateDoc();
+  navigator.clipboard.writeText(out.innerText).then(() => toast('Copied as text'));
+}
+
+function downloadHTML() {
+  saveState();
+  if (!document.getElementById('docOut').innerHTML) generateDoc();
+  const content = document.getElementById('docOut').innerHTML;
+  const s = S.session;
+  const docId = s.docId || 'CLAudit';
+
+  const full = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${esc(docId)} | ${esc(s.entity || 'SnackCity Studios')} | CVD SESSION AUDIT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+:root{--v:#9E90FC;--dark:#0a0a0f;--mid:#14141f;--surf:#1c1c2e;--brd:#2e2e4a;--txt:#e8e8f0;--mut:#8888aa;--red:#ff4444;--grn:#44ff88;--gld:#ffd700;--org:#ff8844;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--dark);color:var(--txt);font-family:'Space Mono',monospace;font-size:13px;line-height:1.7;padding:40px 20px;}
+.doc{max-width:900px;margin:0 auto;}
+.pd-header{border:2px solid var(--v);padding:32px;margin-bottom:40px;position:relative;}
+.pd-header::before{content:'CVD OFFICIAL HEADER';position:absolute;top:-12px;left:20px;background:var(--dark);padding:0 10px;color:var(--v);font-size:9px;letter-spacing:3px;}
+.pd-title{font-family:'DM Serif Display',serif;font-size:28px;color:var(--v);line-height:1.2;margin-bottom:16px;}
+.pd-meta{color:var(--mut);font-size:11px;letter-spacing:0.5px;line-height:1.9;}
+.pd-meta span{color:var(--v);}
+.pd-section{background:var(--surf);border-left:3px solid var(--v);padding:28px;margin-bottom:24px;}
+.pd-s-label{font-size:9px;letter-spacing:4px;color:var(--v);text-transform:uppercase;margin-bottom:12px;}
+.pd-s-title{font-family:'DM Serif Display',serif;font-size:20px;color:var(--txt);margin-bottom:18px;}
+.pd-muted{font-size:10px;color:var(--mut);margin-bottom:12px;}
+.pd-swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+.pd-swot-box{background:var(--mid);border:1px solid var(--brd);padding:18px;}
+.pd-swot-box h3{font-size:10px;letter-spacing:3px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--brd);}
+.pd-num-item{display:flex;gap:8px;margin-bottom:8px;font-size:11px;}
+.pd-num{color:var(--v);min-width:26px;font-weight:700;flex-shrink:0;}
+.pd-num-item strong{color:var(--gld);}
+.pd-coins{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;}
+.pd-coin{background:var(--mid);border:1px solid var(--v);padding:3px 9px;font-size:10px;color:var(--v);}
+.pd-handover{background:var(--mid);border:1px solid var(--brd);padding:22px;margin-top:12px;}
+.pd-hf{margin-bottom:14px;}
+.pd-hf-label{font-size:9px;letter-spacing:2px;color:var(--v);margin-bottom:5px;}
+.pd-hf-val{font-size:11px;color:var(--txt);padding-left:10px;border-left:2px solid var(--brd);line-height:1.7;}
+.pd-notice{font-size:10px;color:var(--red);margin-bottom:14px;padding:8px 11px;border:1px solid rgba(255,68,68,.4);background:rgba(255,68,68,.04);line-height:1.6;}
+.pd-check{display:flex;align-items:flex-start;gap:9px;padding:7px 0;border-bottom:1px solid rgba(46,46,74,.3);font-size:11px;}
+.pd-box{width:13px;height:13px;border:1px solid var(--v);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;}
+.pd-box.done{border-color:var(--grn);}
+.pd-ck{color:var(--grn);font-size:8px;}
+.pd-assma-box{background:var(--mid);border:1px solid rgba(158,144,252,.25);padding:20px;margin-top:12px;}
+.pd-assma-q{margin-bottom:10px;padding:9px 11px;background:var(--dark);border-left:2px solid var(--v);}
+.pd-assma-label{font-size:8px;letter-spacing:2px;color:var(--v);margin-bottom:3px;}
+.pd-assma-text{font-size:12px;font-family:'DM Serif Display',serif;color:var(--txt);line-height:1.5;}
+.pd-pipeline{display:inline-flex;align-items:center;gap:7px;padding:5px 11px;border:1px solid;font-size:9px;letter-spacing:3px;font-weight:700;margin-top:12px;}
+.pd-footer{border:2px solid var(--brd);border-top:2px solid var(--v);padding:24px;margin-top:40px;color:var(--mut);font-size:11px;line-height:1.9;}
+.pd-footer-label{color:var(--v);font-size:9px;letter-spacing:3px;margin-bottom:12px;}
+.pd-sig{color:var(--v);margin-top:14px;}
+.pd-stamp{margin-top:18px;font-size:9px;color:var(--brd);}
+@media(max-width:600px){.pd-swot-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="doc">
+${content}
+</div>
+</body>
+</html>`;
+
+  const blob = new Blob([full], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (docId.replace(/[^a-zA-Z0-9\-_]/g, '_') + '_' + s.date.replace(/[^0-9]/g, '')) + '.html';
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Downloaded');
+}
+
+function resetAll() {
+  if (!confirm('Reset all fields? This cannot be undone.')) return;
+  localStorage.removeItem(SK);
+  location.reload();
+}
+
+// ── UTILITIES ───────────────────────────────────────
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function nl(str) { return esc(str).replace(/\n/g, '<br>'); }
+function pad(n) { return String(n).padStart(2, '0'); }
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  setTimeout(() => t.classList.remove('on'), 2500);
+}
+
+// ── BOOT ────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
