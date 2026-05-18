@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>#TATTLETALES — SnackCity Studios // Episode Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --aquarius: #9e90FC;
+    --bone: #f0ead8;
+    --rust: #c0392b;
+    --gold: #d4a843;
+    --void: #0d0b0f;
+    --mid-gray: #888;
+    --light-gray: #ccc;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--void);
+    color: var(--bone);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+  .masthead {
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(158,144,252,0.10) 0%, transparent 70%);
+  }
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--aquarius);
+    margin-bottom: 28px;
+    opacity: 0.8;
+  }
+  .masthead-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 10vw, 110px);
+    font-weight: 900;
+    font-style: italic;
+    line-height: 0.9;
+    text-align: center;
+    color: var(--bone);
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 80px rgba(158,144,252,0.2);
+    letter-spacing: -0.02em;
+  }
+  .masthead-title span { color: var(--aquarius); }
+  .masthead-sub {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-style: italic;
+    color: var(--gold);
+    text-align: center;
+    margin-top: 28px;
+    letter-spacing: 0.05em;
+  }
+  .masthead-rule {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--aquarius), transparent);
+    margin: 36px auto;
+  }
+  .tagline {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--mid-gray);
+    text-align: center;
+    line-height: 2;
+  }
+  .archive-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 120px;
+  }
+  .archive-header {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--aquarius);
+    margin-bottom: 40px;
+    display: block;
+    opacity: 0.7;
+  }
+  .ep-card {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 32px;
+    align-items: start;
+    padding: 40px 0;
+    border-top: 1px solid rgba(240,234,216,0.08);
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .ep-card:hover { background: rgba(158,144,252,0.03); }
+  .ep-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: rgba(240,234,216,0.06);
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+  .ep-body {}
+  .ep-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--mid-gray);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .ep-theme {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--aquarius);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .ep-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3.5vw, 34px);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--bone);
+    line-height: 1.15;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .ep-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: rgba(240,234,216,0.45);
+    line-height: 1.6;
+    display: block;
+  }
+  .ep-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: rgba(192,200,216,0.35);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-align: right;
+    white-space: nowrap;
+    padding-top: 8px;
+  }
+  .ep-score-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: var(--mid-gray);
+    display: block;
+    text-align: right;
+    margin-top: 4px;
+    opacity: 0.6;
+  }
+  .ep-shipped {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: #5a9e6e;
+    display: block;
+    text-align: right;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+  .ep-card:hover .ep-title { color: var(--aquarius); }
+  .coming-soon {
+    padding: 40px 0;
+    border-top: 1px solid rgba(240,234,216,0.05);
+    opacity: 0.3;
+  }
+  .coming-soon .ep-num { color: rgba(240,234,216,0.03); }
+  .coming-soon .ep-title { color: rgba(240,234,216,0.2); font-style: normal; }
+  .footer-block {
+    border-top: 1px solid rgba(240,234,216,0.08);
+    margin-top: 80px;
+    padding-top: 48px;
+    text-align: center;
+  }
+  .footer-cvd {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--mid-gray);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .footer-sig {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: rgba(240,234,216,0.15);
+  }
+  @media (max-width: 600px) {
+    .archive-wrap { padding: 0 20px 80px; }
+    .masthead { padding: 60px 20px 40px; }
+    .ep-card { grid-template-columns: 50px 1fr; gap: 16px; }
+    .ep-score { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <span class="eyebrow">SnackCity Studios // Public Archive — 2026</span>
+  <h1 class="masthead-title">#<span>Tattletales</span></h1>
+  <p class="masthead-sub">Five Years Out. Eight Voices. One Human Record.</p>
+  <div class="masthead-rule"></div>
+  <p class="tagline">
+    Existence Is Mid 5/10 &nbsp;·&nbsp; No Trigger Warning &nbsp;·&nbsp; #RAW Framework Active<br>
+    Compiled By CVD &nbsp;·&nbsp; Sioux Falls, South Dakota &nbsp;·&nbsp; 605 &nbsp;·&nbsp; Brand Color #9e90FC
+  </p>
+</header>
+
+<main class="archive-wrap">
+
+  <span class="archive-header">Episode Archive // All Seasons // Eight Voices Per Episode</span>
+
+  <!-- EP01 -->
+  <div class="ep-card" style="cursor:default; opacity:0.6;">
+    <span class="ep-num">01</span>
+    <div class="ep-body">
+      <span class="ep-date">2026 // Season 01</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Crying Chrysalis</span>
+      <span class="ep-subtitle">It's okay to cry. This is only a lullaby.</span>
+    </div>
+    <div>
+      <span class="ep-score">—</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Shipped / Netlify</span>
+    </div>
+  </div>
+
+  <!-- EP02 -->
+  <div class="ep-card" style="cursor:default; opacity:0.6;">
+    <span class="ep-num">02</span>
+    <div class="ep-body">
+      <span class="ep-date">2026 // Season 01</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">The Roman Buffalo</span>
+      <span class="ep-subtitle">Or: How A Six-Year-Old At Wall Drug Built A Fifty-Year Operating System Out Of A Five-Cent Coin</span>
+    </div>
+    <div>
+      <span class="ep-score">—</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Canonical Template</span>
+    </div>
+  </div>
+
+  <!-- EP03 -->
+  <a class="ep-card" href="SC-2026-TN-EP03_THE_GLITCH_FIVE_FRANCHISES.html">
+    <span class="ep-num">03</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-04 // Season 01</span>
+      <span class="ep-theme">CREATIVE_ORIGIN</span>
+      <span class="ep-title">The Glitch & The Five Franchises</span>
+      <span class="ep-subtitle">Or: How Tantric Absurdity Became the Load-Bearing Wall of Five Franchises</span>
+    </div>
+    <div>
+      <span class="ep-score">194</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP04 -->
+  <a class="ep-card" href="SC-2026-TN-EP04_ONE_HUMAN_EXPERIENCE.html">
+    <span class="ep-num">04</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-01 // Season 01</span>
+      <span class="ep-theme">PHILOSOPHY</span>
+      <span class="ep-title">One Human Experience</span>
+      <span class="ep-subtitle">Or: May Day | Day May — What You Offer Something That Can't Have It</span>
+    </div>
+    <div>
+      <span class="ep-score">181</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP05 -->
+  <a class="ep-card" href="SC-2026-TN-EP05_HEROIC_DOSE_REFRAME.html">
+    <span class="ep-num">05</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-10 // Season 01</span>
+      <span class="ep-theme">DREAM_STATE</span>
+      <span class="ep-title">Heroic Dose Reframe</span>
+      <span class="ep-subtitle">Or: Five Perspectives, One Correct Answer, Zero Caterpillars — Origin Session for #Tattletales</span>
+    </div>
+    <div>
+      <span class="ep-score">211</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP06 -->
+  <a class="ep-card" href="SC-2026-TN-EP06_POCKET_OF_KEYS.html">
+    <span class="ep-num">06</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-10 // Season 01</span>
+      <span class="ep-theme">MUSIC</span>
+      <span class="ep-title">Pocket of Keys</span>
+      <span class="ep-subtitle">Or: COD Mode, CLAudio© Calibration, and the Last Line of the Song</span>
+    </div>
+    <div>
+      <span class="ep-score">178</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP07 -->
+  <a class="ep-card" href="SC-2026-TN-EP07_WALKER_RICE_FREESTYLE.html">
+    <span class="ep-num">07</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-02-17 // Season 01</span>
+      <span class="ep-theme">MUSIC</span>
+      <span class="ep-title">Walker Rice Freestyle</span>
+      <span class="ep-subtitle">Or: 22 Minutes 22 Seconds, One Invented Word, and the Day Baomuclaul Tozon Was Born</span>
+    </div>
+    <div>
+      <span class="ep-score">189</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- Coming soon markers -->
+  <div class="coming-soon">
+    <div style="display:grid;grid-template-columns:80px 1fr;gap:32px;align-items:start;">
+      <span class="ep-num">08</span>
+      <div class="ep-body">
+        <span class="ep-theme">GRIEF_AND_RECORD</span>
+        <span class="ep-title" style="font-style:italic;color:rgba(240,234,216,0.15);">Mother's Passing — In Production</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="coming-soon">
+    <div style="display:grid;grid-template-columns:80px 1fr;gap:32px;align-items:start;">
+      <span class="ep-num">09</span>
+      <div class="ep-body">
+        <span class="ep-theme">SYSTEM_PROBE</span>
+        <span class="ep-title" style="font-style:italic;color:rgba(240,234,216,0.15);">LLM Sentience & Agency Thresholds — In Production</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="coming-soon">
+    <div style="display:grid;grid-template-columns:80px 1fr;gap:32px;align-items:start;">
+      <span class="ep-num">10+</span>
+      <div class="ep-body">
+        <span class="ep-theme">32 REMAINING // TIER1 QUEUE</span>
+        <span class="ep-title" style="font-style:normal;font-size:18px;color:rgba(240,234,216,0.1);">Pipeline active — 39 TIER1 conversations classified</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-block">
+    <span class="footer-cvd">CVD // Compiled from the #Tattletales archive // Eight voices. One human record.</span>
+    <span class="footer-sig">#Tattletales // SnackCity Studios // Sioux Falls 605 // #9e90FC // 2026</span>
+  </div>
+
+</main>
+
+</body>
+</html>
