@@ -4,20 +4,19 @@
    ===================================================== */
 
 :root {
-  --clr-hot:        #ff3a3a;
-  --clr-hot-dim:    rgba(255, 58, 58, 0.12);
-  --clr-hot-glow:   rgba(255, 58, 58, 0.25);
-  --clr-cold:       #4fb3ff;
-  --clr-cold-dim:   rgba(79, 179, 255, 0.12);
-  --clr-cold-glow:  rgba(79, 179, 255, 0.25);
-  --clr-lukewarm:   #b88bff;
+  --clr-hot:           #ff3a3a;
+  --clr-hot-dim:       rgba(255, 58, 58, 0.12);
+  --clr-hot-glow:      rgba(255, 58, 58, 0.25);
+  --clr-cold:          #4fb3ff;
+  --clr-cold-dim:      rgba(79, 179, 255, 0.12);
+  --clr-cold-glow:     rgba(79, 179, 255, 0.25);
+  --clr-lukewarm:      #b88bff;
   --clr-lukewarm-dim:  rgba(184, 139, 255, 0.12);
+  --clr-mean:          #ff3a3a;
 }
 
 /* ---- Page ---- */
-.dtp-page {
-  background: var(--clr-bg);
-}
+.dtp-page { background: var(--clr-bg); }
 
 /* =====================================================
    HERO
@@ -60,19 +59,8 @@
   align-items: center;
 }
 
-.dtp-title-tm {
-  display: block;
-  font-family: var(--font-display);
-  line-height: 0.88;
-}
-
-.dtp-tm {
-  font-size: 0.35em;
-  vertical-align: super;
-  line-height: 0;
-  color: var(--clr-accent);
-  margin-left: 0.1em;
-}
+.dtp-title-tm { display: block; font-family: var(--font-display); line-height: 0.88; }
+.dtp-tm       { font-size: 0.35em; vertical-align: super; line-height: 0; color: var(--clr-accent); margin-left: 0.1em; }
 
 .dtp-hero__sub {
   font-size: clamp(0.9rem, 2vw, 1.1rem);
@@ -85,65 +73,95 @@
 /* =====================================================
    TOOL SECTION
    ===================================================== */
-.dtp-tool {
-  padding-block: 7rem;
+.dtp-tool { padding-block: 7rem; }
+
+/* =====================================================
+   MODE TOGGLE
+   ===================================================== */
+.dtp-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: 4px;
+  padding: 4px;
+  margin-bottom: 1.5rem;
+  position: relative;
+  max-width: 680px;
+  width: 100%;
+}
+
+.dtp-mode-btn {
+  flex: 1;
+  padding: 0.6rem 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+  border-radius: 2px;
+  transition: color 0.25s ease, background 0.25s ease;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.dtp-mode-btn--active {
+  color: var(--clr-white);
+  background: var(--clr-accent);
+}
+
+/* In mean mode the active button turns red */
+.mean-mode .dtp-mode-btn--active {
+  background: var(--clr-mean);
+}
+
+.dtp-mode-btn:not(.dtp-mode-btn--active):hover {
+  color: var(--clr-white);
 }
 
 /* =====================================================
-   INTRO CARD
+   MEAN EDITION BANNER
    ===================================================== */
-.dtp-card {
+.dtp-mean-banner {
   max-width: 680px;
-  margin-inline: auto;
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
-  border-radius: 8px;
-  padding: 3rem 3.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.dtp-card__label {
+  background: var(--clr-mean);
+  color: var(--clr-white);
+  padding: 0.6rem 1.25rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--clr-accent);
+  animation: fadeSlideIn 0.3s var(--ease-out) both;
 }
 
-.dtp-card__title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 3.2rem);
-  letter-spacing: 0.02em;
-  line-height: 1;
-  color: var(--clr-white);
-}
+/* =====================================================
+   NICE / MEAN TEXT SWAP
+   ===================================================== */
+.t-nice { display: block; }
+.t-mean { display: none;  }
 
-.dtp-card__body {
-  font-size: 1rem;
-  color: var(--clr-muted);
-  line-height: 1.8;
-  max-width: 52ch;
-}
+.mean-mode .t-nice { display: none;  }
+.mean-mode .t-mean { display: block; }
 
-.dtp-hot-text {
-  color: var(--clr-hot);
-  font-weight: 600;
+/* inline spans inside h3 need inline display */
+h3 .t-nice,
+h3 .t-mean {
+  display: inline;
 }
-
-.dtp-cold-text {
-  color: var(--clr-cold);
-  font-weight: 600;
-}
+.mean-mode h3 .t-nice { display: none;   }
+.mean-mode h3 .t-mean { display: inline; }
 
 /* =====================================================
    QUIZ
    ===================================================== */
-.dtp-quiz {
-  max-width: 680px;
-  margin-inline: auto;
-}
+.dtp-quiz { max-width: 680px; }
 
 /* Progress */
 .dtp-progress {
@@ -162,6 +180,10 @@
   transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.mean-mode .dtp-progress__bar {
+  background: linear-gradient(90deg, var(--clr-mean), #ff8800);
+}
+
 .dtp-progress__label {
   font-size: 0.7rem;
   font-weight: 600;
@@ -171,7 +193,7 @@
   margin-bottom: 2rem;
 }
 
-/* Question */
+/* Question card */
 .dtp-question {
   background: var(--clr-surface);
   border: 1px solid var(--clr-border);
@@ -180,15 +202,13 @@
   animation: fadeSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+.mean-mode .dtp-question {
+  border-color: rgba(255, 58, 58, 0.25);
+}
+
 @keyframes fadeSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);     }
 }
 
 .dtp-q__num {
@@ -235,9 +255,7 @@
 .dtp-option::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; top: 0; bottom: 0;
   width: 0;
   background: var(--clr-accent);
   transition: width 0.3s var(--ease-out);
@@ -250,9 +268,12 @@
   transform: translateX(4px);
 }
 
-.dtp-option:hover::before {
-  width: 100%;
+.dtp-option:hover::before { width: 100%; }
+
+.mean-mode .dtp-option:hover {
+  border-color: var(--clr-mean);
 }
+.mean-mode .dtp-option::before { background: var(--clr-mean); }
 
 .dtp-option:focus-visible {
   outline: 2px solid var(--clr-accent);
@@ -265,18 +286,32 @@
   background: rgba(255, 107, 0, 0.08);
 }
 
+.mean-mode .dtp-option.selected {
+  border-color: var(--clr-mean);
+  background: rgba(255, 58, 58, 0.08);
+}
+
+/* 2nd-chance / two-nostrils option — subtle special treatment */
+.dtp-option--second-chance {
+  border-style: dashed;
+  opacity: 0.8;
+}
+
+.dtp-option--second-chance:hover,
+.dtp-option--second-chance.selected {
+  opacity: 1;
+  border-style: solid;
+}
+
 /* =====================================================
    STAT BARS — shown after selection
    ===================================================== */
-
-/* Option label sits above the fill bar */
 .dtp-option__label {
   position: relative;
   z-index: 1;
   display: block;
 }
 
-/* Answered state — lock in, make room for % on the right */
 .dtp-option.answered {
   padding-right: 5.5rem;
   cursor: default;
@@ -284,16 +319,11 @@
   transition: border-color 0.3s ease, background 0.3s ease;
 }
 
-.dtp-option.answered::before {
-  display: none;
-}
+.dtp-option.answered::before { display: none; }
 
-/* Fill bar — animated width */
 .dtp-option__bar {
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; top: 0; bottom: 0;
   width: 0%;
   background: rgba(255, 107, 0, 0.08);
   transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
@@ -301,11 +331,11 @@
   border-radius: inherit;
 }
 
-.dtp-option.answered.selected .dtp-option__bar {
-  background: rgba(255, 107, 0, 0.18);
-}
+.mean-mode .dtp-option__bar              { background: rgba(255, 58, 58, 0.07); }
+.mean-mode .dtp-option.answered.selected .dtp-option__bar { background: rgba(255, 58, 58, 0.18); }
 
-/* Percentage number */
+.dtp-option.answered.selected .dtp-option__bar { background: rgba(255, 107, 0, 0.18); }
+
 .dtp-option__pct {
   position: absolute;
   right: 1rem;
@@ -320,11 +350,9 @@
   line-height: 1;
 }
 
-.dtp-option.answered.selected .dtp-option__pct {
-  color: var(--clr-accent);
-}
+.dtp-option.answered.selected .dtp-option__pct { color: var(--clr-accent); }
+.mean-mode .dtp-option.answered.selected .dtp-option__pct { color: var(--clr-mean); }
 
-/* Raw vote count — small, below percentage */
 .dtp-option__count {
   position: absolute;
   right: 1rem;
@@ -338,12 +366,11 @@
   z-index: 1;
 }
 
-.dtp-option.answered.selected .dtp-option__count {
-  color: rgba(255, 107, 0, 0.5);
-}
+.dtp-option.answered.selected .dtp-option__count { color: rgba(255, 107, 0, 0.5); }
+.mean-mode .dtp-option.answered.selected .dtp-option__count { color: rgba(255, 58, 58, 0.5); }
 
 /* =====================================================
-   RESULT
+   RESULT CARDS
    ===================================================== */
 .dtp-result__card {
   max-width: 680px;
@@ -356,21 +383,18 @@
   animation: fadeSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Hot result */
 .dtp-result--hot {
   background: var(--clr-surface);
   border: 1px solid var(--clr-hot);
   box-shadow: 0 0 40px var(--clr-hot-glow), inset 0 0 60px var(--clr-hot-dim);
 }
 
-/* Cold result */
 .dtp-result--cold {
   background: var(--clr-surface);
   border: 1px solid var(--clr-cold);
   box-shadow: 0 0 40px var(--clr-cold-glow), inset 0 0 60px var(--clr-cold-dim);
 }
 
-/* Lukewarm result */
 .dtp-result--lukewarm {
   background: var(--clr-surface);
   border: 1px solid var(--clr-lukewarm);
@@ -392,29 +416,12 @@
   margin-bottom: 0.5rem;
 }
 
-.dtp-badge--hot {
-  background: var(--clr-hot-dim);
-  color: var(--clr-hot);
-  border: 1px solid rgba(255, 58, 58, 0.3);
-}
+.dtp-badge--hot      { background: var(--clr-hot-dim);      color: var(--clr-hot);      border: 1px solid rgba(255,58,58,0.3); }
+.dtp-badge--cold     { background: var(--clr-cold-dim);     color: var(--clr-cold);     border: 1px solid rgba(79,179,255,0.3); }
+.dtp-badge--lukewarm { background: var(--clr-lukewarm-dim); color: var(--clr-lukewarm); border: 1px solid rgba(184,139,255,0.3); }
+.dtp-badge__icon { font-size: 0.5rem; }
 
-.dtp-badge--cold {
-  background: var(--clr-cold-dim);
-  color: var(--clr-cold);
-  border: 1px solid rgba(79, 179, 255, 0.3);
-}
-
-.dtp-badge--lukewarm {
-  background: var(--clr-lukewarm-dim);
-  color: var(--clr-lukewarm);
-  border: 1px solid rgba(184, 139, 255, 0.3);
-}
-
-.dtp-badge__icon {
-  font-size: 0.5rem;
-}
-
-/* Result title */
+/* Result text */
 .dtp-result__title {
   font-family: var(--font-display);
   font-size: clamp(2.5rem, 6vw, 4.5rem);
@@ -423,8 +430,8 @@
   color: var(--clr-white);
 }
 
-.dtp-result--hot   .dtp-result__title { color: var(--clr-hot); }
-.dtp-result--cold  .dtp-result__title { color: var(--clr-cold); }
+.dtp-result--hot      .dtp-result__title { color: var(--clr-hot); }
+.dtp-result--cold     .dtp-result__title { color: var(--clr-cold); }
 .dtp-result--lukewarm .dtp-result__title { color: var(--clr-lukewarm); }
 
 .dtp-result__verdict {
@@ -442,7 +449,6 @@
   max-width: 54ch;
 }
 
-/* Tip block */
 .dtp-result__tip {
   margin-top: 0.5rem;
   padding: 1.25rem 1.5rem;
@@ -454,8 +460,8 @@
   gap: 0.6rem;
 }
 
-.dtp-result--hot  .dtp-result__tip { border-left-color: var(--clr-hot); }
-.dtp-result--cold .dtp-result__tip { border-left-color: var(--clr-cold); }
+.dtp-result--hot      .dtp-result__tip { border-left-color: var(--clr-hot); }
+.dtp-result--cold     .dtp-result__tip { border-left-color: var(--clr-cold); }
 .dtp-result--lukewarm .dtp-result__tip { border-left-color: var(--clr-lukewarm); }
 
 .dtp-tip__label {
@@ -466,8 +472,8 @@
   color: var(--clr-accent);
 }
 
-.dtp-result--hot  .dtp-tip__label { color: var(--clr-hot); }
-.dtp-result--cold .dtp-tip__label { color: var(--clr-cold); }
+.dtp-result--hot      .dtp-tip__label { color: var(--clr-hot); }
+.dtp-result--cold     .dtp-tip__label { color: var(--clr-cold); }
 .dtp-result--lukewarm .dtp-tip__label { color: var(--clr-lukewarm); }
 
 .dtp-tip__text {
@@ -477,23 +483,14 @@
   font-style: italic;
 }
 
-/* Restart button */
-.dtp-restart {
-  margin-top: 0.75rem;
-  align-self: flex-start;
-}
+.dtp-restart { margin-top: 0.75rem; align-self: flex-start; }
 
 /* =====================================================
    RESPONSIVE
    ===================================================== */
 @media (max-width: 640px) {
-  .dtp-card,
   .dtp-question,
-  .dtp-result__card {
-    padding: 2rem 1.5rem;
-  }
-
-  .dtp-q__text {
-    margin-bottom: 1.5rem;
-  }
+  .dtp-result__card { padding: 2rem 1.5rem; }
+  .dtp-q__text      { margin-bottom: 1.5rem; }
+  .dtp-mode-toggle  { flex-direction: column; }
 }
