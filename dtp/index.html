@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="#DrownthatPuppy™ — A gentle tool to help you decide: Hot or Cold?" />
+  <meta name="description" content="#DrownthatPuppy™ — A tool to help you decide: Hot or Cold?" />
   <title>#DrownthatPuppy™ | Dr. Heemslice 5000</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -43,7 +43,7 @@
       <p class="hero__eyebrow reveal">A Tool by Dr. Heemslice 5000</p>
       <h1 class="dtp-hero__title reveal">
         #Drown<br/>
-        <span class="dtp-title-tm">that<span class="dtp-tm">™</span></span><br/>
+        <span class="dtp-title-tm">that<span class="dtp-tm">&#8482;</span></span><br/>
         <span class="accent-block">Puppy</span>
       </h1>
       <p class="dtp-hero__sub reveal">
@@ -64,36 +64,46 @@
   <section class="dtp-tool" id="dtp-tool">
     <div class="container">
 
-      <!-- QUIZ — shown immediately, no gate -->
+      <!-- MODE TOGGLE -->
+      <div class="dtp-mode-toggle" id="modeToggle" aria-label="Select edition">
+        <button class="dtp-mode-btn dtp-mode-btn--active" data-mode="nice" id="modeNice">Gentle Edition</button>
+        <button class="dtp-mode-btn" data-mode="mean" id="modeMean">Mean Edition</button>
+      </div>
+
+      <!-- MEAN EDITION BANNER -->
+      <div class="dtp-mean-banner" id="meanBanner" hidden>
+        MEAN EDITION &mdash; No coddling. Just answers.
+      </div>
+
+      <!-- QUIZ -->
       <div class="dtp-quiz" id="dtp-quiz">
 
-        <!-- Progress -->
         <div class="dtp-progress" aria-label="Quiz progress">
           <div class="dtp-progress__bar" id="progressBar"></div>
         </div>
-        <p class="dtp-progress__label">
-          Question <span id="qNum">1</span> of 6
-        </p>
+        <p class="dtp-progress__label">Question <span id="qNum">1</span> of 6</p>
 
-        <!-- Questions -->
         <div id="dtp-questions">
 
-          <!-- Q1 — fun opener, stats only, no scoring weight -->
+          <!-- Q1 — fun opener, not scored -->
           <div class="dtp-question" data-q="1" data-scored="false">
             <p class="dtp-q__num">01</p>
-            <h3 class="dtp-q__text">First things first — short or bald?</h3>
+            <h3 class="dtp-q__text">First things first &mdash; short or bald?</h3>
             <div class="dtp-options">
               <button class="dtp-option" data-q="1" data-value="0">
-                <span class="dtp-option__label">Short king — carrying the whole personality</span>
+                <span class="dtp-option__label">Short king &mdash; carrying the whole personality</span>
               </button>
               <button class="dtp-option" data-q="1" data-value="1">
-                <span class="dtp-option__label">Chrome dome certified — bald by choice or by fate</span>
+                <span class="dtp-option__label">Chrome dome certified &mdash; bald by choice or by fate</span>
               </button>
               <button class="dtp-option" data-q="1" data-value="2">
-                <span class="dtp-option__label">The full package — short AND bald</span>
+                <span class="dtp-option__label">The full package &mdash; short AND bald</span>
               </button>
               <button class="dtp-option" data-q="1" data-value="3">
                 <span class="dtp-option__label">Neither. Tall with hair. Still here though.</span>
+              </button>
+              <button class="dtp-option dtp-option--second-chance" data-q="1" data-value="4">
+                <span class="dtp-option__label">Has two nostrils &mdash; and that is apparently the full pitch for a second chance</span>
               </button>
             </div>
           </div>
@@ -101,19 +111,22 @@
           <!-- Q2 -->
           <div class="dtp-question" data-q="2" data-scored="true" hidden>
             <p class="dtp-q__num">02</p>
-            <h3 class="dtp-q__text">How long has this good boy been lingering?</h3>
+            <h3 class="dtp-q__text">
+              <span class="t-nice">How long has this good boy been lingering?</span>
+              <span class="t-mean">How long has this man been stationed in your life?</span>
+            </h3>
             <div class="dtp-options">
               <button class="dtp-option" data-q="2" data-value="0">
-                <span class="dtp-option__label">Just showed up — under a month</span>
+                <span class="dtp-option__label">Just showed up &mdash; under a month</span>
               </button>
               <button class="dtp-option" data-q="2" data-value="1">
-                <span class="dtp-option__label">Been around a minute — 1 to 3 months</span>
+                <span class="dtp-option__label">Been around a minute &mdash; 1 to 3 months</span>
               </button>
               <button class="dtp-option" data-q="2" data-value="2">
-                <span class="dtp-option__label">He's been stationed here — 3 to 12 months</span>
+                <span class="dtp-option__label">He's been stationed here &mdash; 3 to 12 months</span>
               </button>
               <button class="dtp-option" data-q="2" data-value="3">
-                <span class="dtp-option__label">This is a whole long-term situation — over a year</span>
+                <span class="dtp-option__label">This is a whole long-term situation &mdash; over a year</span>
               </button>
             </div>
           </div>
@@ -121,7 +134,10 @@
           <!-- Q3 -->
           <div class="dtp-question" data-q="3" data-scored="true" hidden>
             <p class="dtp-q__num">03</p>
-            <h3 class="dtp-q__text">When you've pulled back, how does he handle it?</h3>
+            <h3 class="dtp-q__text">
+              <span class="t-nice">When you've pulled back, how does he handle it?</span>
+              <span class="t-mean">When you step back, what does he actually do?</span>
+            </h3>
             <div class="dtp-options">
               <button class="dtp-option" data-q="3" data-value="0">
                 <span class="dtp-option__label">He respects it and genuinely gives space</span>
@@ -141,10 +157,13 @@
           <!-- Q4 -->
           <div class="dtp-question" data-q="4" data-scored="true" hidden>
             <p class="dtp-q__num">04</p>
-            <h3 class="dtp-q__text">Outside of these feelings, does he genuinely add something good to your life?</h3>
+            <h3 class="dtp-q__text">
+              <span class="t-nice">Outside of these feelings, does he genuinely add something good to your life?</span>
+              <span class="t-mean">Remove the feelings situation &mdash; what exactly does he bring to the table?</span>
+            </h3>
             <div class="dtp-options">
               <button class="dtp-option" data-q="4" data-value="0">
-                <span class="dtp-option__label">Yes — he's actually a good person in my corner</span>
+                <span class="dtp-option__label">Yes &mdash; he's actually a good person in my corner</span>
               </button>
               <button class="dtp-option" data-q="4" data-value="1">
                 <span class="dtp-option__label">Sometimes, when things aren't weird</span>
@@ -161,10 +180,13 @@
           <!-- Q5 -->
           <div class="dtp-question" data-q="5" data-scored="true" hidden>
             <p class="dtp-q__num">05</p>
-            <h3 class="dtp-q__text">Has he been told — directly or through very clear signals — that it's not happening?</h3>
+            <h3 class="dtp-q__text">
+              <span class="t-nice">Has he been told &mdash; directly or through very clear signals &mdash; that it's not happening?</span>
+              <span class="t-mean">Does this man know it's not happening, or is he still optimistic?</span>
+            </h3>
             <div class="dtp-options">
               <button class="dtp-option" data-q="5" data-value="0">
-                <span class="dtp-option__label">Not directly yet — I haven't addressed it</span>
+                <span class="dtp-option__label">Not directly yet &mdash; I haven't addressed it</span>
               </button>
               <button class="dtp-option" data-q="5" data-value="1">
                 <span class="dtp-option__label">I've dropped hints, pretty obvious ones</span>
@@ -181,10 +203,13 @@
           <!-- Q6 -->
           <div class="dtp-question" data-q="6" data-scored="true" hidden>
             <p class="dtp-q__num">06</p>
-            <h3 class="dtp-q__text">Honestly — how are you feeling about managing this?</h3>
+            <h3 class="dtp-q__text">
+              <span class="t-nice">Honestly &mdash; how are you feeling about managing this?</span>
+              <span class="t-mean">Real talk &mdash; where are you at with the whole situation?</span>
+            </h3>
             <div class="dtp-options">
               <button class="dtp-option" data-q="6" data-value="0">
-                <span class="dtp-option__label">It's manageable — I just want to handle it right</span>
+                <span class="dtp-option__label">It's manageable &mdash; I just want to handle it right</span>
               </button>
               <button class="dtp-option" data-q="6" data-value="1">
                 <span class="dtp-option__label">Slightly drained by it</span>
@@ -193,7 +218,7 @@
                 <span class="dtp-option__label">Pretty tired of navigating it</span>
               </button>
               <button class="dtp-option" data-q="6" data-value="3">
-                <span class="dtp-option__label">Completely over it — I just needed permission</span>
+                <span class="dtp-option__label">Completely over it &mdash; I just needed permission</span>
               </button>
             </div>
           </div>
@@ -210,26 +235,52 @@
             <span class="dtp-badge__icon">&#9650;</span>
             <span class="dtp-badge__label">Hot Water</span>
           </div>
-          <h2 class="dtp-result__title">He needs the heat.</h2>
-          <p class="dtp-result__verdict">Pour it warm &mdash; direct, but kind.</p>
-          <p class="dtp-result__body">
-            This one actually has some real value as a person in your world &mdash;
-            he just got his signals crossed. A clear, caring conversation gives
-            you both a reset without burning it all down. You don't have to lose
-            him as a human. You just have to redirect the energy.
-          </p>
-          <p class="dtp-result__body">
-            Say it plainly. Say it once. Say it with kindness.
-            Hot water is still water &mdash; it moves things.
-          </p>
-          <div class="dtp-result__tip">
-            <span class="dtp-tip__label">What that sounds like:</span>
-            <span class="dtp-tip__text">
-              "I genuinely value you as a person. I want us to be clear with each other
-              so nothing gets weird. It's not like that for me, and I don't think it's
-              going to be &mdash; but that doesn't mean you're not important."
-            </span>
+
+          <div class="t-nice">
+            <h2 class="dtp-result__title">He needs the heat.</h2>
+            <p class="dtp-result__verdict">Pour it warm &mdash; direct, but kind.</p>
+            <p class="dtp-result__body">
+              This one actually has some real value as a person in your world &mdash;
+              he just got his signals crossed. A clear, caring conversation gives
+              you both a reset without burning it all down. You don't have to lose
+              him as a human. You just have to redirect the energy.
+            </p>
+            <p class="dtp-result__body">
+              Say it plainly. Say it once. Say it with kindness.
+              Hot water is still water &mdash; it moves things.
+            </p>
+            <div class="dtp-result__tip">
+              <span class="dtp-tip__label">What that sounds like:</span>
+              <span class="dtp-tip__text">
+                "I genuinely value you as a person. I want us to be clear with each other
+                so nothing gets weird. It's not like that for me, and I don't think it's
+                going to be &mdash; but that doesn't mean you're not important."
+              </span>
+            </div>
           </div>
+
+          <div class="t-mean">
+            <h2 class="dtp-result__title">Go ahead and say it.</h2>
+            <p class="dtp-result__verdict">One sentence. Out loud. Today.</p>
+            <p class="dtp-result__body">
+              You're already composing paragraphs in your head about this.
+              Just say the one sentence out loud, to his face, one time.
+              This has gone on longer than necessary and you both know it.
+            </p>
+            <p class="dtp-result__body">
+              He's not a bad guy. He's just slow. Give him the conversation and move on.
+              You'll feel better in five minutes. He'll adjust in a month. Everyone wins.
+            </p>
+            <div class="dtp-result__tip">
+              <span class="dtp-tip__label">Script &mdash; use it verbatim:</span>
+              <span class="dtp-tip__text">
+                "Hey. I don't have feelings for you. I'm not going to.
+                I wanted to be honest instead of letting this keep going."
+                End. Done. Walk away. That's the whole thing.
+              </span>
+            </div>
+          </div>
+
           <button class="btn btn--ghost dtp-restart" id="restartBtnHot">Take it again</button>
         </div>
 
@@ -239,26 +290,50 @@
             <span class="dtp-badge__icon">&#9660;</span>
             <span class="dtp-badge__label">Cold Water</span>
           </div>
-          <h2 class="dtp-result__title">Time to cool it down.</h2>
-          <p class="dtp-result__verdict">Go cold &mdash; your peace comes first.</p>
-          <p class="dtp-result__body">
-            You've been patient. You've been kind. You've given this more of your
-            energy than it deserved. Cold water doesn't mean cruel &mdash; it means clear.
-          </p>
-          <p class="dtp-result__body">
-            Create the distance you need. Stop engaging with the hope.
-            Let your absence say what another conversation won't.
-            You don't owe anyone unlimited access to you.
-            Some situations don't need more words &mdash; they just need space.
-          </p>
-          <div class="dtp-result__tip">
-            <span class="dtp-tip__label">What that looks like:</span>
-            <span class="dtp-tip__text">
-              Shorter replies. Less availability. No mixed signals.
-              Not because you're being mean &mdash; because you're being honest
-              with yourself about what this is.
-            </span>
+
+          <div class="t-nice">
+            <h2 class="dtp-result__title">Time to cool it down.</h2>
+            <p class="dtp-result__verdict">Go cold &mdash; your peace comes first.</p>
+            <p class="dtp-result__body">
+              You've been patient. You've been kind. You've given this more of your
+              energy than it deserved. Cold water doesn't mean cruel &mdash; it means clear.
+            </p>
+            <p class="dtp-result__body">
+              Create the distance you need. Stop engaging with the hope.
+              Let your absence say what another conversation won't.
+              You don't owe anyone unlimited access to you.
+            </p>
+            <div class="dtp-result__tip">
+              <span class="dtp-tip__label">What that looks like:</span>
+              <span class="dtp-tip__text">
+                Shorter replies. Less availability. No mixed signals.
+                Not because you're being mean &mdash; because you're being honest
+                with yourself about what this is.
+              </span>
+            </div>
           </div>
+
+          <div class="t-mean">
+            <h2 class="dtp-result__title">Baby.</h2>
+            <p class="dtp-result__verdict">Stop. Engaging.</p>
+            <p class="dtp-result__body">
+              Every reply is a meal. Every like is a snack.
+              You are actively feeding a situation you already know is going nowhere.
+              The kindest thing you can do at this point is nothing.
+            </p>
+            <p class="dtp-result__body">
+              You don't need to explain it. You don't need to soften it.
+              Silence IS the message. Let it send itself.
+            </p>
+            <div class="dtp-result__tip">
+              <span class="dtp-tip__label">Action items, in order:</span>
+              <span class="dtp-tip__text">
+                Archive the texts. Stop watching the stories.
+                Let the read receipts do the talking. You are done here.
+              </span>
+            </div>
+          </div>
+
           <button class="btn btn--ghost dtp-restart" id="restartBtnCold">Take it again</button>
         </div>
 
@@ -268,27 +343,51 @@
             <span class="dtp-badge__icon">&#9644;</span>
             <span class="dtp-badge__label">Lukewarm</span>
           </div>
-          <h2 class="dtp-result__title">Somewhere in the middle.</h2>
-          <p class="dtp-result__verdict">One real conversation &mdash; then you'll know.</p>
-          <p class="dtp-result__body">
-            This one's sitting in a gray zone. The situation isn't urgent, but
-            it's not nothing either. One direct, honest conversation will tell
-            you everything you need to know about how this goes.
-          </p>
-          <p class="dtp-result__body">
-            If he hears you and adjusts, the warm approach worked.
-            If he doesn't, you'll have all the clarity you need to go cold.
-            Either way &mdash; you come out knowing exactly where you stand.
-            And that's worth more than staying comfortable in the gray.
-          </p>
-          <div class="dtp-result__tip">
-            <span class="dtp-tip__label">One thing to remember:</span>
-            <span class="dtp-tip__text">
-              You're not responsible for managing his feelings.
-              You're only responsible for being honest about yours.
-              That's it. That's the whole job.
-            </span>
+
+          <div class="t-nice">
+            <h2 class="dtp-result__title">Somewhere in the middle.</h2>
+            <p class="dtp-result__verdict">One real conversation &mdash; then you'll know.</p>
+            <p class="dtp-result__body">
+              This one's sitting in a gray zone. The situation isn't urgent, but
+              it's not nothing either. One direct, honest conversation will tell
+              you everything you need to know about how this goes.
+            </p>
+            <p class="dtp-result__body">
+              If he hears you and adjusts, the warm approach worked.
+              If he doesn't, you'll have all the clarity you need to go cold.
+              Either way &mdash; you come out knowing exactly where you stand.
+            </p>
+            <div class="dtp-result__tip">
+              <span class="dtp-tip__label">One thing to remember:</span>
+              <span class="dtp-tip__text">
+                You're not responsible for managing his feelings.
+                You're only responsible for being honest about yours.
+                That's it. That's the whole job.
+              </span>
+            </div>
           </div>
+
+          <div class="t-mean">
+            <h2 class="dtp-result__title">You already know.</h2>
+            <p class="dtp-result__verdict">You're just procrastinating.</p>
+            <p class="dtp-result__body">
+              This quiz is not telling you anything you didn't already walk in knowing.
+              You came here because you wanted permission.
+              Consider it granted &mdash; handle it.
+            </p>
+            <p class="dtp-result__body">
+              Pick a lane. Hot or cold. Either one gets you out of this gray area
+              you've been quietly living in for way too long.
+            </p>
+            <div class="dtp-result__tip">
+              <span class="dtp-tip__label">Real talk:</span>
+              <span class="dtp-tip__text">
+                The longer you stay in the gray, the more he reads it as a green light.
+                It is not a green light. Close it out.
+              </span>
+            </div>
+          </div>
+
           <button class="btn btn--ghost dtp-restart" id="restartBtnLukewarm">Take it again</button>
         </div>
 
