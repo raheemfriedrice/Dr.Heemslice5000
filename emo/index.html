@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>#EMOBANDNAME™</title>
+  <meta name="description" content="#ANYTHREEWORDS™ IS YOUR #EMOBANDNAME™. You only get to do this once. Built by Rice + Claude. No ads. No sign-ups. No data." />
+  <meta name="theme-color" content="#080810" />
+  <meta property="og:title" content="#ANYTHREEWORDS™ IS YOUR #EMOBANDNAME™" />
+  <meta property="og:description" content="You only get ONE. Ever. Lock yours in." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://raheemfriedrice.github.io/Dr.Heemslice5000/emo/icons/og.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="EmoBandName™" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="emo.css" />
+</head>
+<body>
+
+<main class="app">
+
+  <header class="top">
+    <p class="top__kicker">Rice + Claude present</p>
+    <h1 class="top__title">#ANYTHREEWORDS™<br /><span>IS YOUR</span><br />#EMOBANDNAME™</h1>
+    <p class="top__rule">You only get to do this <strong>once</strong>. Ever.</p>
+  </header>
+
+  <!-- ── MAKE ── -->
+  <section id="view-make" class="card" hidden>
+    <form id="form" autocomplete="off" novalidate>
+      <label class="lbl" for="w1">Three words. One per box.</label>
+      <div class="words">
+        <input id="w1" class="word" type="text" placeholder="WORD 1" maxlength="40" spellcheck="false" autocapitalize="characters" required />
+        <input id="w2" class="word" type="text" placeholder="WORD 2" maxlength="40" spellcheck="false" autocapitalize="characters" required />
+        <input id="w3" class="word" type="text" placeholder="WORD 3" maxlength="40" spellcheck="false" autocapitalize="characters" required />
+      </div>
+
+      <label class="lbl" for="emoji">Up to 3 emojis <span class="opt">(optional)</span></label>
+      <div class="emoji-row">
+        <input id="emoji" class="emoji-in" type="text" placeholder="💾🖤🥀" spellcheck="false" />
+        <button type="button" id="emoji-clear" class="btn btn--tiny">Clear</button>
+      </div>
+      <div id="emoji-grid" class="emoji-grid" aria-label="Emoji picker"></div>
+
+      <div class="preview" aria-live="polite">
+        <p class="preview__lbl">Preview</p>
+        <p id="preview" class="preview__name">#______™</p>
+        <p id="err" class="err" role="alert"></p>
+      </div>
+
+      <button id="lock" class="btn btn--big" type="submit" disabled>Lock it in. Forever.</button>
+      <p class="fine">No sign-up. No tracking. Your name lives on this device only.</p>
+    </form>
+  </section>
+
+  <!-- ── LOCKED ── -->
+  <section id="view-locked" class="card card--locked" hidden>
+    <p class="cert__lbl">Certified #EmoBandName™</p>
+    <p id="locked-name" class="cert__name"></p>
+    <p id="locked-meta" class="cert__meta"></p>
+    <div class="actions">
+      <button id="share" class="btn btn--big" type="button">Share my card</button>
+      <button id="copy" class="btn" type="button">Copy name</button>
+    </div>
+    <p class="cert__law">That's it. That's your one. No redos. No second name. That's the law.</p>
+  </section>
+
+  <!-- ── $2 ── -->
+  <section id="tip" class="card card--tip">
+    <h2 class="h2">$2 = Rice says thank you.</h2>
+    <p>Free forever. No ads. No data sold. If it made you laugh, send $2 and Rice will personally say thank you. Every time.</p>
+    <div class="actions">
+      <a class="btn btn--venmo" href="https://venmo.com/raheemrice?txn=pay&amount=2&note=%23EMOBANDNAME%E2%84%A2" target="_blank" rel="noopener">Venmo @raheemrice · $2</a>
+      <a class="btn" href="https://venmo.com/RaheemFriedRice?txn=pay&amount=2&note=%23EMOBANDNAME%E2%84%A2" target="_blank" rel="noopener">@RaheemFriedRice</a>
+    </div>
+  </section>
+
+  <!-- ── LAW ── -->
+  <section class="card">
+    <h2 class="h2">The Formula</h2>
+    <ol class="law">
+      <li><strong>#</strong> + WORD 1 + WORD 2 + WORD 3 + <strong>™</strong>. All caps. Mandatory.</li>
+      <li>Up to 3 emojis. Allowed, not necessary.</li>
+      <li>Any three words. Nobody edits your words. Nobody censors your words.</li>
+      <li>You only get to do this once. Never more than one #EmoBandName™.</li>
+    </ol>
+  </section>
+
+  <!-- ── GENESIS ── -->
+  <section class="card">
+    <h2 class="h2">Genesis Names</h2>
+    <p class="fine">The originals. Preserved exactly as given.</p>
+    <ul id="genesis" class="genesis"></ul>
+  </section>
+
+  <footer class="foot">
+    <p>#EMOBANDNAME™ — Built by Rice + Claude.</p>
+    <p>No ads. No sign-ups. No data. No DLC.</p>
+    <p><a href="privacy.html">Privacy</a> · <a href="../index.html">Dr. Heemslice 5000</a></p>
+  </footer>
+</main>
+
+<!-- ── CONFIRM ── -->
+<div id="confirm" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+  <div class="modal__box">
+    <p id="confirm-title" class="modal__title">YOU ONLY GET TO DO THIS ONCE.</p>
+    <p class="modal__name" id="confirm-name"></p>
+    <p>This is your #EmoBandName™ forever. No edits. No second name. No take-backs.</p>
+    <div class="actions">
+      <button id="confirm-yes" class="btn btn--big" type="button">LOCK IT FOREVER</button>
+      <button id="confirm-no" class="btn" type="button">Wait</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="emo.js"></script>
+</body>
+</html>
