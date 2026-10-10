@@ -202,9 +202,10 @@ function wrapByWidth(ctx, text, maxW) {
   return lines;
 }
 
-async function makeCard(lock) {
+async function makeCard(lock, format) {
   try { await document.fonts.load('200px "Bebas Neue"'); } catch (_) { /* fallback font */ }
-  const W = 1080, H = 1920;
+  const SQ = format === 'square';
+  const W = 1080, H = SQ ? 1080 : 1920;
   const c = document.createElement('canvas');
   c.width = W; c.height = H;
   const ctx = c.getContext('2d');
@@ -215,7 +216,7 @@ async function makeCard(lock) {
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  const glow = ctx.createRadialGradient(W / 2, H * 0.48, 50, W / 2, H * 0.48, 700);
+  const glow = ctx.createRadialGradient(W / 2, H * 0.48, 50, W / 2, H * 0.48, SQ ? 520 : 700);
   glow.addColorStop(0, 'rgba(123,47,255,0.45)');
   glow.addColorStop(1, 'rgba(123,47,255,0)');
   ctx.fillStyle = glow;
@@ -225,8 +226,8 @@ async function makeCard(lock) {
   ctx.textBaseline = 'middle';
 
   ctx.fillStyle = '#ff2f6e';
-  ctx.font = '64px "Bebas Neue", Impact, sans-serif';
-  ctx.fillText('CERTIFIED #EMOBANDNAME™', W / 2, 300);
+  ctx.font = (SQ ? 54 : 64) + 'px "Bebas Neue", Impact, sans-serif';
+  ctx.fillText('CERTIFIED #EMOBANDNAME™', W / 2, SQ ? 130 : 300);
 
   // Name on one line if it fits at a readable size (only very long names
   // wrap), with the emojis on their own line underneath.
@@ -234,15 +235,15 @@ async function makeCard(lock) {
   const text = cut > 0 ? lock.name.slice(0, cut) : lock.name;
   const emo = cut > 0 ? lock.name.slice(cut) : '';
   const maxW = W - 120;
-  let size = 230;
+  let size = SQ ? 200 : 230;
   ctx.font = size + 'px "Bebas Neue", Impact, sans-serif';
-  while (ctx.measureText(text).width > maxW && size > 96) {
+  while (ctx.measureText(text).width > maxW && size > (SQ ? 84 : 96)) {
     size -= 4;
     ctx.font = size + 'px "Bebas Neue", Impact, sans-serif';
   }
   const lines = wrapByWidth(ctx, text, maxW);
   const lh = size * 1.02;
-  const emoSize = 150;
+  const emoSize = SQ ? 120 : 150;
   const blockH = lines.length * lh + (emo ? emoSize * 1.3 : 0);
   const top = H * 0.47 - blockH / 2 + lh / 2;
   ctx.fillStyle = '#ffffff';
@@ -256,31 +257,30 @@ async function makeCard(lock) {
   ctx.shadowBlur = 0;
 
   ctx.fillStyle = '#2fffcb';
-  ctx.font = '54px "Bebas Neue", Impact, sans-serif';
-  ctx.fillText('NO. ' + lock.no + ' · YOU ONLY GET ONE', W / 2, H - 420);
+  ctx.font = (SQ ? 46 : 54) + 'px "Bebas Neue", Impact, sans-serif';
+  ctx.fillText('NO. ' + lock.no + ' · YOU ONLY GET ONE', W / 2, SQ ? H - 245 : H - 420);
 
   ctx.fillStyle = '#9a9ab8';
-  ctx.font = '600 40px Inter, sans-serif';
-  ctx.fillText('Get yours (once):', W / 2, H - 300);
+  ctx.font = '600 ' + (SQ ? 34 : 40) + 'px Inter, sans-serif';
+  ctx.fillText('Get yours (once):', W / 2, SQ ? H - 170 : H - 300);
   ctx.fillStyle = '#e8e8f0';
-  ctx.font = '600 34px Inter, sans-serif';
-  ctx.fillText('raheemfriedrice.github.io/Dr.Heemslice5000/emo', W / 2, H - 245);
+  ctx.font = '600 ' + (SQ ? 30 : 34) + 'px Inter, sans-serif';
+  ctx.fillText('raheemfriedrice.github.io/Dr.Heemslice5000/emo', W / 2, SQ ? H - 122 : H - 245);
 
   ctx.fillStyle = '#6b6b8a';
-  ctx.font = '30px "Bebas Neue", Impact, sans-serif';
-  ctx.fillText('BUILT BY RICE + CLAUDE · NO ADS · NO DATA', W / 2, H - 140);
+  ctx.font = (SQ ? 26 : 30) + 'px "Bebas Neue", Impact, sans-serif';
+  ctx.fillText('BUILT BY RICE + CLAUDE · NO ADS · NO DATA', W / 2, SQ ? H - 52 : H - 140);
 
   return new Promise((res) => c.toBlob(res, 'image/png'));
 }
 
-async function shareCard() {
+async function shareCard(format, btn) {
   const lock = readLock();
   if (!lock) return;
-  const btn = $('share');
   btn.disabled = true;
   try {
-    const blob = await makeCard(lock);
-    const file = new File([blob], 'my-emobandname.png', { type: 'image/png' });
+    const blob = await makeCard(lock, format);
+    const file = new File([blob], format === 'square' ? 'my-emobandname-square.png' : 'my-emobandname.png', { type: 'image/png' });
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       await navigator.share({ files: [file], text: shareText(lock.name) });
     } else {
@@ -298,6 +298,64 @@ async function shareCard() {
   } finally {
     btn.disabled = false;
   }
+}
+
+// ── Typing flow: a space jumps to the next box; pasting three words fills all three ──
+const BOXES = ['w1', 'w2', 'w3'];
+function distribute(i) {
+  const el = $(BOXES[i]);
+  const v = el.value;
+  if (!/\s/.test(v.trim()) && !/\s$/.test(v)) return;           // no break typed
+  if (i === BOXES.length - 1) { el.value = v.replace(/\s+$/, ''); return; }  // last box: keep the error for real extra words
+  const parts = v.split(/\s+/).filter(Boolean);
+  el.value = parts.shift() || '';
+  let j = i + 1;
+  while (parts.length && j < BOXES.length) {
+    const next = $(BOXES[j]);
+    if (!next.value) next.value = parts.shift();
+    j++;
+  }
+  if (parts.length) $(BOXES[BOXES.length - 1]).value += ' ' + parts.join(' ');  // surfaces "ONE word per box"
+  const target = BOXES.slice(i + 1).find(id => !$(id).value) || BOXES[Math.min(i + 1, BOXES.length - 1)];
+  $(target).focus();
+}
+
+// ── Spark: fill empty boxes with suggestions (still yours to edit or keep) ──
+const SPARK = {
+  a: ['Weeping', 'Hollow', 'Velvet', 'Midnight', 'Haunted', 'Sleepless', 'Borrowed', 'Static', 'Gutter', 'Neon', 'Paper', 'Rusted', 'Tender', 'Broken', 'Silent', 'Cursed', 'Plastic', 'Lukewarm'],
+  b: ['Tuesday', 'Casket', 'Microwave', 'Honda', 'Lunchbox', 'Cathedral', 'Mixtape', 'Raccoon', 'Toaster', 'Swingset', 'Ferris', 'Bathtub', 'Diner', 'Payphone', 'Moth', 'Hymnal', 'Laundromat', 'Biscuit'],
+  c: ['Funeral', 'Choir', 'Parade', 'Season', 'Mistake', 'Rebellion', 'Kids', 'Society', 'Theory', 'Collective', 'Disaster', 'Situation', 'Club', 'Experiment', 'Dynasty', 'Apology', 'Syndrome', 'Weather'],
+};
+function spark() {
+  const pickOne = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  const banks = [SPARK.a, SPARK.b, SPARK.c];
+  let filled = 0;
+  BOXES.forEach((id, i) => { if (!$(id).value.trim()) { $(id).value = pickOne(banks[i]); filled++; } });
+  if (!filled) BOXES.forEach((id, i) => { $(id).value = pickOne(banks[i]); });
+  refresh();
+  toast('Sparked. Change any word — it\'s still yours, and still only once.');
+}
+
+// ── Install (Android: native prompt · iOS: Share → Add to Home Screen) ──
+let installEvt = null;
+function initInstall() {
+  const btn = $('install');
+  if (!btn) return;
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if (standalone || IS_APP) return;
+  window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); installEvt = e; btn.hidden = false; });
+  const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if (iOS) btn.hidden = false;
+  btn.addEventListener('click', async () => {
+    if (installEvt) {
+      installEvt.prompt();
+      try { await installEvt.userChoice; } catch (_) { /* ignore */ }
+      installEvt = null; btn.hidden = true;
+    } else {
+      toast('On iPhone: tap Share, then "Add to Home Screen".');
+    }
+  });
+  window.addEventListener('appinstalled', () => { btn.hidden = true; toast('Installed. It\'s an app now.'); });
 }
 
 // ── Genesis list ─────────────────────────────────────────────
@@ -358,7 +416,9 @@ function init() {
   } else {
     $('view-make').hidden = false;
     buildPicker();
-    ['w1', 'w2', 'w3', 'emoji'].forEach((id) => $(id).addEventListener('input', refresh));
+    BOXES.forEach((id, i) => $(id).addEventListener('input', () => { distribute(i); refresh(); }));
+    $('emoji').addEventListener('input', refresh);
+    $('spark').addEventListener('click', spark);
     $('emoji-clear').addEventListener('click', () => { $('emoji').value = ''; refresh(); });
     $('form').addEventListener('submit', (e) => { e.preventDefault(); openConfirm(); });
     $('confirm-yes').addEventListener('click', lockIn);
@@ -367,7 +427,9 @@ function init() {
     refresh();
   }
 
-  $('share').addEventListener('click', shareCard);
+  $('share').addEventListener('click', () => shareCard('story', $('share')));
+  $('share-square').addEventListener('click', () => shareCard('square', $('share-square')));
+  initInstall();
   $('copy').addEventListener('click', copyName);
 
   // Another tab locked a name: follow it.

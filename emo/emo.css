@@ -238,3 +238,7 @@ a { color: var(--teal); }
 @keyframes fall {
   to { transform: translateY(110vh) rotate(540deg); opacity: 0.2; }
 }
+
+.lbl-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.lbl-row .lbl { margin-bottom: 8px; }
+.lbl-row .btn--tiny { margin-bottom: 8px; }

@@ -34,7 +34,7 @@
   <!-- ── MAKE ── -->
   <section id="view-make" class="card" hidden>
     <form id="form" autocomplete="off" novalidate>
-      <label class="lbl" for="w1">Three words. One per box.</label>
+      <div class="lbl-row"><label class="lbl" for="w1">Three words. One per box.</label><button type="button" id="spark" class="btn btn--tiny" title="Suggest words you can edit">🎲 Spark</button></div>
       <div class="words">
         <input id="w1" class="word" type="text" placeholder="WORD 1" maxlength="40" spellcheck="false" autocapitalize="characters" required />
         <input id="w2" class="word" type="text" placeholder="WORD 2" maxlength="40" spellcheck="false" autocapitalize="characters" required />
@@ -65,7 +65,8 @@
     <p id="locked-name" class="cert__name"></p>
     <p id="locked-meta" class="cert__meta"></p>
     <div class="actions">
-      <button id="share" class="btn btn--big" type="button">Share my card</button>
+      <button id="share" class="btn btn--big" type="button">Share my story card</button>
+      <button id="share-square" class="btn" type="button">Square card</button>
       <button id="copy" class="btn" type="button">Copy name</button>
     </div>
     <p class="cert__law">That's it. That's your one. No redos. No second name. That's the law.</p>
@@ -102,6 +103,7 @@
   <footer class="foot">
     <p>#EMOBANDNAME™ — Built by Rice + Claude.</p>
     <p>No ads. No sign-ups. No data. No DLC.</p>
+    <p><button id="install" class="btn btn--tiny" type="button" hidden>⬇︎ Install the app</button></p>
     <p><a href="privacy.html">Privacy</a> · <a href="../index.html">Dr. Heemslice 5000</a></p>
   </footer>
 </main>

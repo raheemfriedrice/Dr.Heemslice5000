@@ -1,5 +1,5 @@
 // #EMOBANDNAME™ service worker: works offline after the first visit.
-const CACHE = 'ebn-v1';
+const CACHE = 'ebn-v2';
 const SHELL = [
   './',
   'index.html',
