@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#14110b">
 <title>The 100 — Legacy Contract</title>
-<meta name="description" content="100 pages. A page a day. Your words, #RAW — no autocorrect, no edits, nobody but you. Saved on this device. Built by Rice + Claude.">
+<meta name="description" content="100 pages. A page a day. Ten chapters. A must-do at the foot of every page. Your words, #RAW — no autocorrect, no edits, nobody but you. Saved on this device. Built by Rice + Claude.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -21,18 +21,37 @@
   <button class="bar__btn" id="toToc" aria-label="All pages">☰</button>
   <div class="bar__mid">
     <button class="nav" id="prev" aria-label="Previous page">‹</button>
-    <div class="bar__page" id="pageLabel">Page 1 / 100</div>
+    <div class="bar__page"><span id="pageLabel">Page 1 / 100</span><small id="chapLabel">Chapter I</small></div>
     <button class="nav" id="next" aria-label="Next page">›</button>
   </div>
   <button class="bar__btn" id="menuBtn" aria-label="Menu">⋯</button>
 </header>
 
-<div class="prog"><div class="prog__fill" id="prog"></div></div>
+<div class="prog" title="Pages started"><div class="prog__fill" id="prog"></div></div>
 
 <main class="page" id="pageView">
-  <input class="title" id="title" placeholder="Page title (optional)" autocomplete="off" spellcheck="false">
-  <textarea class="body" id="body" placeholder="Write it #RAW. No autocorrect, no edits, no one but you. A page a day. &amp; is a word. Typos are allowed. Nothing here is sent anywhere." spellcheck="false" autocorrect="off" autocapitalize="off"></textarea>
-  <div class="meta" id="meta"></div>
+  <div class="page__top">
+    <div class="swatches" id="swatches" role="radiogroup" aria-label="Page color"></div>
+    <div class="streak" id="streak" title="Days in a row with writing"></div>
+  </div>
+  <input class="title" id="title" placeholder="Page title (optional)" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
+  <textarea class="body" id="body" spellcheck="false" autocorrect="off" autocapitalize="off"></textarea>
+  <button class="prompt-btn" id="promptBtn" type="button">🎲 Stuck? Give me a prompt</button>
+
+  <details class="notes" id="notesBox">
+    <summary>✎ Margin notes</summary>
+    <textarea class="notes__ta" id="notes" placeholder="Notes to yourself, links, who was there, what song was playing. Not part of the page." spellcheck="false" autocorrect="off" autocapitalize="off"></textarea>
+  </details>
+
+  <footer class="foot" id="foot">
+    <p class="foot__canon">"All 100 Pages Must Be Completed Before I Die."</p>
+    <label class="mustdo">
+      <input type="checkbox" id="mdDone">
+      <span class="mustdo__n" id="mdNum">Must-do #1</span>
+      <input class="mustdo__t" id="mdText" placeholder="One thing to do before I die (tap to write it)" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off">
+    </label>
+    <p class="foot__meta" id="meta"></p>
+  </footer>
 </main>
 
 <!-- TOC -->
@@ -42,20 +61,31 @@
     <button class="x" id="tocX" aria-label="Close">✕</button>
   </div>
   <p class="sheet__sub" id="tocSub"></p>
-  <div class="grid" id="grid"></div>
+  <div class="legend" id="legend"></div>
+  <div class="chapters" id="chapters"></div>
 </div>
 
 <!-- Menu -->
 <div class="sheet" id="menu" hidden>
   <div class="sheet__head"><h2>Menu</h2><button class="x" id="menuX" aria-label="Close">✕</button></div>
   <div class="menu-list">
-    <button class="mrow" id="exp">⬇︎ Export my book (.json backup)</button>
-    <button class="mrow" id="expTxt">⬇︎ Export as readable .txt</button>
-    <label class="mrow" style="cursor:pointer">⬆︎ Import a backup<input type="file" id="imp" accept=".json" hidden></label>
     <div class="mrow mrow--static" id="savedInfo"></div>
-    <div class="mrow mrow--note">Everything is saved on <b>this device only</b>, as you type. Nothing is sent anywhere. Export often — a cleared browser forgets. Your words are never autocorrected.</div>
+    <button class="mrow" id="expBook">📖 Export as a styled book (.html — read or print anywhere)</button>
+    <button class="mrow" id="expTxt">⬇︎ Export as readable .txt</button>
+    <button class="mrow" id="exp">⬇︎ Backup everything (.json)</button>
+    <label class="mrow" style="cursor:pointer">⬆︎ Restore a backup (.json)<input type="file" id="imp" accept=".json,application/json" hidden></label>
+    <label class="mrow" style="cursor:pointer">✅ Import my 100 Things list (.json)<input type="file" id="impThings" accept=".json,application/json" hidden></label>
+    <button class="mrow" id="editChapters">✎ Rename chapters &amp; colors</button>
+    <div class="mrow mrow--note">Everything is saved on <b>this device only</b>, as you type. Nothing is sent anywhere. Export often — a cleared browser forgets. Your words are never autocorrected. <b>#RAW</b>.</div>
     <a class="mrow" href="../index.html">← Dr. Heemslice 5000</a>
   </div>
+</div>
+
+<!-- Rename -->
+<div class="sheet" id="rename" hidden>
+  <div class="sheet__head"><h2>Chapters &amp; Colors</h2><button class="x" id="renameX" aria-label="Close">✕</button></div>
+  <p class="sheet__sub">Name your ten chapters and what each color means. Saved on this device.</p>
+  <div class="rename" id="renameList"></div>
 </div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
