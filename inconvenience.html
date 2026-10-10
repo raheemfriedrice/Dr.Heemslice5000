@@ -15,11 +15,51 @@
 </head>
 <body>
 
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  FISTBUMP GATE — Required. Non-negotiable. Per session. -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="fistbump-gate" class="fistbump-gate">
+  <p class="fistbump-gate__label">The Inconvenience Store™ — Entry Protocol</p>
+  <h1 class="fistbump-gate__title">#<span>FreeFistBump</span>™</h1>
+  <div class="fistbump-gate__sub">
+    Before you browse, we require one fistbump.<br/>
+    This is <strong>#FirstTimesFree™</strong>. It costs nothing.<br/>
+    Rice will put his fist to the screen upon notification of an actual sale.<br/>
+    That is a separate event. This is just the fistbump.
+  </div>
+  <button id="fistbump-btn" class="fistbump-btn">
+    🤜 Fistbump Rice 🤛
+  </button>
+  <p class="fistbump-gate__fine">
+    By fistbumping you confirm: you understand this store is slightly useful and barely annoying.
+    You understand shipping is $22.22+tax. You understand Rice will not thank you.
+    You understand the store will only get more inconvenient from here.
+    These terms are non-negotiable and also free.
+  </p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!--  #$2KARATE™ BANNER [Rice]™                            -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="karate-banner">
+  <div>
+    <div class="karate-banner__chop">#$2Karate™</div>
+    <span class="karate-banner__tm">[Rice]™ — Brightskin Bible Compliant</span>
+  </div>
+  <div class="karate-banner__sub">
+    <strong>We karate chop the concept of value directly into your life.</strong><br/>
+    $2 item. $22.22 shipping. Full irony. No refunds on the irony specifically.
+  </div>
+  <div class="karate-banner__sub" style="text-align:right;">
+    <strong>🥋 CHOP PRICE:</strong> $2.00<br/>
+    <strong>🥋 CHOP SHIPPING:</strong> $22.22+tax<br/>
+    <strong>🥋 CHOP THANK YOU:</strong> Not happening
+  </div>
+</div>
+
 <!-- ── ANNOUNCEMENT BANNER ── -->
 <div class="announce">
-  <strong>SHIPPING IS $22.22+TAX.</strong> &nbsp;|&nbsp; No free shipping. No free returns. No apologies. &nbsp;|&nbsp;
-  Rice will <strong>not</strong> say thank you. This is disclosed. This is intentional. &nbsp;|&nbsp;
-  <a href="#featured">Don't buy the rock.</a>
+  <span id="announce-text"><strong>SHIPPING IS $22.22+TAX.</strong> &nbsp;|&nbsp; No free shipping. No free returns. No apologies. &nbsp;|&nbsp; Rice will <strong>not</strong> say thank you. Disclosed. Intentional. &nbsp;|&nbsp; <a href="#featured">Don't buy the rock.</a> &nbsp;|&nbsp; Store gets more inconvenient from here.</span>
 </div>
 
 <!-- ── NAV ── -->
@@ -28,24 +68,39 @@
     <a href="inconvenience.html" class="is-nav__logo">
       The Inconvenience<span> Store™</span>
     </a>
-    <span class="is-nav__tagline">We'd rather you didn't.</span>
-    <a href="index.html" class="is-nav__back">← Back to Dr. Heemslice 5000</a>
+    <span id="nav-tagline" class="is-nav__tagline">We'd rather you didn't.</span>
+    <a href="index.html" class="is-nav__back">← Dr. Heemslice 5000</a>
   </div>
 </nav>
 
+<!-- ── LIFETIME COUNTER STRIP ── -->
+<div class="lifetime-strip">
+  <div>
+    <div class="lifetime-strip__label">Lifetime Gross Sales — Bragged About Publicly</div>
+    <div class="lifetime-strip__num" id="lifetime-num">$48.36</div>
+  </div>
+  <div class="lifetime-strip__brag">
+    "Money will not be responsibly spent." — Rice, pre-warned, on record.
+  </div>
+  <div class="lifetime-strip__brag" style="color:#444;">
+    This number updates with every order.<br/>We are very proud of whatever this says.
+  </div>
+</div>
+
 <!-- ── HERO ── -->
 <section class="is-hero">
-  <p class="is-hero__eyebrow">Est. Now — Please Reconsider</p>
-  <h1 class="is-hero__title">
+  <p class="is-hero__eyebrow">Est. Now — Please Reconsider — Hassled Guaranteed™</p>
+  <h1 class="is-hero__title" id="hero-title">
     SHOP.<br/><em>IF YOU</em><br/>MUST.
   </h1>
-  <p class="is-hero__sub">
-    Slightly useful items. Barely annoying. Unironically available.
-    You could absolutely not do this.
+  <p class="is-hero__sub" id="hero-sub">
+    Slightly useful items. Barely annoying. If given as a gift, it would be almost insulted
+    to not film the reaction. Absurdity of purchase confirmed.
+    The store will only get more inconvenient from here.
   </p>
   <div class="is-hero__cta-wrap">
-    <a href="#featured" class="is-btn is-btn--primary">View the Rock (Don't)</a>
-    <a href="#products" class="is-btn is-btn--ghost">Other Stuff</a>
+    <a href="#featured" id="hero-cta1" class="is-btn is-btn--primary">View the Rock (Don't)</a>
+    <a href="#products" id="hero-cta2" class="is-btn is-btn--ghost">Other Stuff</a>
   </div>
 </section>
 
@@ -56,38 +111,31 @@
   <div class="is-container">
     <span class="is-section__label">001 — Featured Product / Please Don't</span>
     <h2 class="is-section__title">#uglyrock$2™</h2>
-    <p class="is-section__sub">Rice's Magnum Opus. His finest work. His greatest regret offering.</p>
+    <p class="is-section__sub">
+      Rice's Magnum Opus. His finest work. His greatest regret offering.
+      You can look at anything in this store but the #uglyrock$2™.
+      You're looking at it right now. We can't stop you. But we noted it.
+    </p>
 
     <div class="featured">
-
-      <!-- VISUAL -->
       <div class="featured__visual">
         <span class="featured__visual-label">Product Photography</span>
         <p class="do-not-look">DO NOT LOOK AT THIS ROCK.</p>
 
         <div class="rock-container" id="rock-container">
-          <!-- COVER STATE -->
           <div class="rock-cover">
             Click "I Understand"<br/>to reveal.<br/><br/>
             We recommend<br/>against it.
           </div>
-          <!-- ROCK ART -->
           <div class="rock-art">
             <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" width="180" height="144" role="img" aria-label="An ugly rock">
-              <!-- Main rock body — aggressively mediocre shape -->
-              <polygon points="30,130 15,90 40,55 80,35 130,30 165,50 175,90 160,125 110,140 60,138"
-                fill="#9e8a72" stroke="#6b5a3e" stroke-width="2"/>
-              <!-- Surface texture patches -->
+              <polygon points="30,130 15,90 40,55 80,35 130,30 165,50 175,90 160,125 110,140 60,138" fill="#9e8a72" stroke="#6b5a3e" stroke-width="2"/>
               <ellipse cx="75" cy="80" rx="22" ry="14" fill="#8b7355" opacity="0.6"/>
               <ellipse cx="130" cy="95" rx="18" ry="10" fill="#7a6345" opacity="0.5"/>
               <ellipse cx="100" cy="55" rx="12" ry="8" fill="#b09a7e" opacity="0.4"/>
-              <!-- Boring crack — goes nowhere -->
               <path d="M90,60 Q100,80 95,110" stroke="#6b5a3e" stroke-width="1.5" fill="none" opacity="0.7"/>
-              <!-- Small unremarkable pebble mark -->
               <circle cx="55" cy="100" r="6" fill="#7a6345" opacity="0.5"/>
-              <!-- Flat spot (the worst part) -->
               <path d="M140,110 L160,115 L158,125 L137,120 Z" fill="#8b7355" opacity="0.4"/>
-              <!-- Highlight — small, unconvincing -->
               <ellipse cx="70" cy="60" rx="8" ry="5" fill="#c4ae92" opacity="0.5" transform="rotate(-15 70 60)"/>
             </svg>
           </div>
@@ -96,13 +144,11 @@
         <button id="reveal-rock-btn" class="is-btn is-btn--ghost" style="font-size:0.8rem; padding:0.5rem 1rem;">
           I Understand (Reveal Rock)
         </button>
-
         <div class="stamp">GLUTEN FREE</div>
       </div>
 
-      <!-- INFO -->
       <div class="featured__info">
-        <span class="featured__eyebrow">[Rice]™ — Sourced from #AhardPlace</span>
+        <span class="featured__eyebrow">[Rice]™ — Sourced from #AhardPlace — Hassled Guaranteed™</span>
         <h3 class="featured__title">#uglyrock<br/>$2™</h3>
 
         <div class="featured__price-block">
@@ -129,10 +175,10 @@
             <li>Does not vibrate at a frequency.</li>
             <li>Not quartz. Not crystal. Not trying.</li>
             <li>Looks exactly like what it is.</li>
-            <li>Flat spot on one side. Reason unknown. Reason unknowable.</li>
+            <li>Flat spot on one side. Reason unknown. Unknowable.</li>
             <li>Sourced from <strong>#AhardPlace</strong>.</li>
             <li>Removed for no reason. Cruelly.</li>
-            <li class="gluten">GLUTEN FREE ✓ (cruelly removed for no reason)</li>
+            <li class="gluten">GLUTEN FREE ✓ (cruelly removed, for no reason)</li>
           </ul>
         </div>
 
@@ -141,18 +187,35 @@
         </button>
 
         <p class="featured__disclaimer">
-          *Full disclosure provided freely. No upsell. Rice will not say "thank you" upon completed purchase.
-          This has been disclosed, is being disclosed, and will continue to be disclosed.
-          Shipping is $22.22+tax. The rock is $2. You know what you're doing. Do you know what you're doing?
-          Sourced from #AhardPlace. All rocks are final sale.
-          The Inconvenience Store™ is not responsible for your choices.
-          Rice is not responsible for your choices. Nobody is.
+          *Full disclosure freely given. Rice will not say "thank you" upon completed purchase —
+          disclosed, ongoing, will continue to be disclosed.
+          Shipping $22.22+tax. Rock $2. You know what you're doing.
+          Do you know what you're doing? All rocks final sale. Store is not responsible for your choices.
+          Rice is not responsible for your choices. Rest-assured delays. Disappointment guaranteed.
+          The Inconvenience Store™ reserves the right to refund any inconvenience at all times.
         </p>
       </div>
-
-    </div><!-- /featured -->
+    </div>
   </div>
 </section>
+
+<!-- ── UPSELL STRIP ── -->
+<div class="upsell-strip">
+  <p class="upsell-strip__label">🥋 #$2Karate™ Upsell — Real Sales Tactics Follow</p>
+  <p class="upsell-strip__title">You're Already Here. You Might As Well.</p>
+  <p class="upsell-strip__body">
+    Customers who tolerated the rock also looked at these items and immediately questioned their lives.
+    Adding them won't feel better. But you'd have more stuff. That's something. Probably.
+  </p>
+  <div class="upsell-strip__items">
+    <button class="upsell-item" data-upsell="clamshell-scissors">+ Scissors (Extreme Clamshell) — $14.99</button>
+    <button class="upsell-item" data-upsell="battery-pack">+ Batteries (Misc Charge) — $6.00</button>
+    <button class="upsell-item" data-upsell="junk-drawer">+ Junk Drawer Kit — $11.00</button>
+  </div>
+  <p style="font-size:0.65rem; color:#b89000; font-family:'Space Mono',monospace; margin-top:0.75rem;">
+    Each additional item adds $22.22 shipping. You're aware. We're aware. This is The Inconvenience Store™.
+  </p>
+</div>
 
 <!-- ════════════════════════════════════════════ -->
 <!--  OTHER PRODUCTS                              -->
@@ -161,7 +224,10 @@
   <div class="is-container">
     <span class="is-section__label">002 — Also Available / Fine</span>
     <h2 class="is-section__title">Other Things</h2>
-    <p class="is-section__sub">These at least make slightly more sense. Slightly.</p>
+    <p class="is-section__sub">
+      These at least make slightly more sense. Barely enough to be useful.
+      If given as a gift it would be almost insulted to not film the reaction.
+    </p>
 
     <div class="product-grid">
 
@@ -170,11 +236,8 @@
         <span class="product-card__badge badge--warn">TECHNICALLY USEFUL</span>
         <div class="product-card__visual">
           <svg class="scissors-svg" viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scissors in extreme clamshell packaging">
-            <!-- Clamshell outer -->
             <rect x="5" y="5" width="90" height="130" rx="4" fill="#d0e8f5" stroke="#4a90a4" stroke-width="2" opacity="0.85"/>
-            <!-- Clamshell inner cavity -->
             <rect x="15" y="20" width="70" height="100" rx="3" fill="#b8d8e8" stroke="#4a90a4" stroke-width="1" opacity="0.5"/>
-            <!-- Scissors inside -->
             <g transform="translate(50,70) rotate(-15)">
               <ellipse cx="-8" cy="-30" rx="7" ry="7" fill="none" stroke="#888" stroke-width="2"/>
               <ellipse cx="8" cy="-30" rx="7" ry="7" fill="none" stroke="#888" stroke-width="2"/>
@@ -182,25 +245,21 @@
               <line x1="8" y1="-23" x2="0" y2="20" stroke="#888" stroke-width="2.5"/>
               <line x1="-3" y1="5" x2="3" y2="5" stroke="#666" stroke-width="1.5"/>
             </g>
-            <!-- "Impossible to open" indicator text -->
             <text x="50" y="130" text-anchor="middle" font-size="6" fill="#4a90a4" font-family="monospace">REQUIRES SCISSORS TO OPEN</text>
           </svg>
         </div>
         <span class="product-card__num">SKU-002</span>
         <h3 class="product-card__title">Premium Scissors<span class="product-card__title-tm">™</span></h3>
         <p class="product-card__desc">
-          Extremely nice scissors. <em>Extremely</em> nice. Sealed in a clamshell that
-          requires scissors to open. Full irony provided at no additional charge.
-          <strong>You will need scissors to access your scissors.</strong>
-          This is the product. This is the point.
+          Extremely nice scissors. Sealed in clamshell that requires scissors to open.
+          Full irony at no charge. <strong>You will need scissors to access your scissors.</strong>
+          This is the product. As a gift: film the reaction.
         </p>
         <div class="product-card__price-row">
           <span class="price-main">$14.99</span>
           <span class="price-shipping">+ $22.22 shipping</span>
         </div>
-        <button class="is-btn is-btn--primary add-to-cart-btn" style="width:100%; margin-top:0.5rem;" data-add-to-cart="clamshell-scissors">
-          Add to Cart
-        </button>
+        <button class="is-btn is-btn--primary add-to-cart-btn" style="width:100%; margin-top:0.5rem;" data-add-to-cart="clamshell-scissors">Add to Cart</button>
       </div>
 
       <!-- BATTERIES -->
@@ -208,23 +267,19 @@
         <span class="product-card__badge badge--ugly">PROBABLY HAS AAAS</span>
         <div class="product-card__visual">
           <svg class="battery-svg" viewBox="0 0 140 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Assorted batteries at unknown charge">
-            <!-- Battery 1 (AA) -->
             <rect x="10" y="20" width="28" height="60" rx="3" fill="#c8c8c8" stroke="#888" stroke-width="1.5"/>
             <rect x="17" y="15" width="14" height="7" rx="2" fill="#aaa"/>
             <rect x="12" y="25" width="24" height="20" fill="#4a9e4a" opacity="0.7"/>
             <text x="24" y="72" text-anchor="middle" font-size="6" fill="#555" font-family="monospace">AA</text>
-            <!-- Battery 2 (AAA) -->
             <rect x="48" y="28" width="22" height="50" rx="3" fill="#d4d4d4" stroke="#888" stroke-width="1.5"/>
             <rect x="54" y="23" width="10" height="6" rx="2" fill="#bbb"/>
             <rect x="50" y="33" width="18" height="8" fill="#4a9e4a" opacity="0.5"/>
             <text x="59" y="70" text-anchor="middle" font-size="5" fill="#555" font-family="monospace">AAA</text>
-            <!-- Battery 3 (9V) -->
             <rect x="80" y="22" width="36" height="56" rx="3" fill="#e8d44a" stroke="#888" stroke-width="1.5"/>
             <rect x="88" y="15" width="8" height="8" rx="2" fill="#ccc"/>
             <rect x="100" y="15" width="8" height="8" rx="2" fill="#ccc"/>
             <rect x="82" y="27" width="32" height="30" fill="#4a9e4a" opacity="0.3"/>
             <text x="98" y="72" text-anchor="middle" font-size="6" fill="#555" font-family="monospace">9V</text>
-            <!-- Mystery % labels -->
             <text x="24" y="50" text-anchor="middle" font-size="7" fill="#2a7a2a" font-family="monospace">??%</text>
             <text x="59" y="52" text-anchor="middle" font-size="6" fill="#d4821a" font-family="monospace">?%</text>
             <text x="98" y="55" text-anchor="middle" font-size="7" fill="#c8372d" font-family="monospace">?%</text>
@@ -233,19 +288,16 @@
         <span class="product-card__num">SKU-003</span>
         <h3 class="product-card__title">Varietal Battery Pack<span class="product-card__title-tm">™</span></h3>
         <p class="product-card__desc">
-          Assorted batteries in assorted sizes at <em>assorted charge levels.</em>
-          Like your junk drawer, but curated. Charge disclosed as: <strong>some.</strong>
-          May include AA, AAA, 9V, and/or one C battery that nobody needed.
-          "Probably has some AAAs" — The Inconvenience Store™, 2026.
+          Assorted batteries, assorted sizes, <em>assorted charge levels.</em>
+          Like your junk drawer but curated. Charge disclosed as: <strong>some.</strong>
+          As a gift: film the reaction.
         </p>
         <div class="product-card__price-row">
           <span class="price-main">$6.00</span>
           <span class="price-shipping">+ $22.22 shipping</span>
           <span class="price-note">charge: misc</span>
         </div>
-        <button class="is-btn is-btn--primary add-to-cart-btn" style="width:100%; margin-top:0.5rem;" data-add-to-cart="battery-pack">
-          Add to Cart
-        </button>
+        <button class="is-btn is-btn--primary add-to-cart-btn" style="width:100%; margin-top:0.5rem;" data-add-to-cart="battery-pack">Add to Cart</button>
       </div>
 
       <!-- JUNK DRAWER KIT -->
@@ -253,24 +305,19 @@
         <span class="product-card__badge badge--new">COMPLETE THE LOOK</span>
         <div class="product-card__visual">
           <svg class="junk-svg" viewBox="0 0 140 110" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Curated junk drawer items">
-            <!-- Dead pen -->
             <rect x="10" y="25" width="60" height="8" rx="4" fill="#3a3a8a" stroke="#222" stroke-width="1"/>
             <rect x="65" y="26" width="8" height="6" rx="1" fill="#222"/>
             <text x="35" y="32" text-anchor="middle" font-size="5" fill="white" font-family="monospace">DEAD PEN</text>
-            <!-- Mystery key -->
             <circle cx="95" cy="30" r="8" fill="none" stroke="#b8962e" stroke-width="2.5"/>
             <circle cx="95" cy="30" r="3" fill="none" stroke="#b8962e" stroke-width="1.5"/>
             <rect x="99" y="34" width="14" height="3" rx="1" fill="#b8962e"/>
             <rect x="107" y="37" width="4" height="5" rx="1" fill="#b8962e"/>
             <rect x="111" y="37" width="4" height="3" rx="1" fill="#b8962e"/>
-            <!-- Rubber band (dried up) -->
             <ellipse cx="40" cy="60" rx="22" ry="10" fill="none" stroke="#8b4513" stroke-width="3" stroke-dasharray="4,2" opacity="0.7"/>
             <text x="40" y="82" text-anchor="middle" font-size="5" fill="#8b4513" font-family="monospace">DRIED</text>
-            <!-- Batteries (old) -->
             <rect x="72" y="50" width="18" height="30" rx="2" fill="#aaa" stroke="#888" stroke-width="1"/>
             <rect x="77" y="46" width="8" height="5" rx="1" fill="#999"/>
             <text x="81" y="73" text-anchor="middle" font-size="5" fill="#666" font-family="monospace">0%</text>
-            <!-- Expired coupon -->
             <rect x="98" y="52" width="36" height="22" rx="2" fill="#fff9e6" stroke="#ccc" stroke-width="1"/>
             <text x="116" y="62" text-anchor="middle" font-size="5" fill="#c8372d" font-family="monospace">EXPIRED</text>
             <text x="116" y="70" text-anchor="middle" font-size="4" fill="#999" font-family="monospace">2019</text>
@@ -279,70 +326,249 @@
         <span class="product-card__num">SKU-004</span>
         <h3 class="product-card__title">Junk Drawer Starter Kit<span class="product-card__title-tm">™</span></h3>
         <p class="product-card__desc">
-          A curated selection of the items that <em>will definitely end up in your junk drawer anyway.</em>
-          Skip the years of accumulation. Arrive. Includes: one dead pen (writes 0%),
-          one mystery key (origin unknown), one dried rubber band, two batteries at 0% charge,
-          and one expired coupon from a restaurant that closed.
-          <strong>Authentically useless.</strong>
+          Curated selection of items that will end up in your junk drawer anyway.
+          Skip the years of accumulation. One dead pen, one mystery key, one dried rubber band,
+          two 0% batteries, one expired coupon. <strong>Authentically useless.</strong> Film the reaction.
         </p>
         <div class="product-card__price-row">
           <span class="price-main">$11.00</span>
           <span class="price-shipping">+ $22.22 shipping</span>
         </div>
-        <button class="is-btn is-btn--primary add-to-cart-btn" style="width:100%; margin-top:0.5rem;" data-add-to-cart="junk-drawer">
-          Add to Cart
-        </button>
+        <button class="is-btn is-btn--primary add-to-cart-btn" style="width:100%; margin-top:0.5rem;" data-add-to-cart="junk-drawer">Add to Cart</button>
       </div>
 
-    </div><!-- /product-grid -->
+    </div>
   </div>
 </section>
+
+<!-- ════════════════════════════════════════════ -->
+<!--  1-STAR REVIEWS — FRONT PAGE, AS PROMISED    -->
+<!-- ════════════════════════════════════════════ -->
+<section class="is-section reviews-section" id="reviews">
+  <div class="is-container">
+    <span class="is-section__label">003 — 1-Star Reviews — Featured Prominently, As Promised</span>
+    <h2 class="is-section__title">Hall of 1 Stars</h2>
+    <p class="is-section__sub">
+      All 1-star reviews receive attention on the front page to warn other shoppers.
+      We're really not going out of our way to bother you, but dang you really are gonna look at the stuff huh?
+    </p>
+
+    <div class="review-alert">
+      <strong>STORE NOTICE:</strong> The Inconvenience Store™ reserves the right to refund any inconvenience at all times.
+      If you experienced inconvenience, you may request a refund of the inconvenience.
+      The item is non-refundable. The shipping is non-refundable. The inconvenience specifically: refundable.
+      We take that one seriously.
+    </div>
+
+    <div class="reviews-grid">
+
+      <div class="review-card">
+        <div class="review-card__stars">★☆☆☆☆</div>
+        <p class="review-card__text">
+          "I bought an ugly rock. It arrived. It was a rock. It was ugly. I don't know what I expected.
+          I genuinely cannot explain why I did this. I have the rock now. It's on my desk. I look at it.
+          It does not look back. 1 star."
+        </p>
+        <div class="review-card__author">— Verified Buyer &nbsp;|&nbsp; Bought: #uglyrock$2™</div>
+        <div class="review-card__response">
+          <strong>Store Response:</strong> This review will remain on our homepage indefinitely
+          as a service to future shoppers. The rock was accurately described. We are sorry.
+          We are not sorry. The rock is $2. Shipping was $22.22. You knew.
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card__stars">★☆☆☆☆</div>
+        <p class="review-card__text">
+          "Shipping took 3 business days. I needed it in 2. I have no idea why I needed it in 2.
+          It's a rock. 1 star."
+        </p>
+        <div class="review-card__author">— Verified Buyer &nbsp;|&nbsp; Bought: #uglyrock$2™</div>
+        <div class="review-card__response">
+          <strong>Store Response:</strong> Rest-assured delays. Pre-warned promises.
+          We did mention this was The Inconvenience Store™. We are adding this review
+          to the front page per our stated policy. Thank you for the content.
+          Rice will not thank you.
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card__stars">★☆☆☆☆</div>
+        <p class="review-card__text">
+          "The scissors came in packaging I literally could not open without scissors.
+          The listing said this. I read the listing. I bought it anyway. 1 star."
+        </p>
+        <div class="review-card__author">— Verified Buyer &nbsp;|&nbsp; Bought: Premium Scissors™</div>
+        <div class="review-card__response">
+          <strong>Store Response:</strong> We are sorry. We are not sorry.
+          "Requires scissors to open" was in the product title, description, and the SVG art inside
+          the listing image. This review is featured on the front page. You are helping future shoppers.
+          We appreciate you. Rice does not.
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card__stars">★☆☆☆☆</div>
+        <p class="review-card__text">
+          "Rice didn't thank me. He said he wouldn't. He didn't.
+          I waited. Nothing. 1 star."
+        </p>
+        <div class="review-card__author">— Verified Buyer &nbsp;|&nbsp; Bought: Misc</div>
+        <div class="review-card__response">
+          <strong>Store Response:</strong> Policy confirmed. Executed correctly.
+          Rice has been made aware of this review. He did not say anything.
+          He put his fist to the screen. That is the gesture. That is all you get.
+          Thank you for your purchase. Rice will not be saying that.
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card__stars">★☆☆☆☆</div>
+        <p class="review-card__text">
+          "I asked for a refund on the inconvenience and they gave it to me immediately.
+          I don't know how to feel about that. I'm still disappointed but differently now.
+          It's a complicated 1 star."
+        </p>
+        <div class="review-card__author">— Verified Buyer &nbsp;|&nbsp; Bought: Junk Drawer Kit™</div>
+        <div class="review-card__response">
+          <strong>Store Response:</strong> We reserve the right to refund any inconvenience at all times.
+          We exercised it. You're welcome. The item was not refunded. The shipping was not refunded.
+          The inconvenience was. This is the policy. You are the first person to test it.
+          We are proud of you. Rice is not saying that.
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-card__stars">★☆☆☆☆</div>
+        <p class="review-card__text">
+          "I was told I had to wait 22 hours and 22 minutes before I could place another order.
+          I wanted another rock. This is unreasonable. I understand why. I still give it 1 star."
+        </p>
+        <div class="review-card__author">— Verified Repeat Visitor &nbsp;|&nbsp; Tried to buy: #uglyrock$2™ again</div>
+        <div class="review-card__response">
+          <strong>Store Response:</strong> The 22:22 cooldown is intentional. It is disclosed.
+          It is implemented in JavaScript. We want you to sit with your purchase before
+          making another one. We are doing you a favor. You do not see it that way.
+          This review is on the front page. The cooldown remains.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!--  PARTNERSHIP — 33% OFFER                    -->
+<!-- ════════════════════════════════════════════ -->
+<section class="is-section partnership-section" id="partner">
+  <div class="is-container">
+    <div class="partnership-inner">
+      <div>
+        <span class="is-section__label">004 — Business Opportunity / Probably Not</span>
+        <h2 class="is-section__title">Run This For Me.</h2>
+        <p class="partnership-body">
+          Running The Inconvenience Store™ seems like a lot, honestly.
+          If you want to run it, <strong class="gold">we'll give you 33%.</strong>
+        </p>
+        <p class="partnership-body">
+          This is a real offer. The store is real. The products are real.
+          The $22.22 shipping is real. The 1-star reviews are real.
+          Rice is real and will continue to not thank people.
+        </p>
+        <p class="partnership-body">
+          You would handle: fulfillment, order printing, customer communication,
+          the 22:22 cooldown enforcement, and reading the 1-star reviews.
+          <strong>Rice handles: concept, the fistbump, not saying thank you.</strong>
+          Gross sales will be publicly bragged about regardless.
+        </p>
+        <div class="partnership-terms">
+          Terms: 33% of gross revenue to operator.
+          #FirstTimesFree™ fistbump required at onboarding.
+          Brightskin Bible applies. No ads. No data sales.
+          Contact method: figure it out. If you're serious, you'll figure it out.
+          That's the first test. It's intentional.
+        </div>
+      </div>
+      <div style="text-align:center;">
+        <div class="partnership-number">33%<span>of gross. really.</span></div>
+        <p style="font-family:'Space Mono',monospace; font-size:0.65rem; color:#555; margin-top:1rem; line-height:1.8;">
+          Current lifetime gross: <span id="partner-total" style="color:#ffcc00;">loading...</span><br/>
+          33% of that: <span id="partner-share" style="color:#888;">loading...</span><br/>
+          Money will not be responsibly spent.<br/>
+          This is pre-warned.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════ -->
+<!--  DO NOT CLICK THIS BUTTON                    -->
+<!-- ════════════════════════════════════════════ -->
+<div class="dont-click-section">
+  <p class="dont-click-label">A Message From The Store</p>
+  <p class="dont-click-sub">
+    We politely ask you to not click this button.
+    If you do, nothing will happen. But we'll know you clicked it,
+    and we genuinely won't understand why.
+  </p>
+  <button id="dont-click-btn" class="dont-click-btn">
+    Do Not Click This
+  </button>
+  <p id="dont-click-count" class="dont-click-count"></p>
+</div>
 
 <!-- ════════════════════════════════════════════ -->
 <!--  ABOUT / POLICIES                            -->
 <!-- ════════════════════════════════════════════ -->
 <section class="is-section" id="about">
   <div class="is-container">
-    <span class="is-section__label">003 — About This Store</span>
+    <span class="is-section__label">005 — About This Store / Shopify Notes</span>
     <h2 class="is-section__title">What This Is</h2>
 
     <div class="about-grid">
       <div>
         <p class="about-body">
-          The Inconvenience Store™ is a retail concept built on radical honesty and mild
-          frustration. Every product here is <em>slightly useful</em>, <em>barely annoying</em>,
-          and <em>unironically available for purchase</em>.
+          The Inconvenience Store™ is a real store. Not a gag site. The money used will not be
+          responsibly spent and gross sales will be bragged about as a Lifetime Total counter
+          at the top of every page.
         </p>
         <p class="about-body">
-          We do not want your data. We do not want your email address. We do not have a
-          newsletter. We do not have a loyalty program. We barely want your money —
-          as evidenced by the shipping costs, the discouragement copy, and the
-          #uglyrock$2™ disclaimer.
+          Every product is slightly useful, barely annoying, and unironically available.
+          If given as a gift it would be almost insulted to not film the reaction.
+          Absurdity of purchase confirmed. The store will only get more inconvenient from here.
         </p>
         <p class="about-body">
-          The store exists because someone had to antithesize the quartz crystal wellness
-          complex. That someone was Rice. This is his legacy offering. Treat it accordingly.
+          <strong>Shopify migration:</strong> This store will eventually transfer to Shopify
+          for real order printing, fulfillment, and shipping integration.
+          Products that fit the dropshipping model will be identified and transitioned.
+          The 22:22 cooldown, fistbump gate, and discouragement copy survive the migration.
+          Those are features, not bugs.
         </p>
         <p class="about-body" style="margin-top:1rem;">
           <strong>Built by Rice + Claude.</strong><br/>
-          <span style="font-size:0.8rem; color:#999;">No ads. No data sales. No thank yous from Rice.</span>
+          <span style="font-size:0.8rem; color:#999;">No ads. No data sales. No thank yous from Rice. Brightskin Bible compliant.</span>
         </p>
       </div>
 
       <div>
         <p style="font-size:0.72rem; font-family:'Space Mono',monospace; color:#999; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:0.75rem;">Store Policies</p>
         <ul class="policy-list">
-          <li>No returns. All sales are final. You knew.</li>
-          <li>No thank yous. Disclosed pre-purchase.</li>
-          <li class="good">No ads. Legally and morally prohibited by the Brightskin Bible.</li>
+          <li>The store reserves the right to refund any inconvenience at all times.</li>
+          <li>All items: non-refundable. The inconvenience specifically: refundable.</li>
+          <li>No thank yous. Disclosed pre-purchase. Rice's fist to screen is the gesture.</li>
+          <li class="good">No ads. Prohibited by the Brightskin Bible. Non-negotiable.</li>
           <li class="good">No user data collected or sold. Ever. Full stop.</li>
-          <li>Shipping is $22.22+tax. On everything. Non-negotiable.</li>
-          <li>The rock is $2. That math is intentional.</li>
+          <li>Shipping: $22.22+tax. On everything. Always. Non-negotiable.</li>
+          <li>22:22 hour cooldown between purchases. Sit with it.</li>
           <li>Do not touch the rocks until purchased. Ineligibility is immediate.</li>
-          <li class="good">Gluten free. (Cruelly removed. For no reason.)</li>
+          <li class="good">Gluten free. Cruelly removed. For no reason.</li>
           <li>Sourced from #AhardPlace. Traceable. Unfortunate.</li>
-          <li>Full ugly rock disclosure available upon request. Always.</li>
-          <li>Rice reserves the right to not thank you for any reason at any time.</li>
+          <li>Hassled guaranteed. Rest-assured delays. Despite all this: disappointed.</li>
+          <li>The store will only get more inconvenient from here. This is a promise.</li>
+          <li>1-star reviews get front page placement. Always. We told you.</li>
+          <li>33% available to whoever runs this. Fistbump required at onboarding.</li>
+          <li>Gross sales publicly bragged about. Money irresponsibly spent.</li>
         </ul>
       </div>
     </div>
@@ -356,8 +582,8 @@
     <p class="is-footer__copy">
       Built by <span style="color:#ffcc00;">Rice</span> + <span style="color:#7b2fff;">Claude</span> &nbsp;|&nbsp;
       No Ads. No Data Sales. No Thank Yous.<br/>
-      #uglyrock$2™ is a <span style="color:#ffcc00;">[Rice]™</span> original concept.<br/>
-      The Brightskin Bible governs all. &nbsp;|&nbsp;
+      #uglyrock$2™ &amp; #$2Karate™ are <span style="color:#ffcc00;">[Rice]™</span> original concepts. Brightskin Bible governs all.<br/>
+      Pre-warned promises. This is not a gag site. The money will not be responsibly spent.<br/>
       <a href="index.html">← Dr. Heemslice 5000</a> &nbsp;|&nbsp;
       <a href="emobandname.html">EmoBandName™ Generator</a>
     </p>
@@ -374,15 +600,10 @@
       <button id="cart-close" class="is-btn is-btn--ghost" style="padding:0.4rem 0.75rem; font-size:0.8rem;">✕</button>
     </div>
     <p class="cart-modal__subtitle">You can still leave.</p>
-
-    <!-- Items (step 0 only) -->
     <div class="cart-modal__items"></div>
     <div class="cart-modal__total" style="display:none;"><span>Total</span><span></span></div>
     <div class="cart-modal__warning"></div>
-
-    <!-- Step message (steps 1+) -->
     <p class="cart-modal__step-msg" style="display:none;"></p>
-
     <div class="cart-modal__btns">
       <button id="cart-primary"   class="is-btn is-btn--primary" style="flex:1;">Proceed to Regret →</button>
       <button id="cart-secondary" class="is-btn is-btn--ghost">Actually, Never Mind</button>
@@ -398,17 +619,56 @@
     <p style="font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:0.15em; text-transform:uppercase; color:#999; margin-bottom:0.5rem;">Order Status</p>
     <h2 style="font-family:'Bebas Neue',sans-serif; font-size:2.5rem; margin-bottom:1rem;">Order Placed.</h2>
     <p style="font-family:'Space Mono',monospace; font-size:0.85rem; line-height:1.8; color:#444; margin-bottom:1rem;" id="confirm-msg"></p>
-    <p style="font-family:'Space Mono',monospace; font-size:0.7rem; color:#999; margin-bottom:1.5rem;">
-      Rice has been notified. He did not say anything.
-      This was disclosed. Shipping confirmation forthcoming. Or not. We'll see.
+    <p style="font-family:'Space Mono',monospace; font-size:0.68rem; color:#999; margin-bottom:0.5rem; line-height:1.7;">
+      You may not shop again for 22 hours and 22 minutes.<br/>
+      This is not optional. This is intentional. Rest-assured.<br/>
+      Rice has been notified. He put his fist to the screen.
+    </p>
+    <p style="font-family:'Space Mono',monospace; font-size:0.65rem; color:#bbb; margin-bottom:1.5rem; font-style:italic;">
+      Despite all this — you will be disappointed. That is also intentional.
     </p>
     <button onclick="closeConfirm()" class="is-btn is-btn--primary" style="width:100%;">Close (And Reflect)</button>
   </div>
 </div>
 
+<!-- ════════════════════════════════════════════ -->
+<!--  22:22 COOLDOWN MODAL                        -->
+<!-- ════════════════════════════════════════════ -->
+<div id="cooldown-overlay" class="cooldown-overlay">
+  <div class="cooldown-modal">
+    <p style="font-family:'Space Mono',monospace; font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:#999; margin-bottom:0.5rem;">Purchase Cooldown Active</p>
+    <div class="cooldown-modal__title">NOT YET.</div>
+    <div class="cooldown-modal__timer" id="cooldown-timer">22:22:00</div>
+    <p class="cooldown-modal__sub">
+      You placed an order recently. You may shop again when the timer reaches 00:00:00.<br/>
+      This wait is intentional. Sit with your last purchase.<br/>
+      The store will still be here. It will be more inconvenient by then.
+    </p>
+    <button id="cooldown-close" class="is-btn is-btn--ghost" style="width:100%;">Fine. I'll Wait.</button>
+  </div>
+</div>
+
+<!-- ── FLOATING LANGUAGE BUTTON ── -->
+<button id="lang-btn" class="lang-float">
+  🌐 Random Language
+  <span class="lang-float__current">Standard English</span>
+</button>
+
 <!-- TOAST -->
 <div id="is-toast" class="is-toast"></div>
 
 <script src="assets/js/inconvenience.js"></script>
+<script>
+  // Wire up partnership totals after JS loads
+  document.addEventListener('DOMContentLoaded', () => {
+    const pt = document.getElementById('partner-total');
+    const ps = document.getElementById('partner-share');
+    if (pt && ps) {
+      const total = parseFloat(localStorage.getItem('tis_lifetimeTotal') || '48.36');
+      pt.textContent = '$' + total.toFixed(2);
+      ps.textContent = '$' + (total * 0.33).toFixed(2);
+    }
+  });
+</script>
 </body>
 </html>
