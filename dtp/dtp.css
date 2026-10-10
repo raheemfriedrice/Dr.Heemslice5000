@@ -1,0 +1,499 @@
+/* =====================================================
+   #DrownthatPuppy™ — Tool Styles
+   Extends assets/css/styles.css
+   ===================================================== */
+
+:root {
+  --clr-hot:        #ff3a3a;
+  --clr-hot-dim:    rgba(255, 58, 58, 0.12);
+  --clr-hot-glow:   rgba(255, 58, 58, 0.25);
+  --clr-cold:       #4fb3ff;
+  --clr-cold-dim:   rgba(79, 179, 255, 0.12);
+  --clr-cold-glow:  rgba(79, 179, 255, 0.25);
+  --clr-lukewarm:   #b88bff;
+  --clr-lukewarm-dim:  rgba(184, 139, 255, 0.12);
+}
+
+/* ---- Page ---- */
+.dtp-page {
+  background: var(--clr-bg);
+}
+
+/* =====================================================
+   HERO
+   ===================================================== */
+.dtp-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding-top: var(--nav-h);
+}
+
+.dtp-hero__gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 55% at 20% 80%, rgba(255, 58, 58, 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 55% at 80% 20%, rgba(79, 179, 255, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(255, 107, 0, 0.04) 0%, transparent 70%);
+}
+
+.dtp-hero__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding-inline: 2rem;
+  max-width: 900px;
+}
+
+.dtp-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 17vw, 14rem);
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  margin-block: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dtp-title-tm {
+  display: block;
+  font-family: var(--font-display);
+  line-height: 0.88;
+}
+
+.dtp-tm {
+  font-size: 0.35em;
+  vertical-align: super;
+  line-height: 0;
+  color: var(--clr-accent);
+  margin-left: 0.1em;
+}
+
+.dtp-hero__sub {
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--clr-muted);
+  letter-spacing: 0.04em;
+  line-height: 1.8;
+  margin-bottom: 3rem;
+}
+
+/* =====================================================
+   TOOL SECTION
+   ===================================================== */
+.dtp-tool {
+  padding-block: 7rem;
+}
+
+/* =====================================================
+   INTRO CARD
+   ===================================================== */
+.dtp-card {
+  max-width: 680px;
+  margin-inline: auto;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: 8px;
+  padding: 3rem 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.dtp-card__label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clr-accent);
+}
+
+.dtp-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--clr-white);
+}
+
+.dtp-card__body {
+  font-size: 1rem;
+  color: var(--clr-muted);
+  line-height: 1.8;
+  max-width: 52ch;
+}
+
+.dtp-hot-text {
+  color: var(--clr-hot);
+  font-weight: 600;
+}
+
+.dtp-cold-text {
+  color: var(--clr-cold);
+  font-weight: 600;
+}
+
+/* =====================================================
+   QUIZ
+   ===================================================== */
+.dtp-quiz {
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+/* Progress */
+.dtp-progress {
+  height: 3px;
+  background: var(--clr-border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.dtp-progress__bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--clr-accent), var(--clr-hot));
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dtp-progress__label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+  margin-bottom: 2rem;
+}
+
+/* Question */
+.dtp-question {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: 8px;
+  padding: 3rem 3.5rem;
+  animation: fadeSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dtp-q__num {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: var(--clr-border);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.dtp-q__text {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  letter-spacing: 0.02em;
+  color: var(--clr-white);
+  line-height: 1.1;
+  margin-bottom: 2rem;
+}
+
+/* Options */
+.dtp-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dtp-option {
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  background: var(--clr-bg);
+  color: var(--clr-muted);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+
+.dtp-option::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: var(--clr-accent);
+  transition: width 0.3s var(--ease-out);
+  opacity: 0.06;
+}
+
+.dtp-option:hover {
+  border-color: var(--clr-accent);
+  color: var(--clr-white);
+  transform: translateX(4px);
+}
+
+.dtp-option:hover::before {
+  width: 100%;
+}
+
+.dtp-option:focus-visible {
+  outline: 2px solid var(--clr-accent);
+  outline-offset: 2px;
+}
+
+.dtp-option.selected {
+  border-color: var(--clr-accent);
+  color: var(--clr-white);
+  background: rgba(255, 107, 0, 0.08);
+}
+
+/* =====================================================
+   STAT BARS — shown after selection
+   ===================================================== */
+
+/* Option label sits above the fill bar */
+.dtp-option__label {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+/* Answered state — lock in, make room for % on the right */
+.dtp-option.answered {
+  padding-right: 5.5rem;
+  cursor: default;
+  transform: none !important;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.dtp-option.answered::before {
+  display: none;
+}
+
+/* Fill bar — animated width */
+.dtp-option__bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: rgba(255, 107, 0, 0.08);
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+  border-radius: inherit;
+}
+
+.dtp-option.answered.selected .dtp-option__bar {
+  background: rgba(255, 107, 0, 0.18);
+}
+
+/* Percentage number */
+.dtp-option__pct {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.03em;
+  color: var(--clr-muted);
+  z-index: 1;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+.dtp-option.answered.selected .dtp-option__pct {
+  color: var(--clr-accent);
+}
+
+/* Raw vote count — small, below percentage */
+.dtp-option__count {
+  position: absolute;
+  right: 1rem;
+  top: calc(50% + 1rem);
+  transform: translateY(-50%);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-border);
+  z-index: 1;
+}
+
+.dtp-option.answered.selected .dtp-option__count {
+  color: rgba(255, 107, 0, 0.5);
+}
+
+/* =====================================================
+   RESULT
+   ===================================================== */
+.dtp-result__card {
+  max-width: 680px;
+  margin-inline: auto;
+  border-radius: 8px;
+  padding: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  animation: fadeSlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Hot result */
+.dtp-result--hot {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-hot);
+  box-shadow: 0 0 40px var(--clr-hot-glow), inset 0 0 60px var(--clr-hot-dim);
+}
+
+/* Cold result */
+.dtp-result--cold {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-cold);
+  box-shadow: 0 0 40px var(--clr-cold-glow), inset 0 0 60px var(--clr-cold-dim);
+}
+
+/* Lukewarm result */
+.dtp-result--lukewarm {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-lukewarm);
+  box-shadow: 0 0 40px rgba(184, 139, 255, 0.2), inset 0 0 60px var(--clr-lukewarm-dim);
+}
+
+/* Badge */
+.dtp-result__temp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.dtp-badge--hot {
+  background: var(--clr-hot-dim);
+  color: var(--clr-hot);
+  border: 1px solid rgba(255, 58, 58, 0.3);
+}
+
+.dtp-badge--cold {
+  background: var(--clr-cold-dim);
+  color: var(--clr-cold);
+  border: 1px solid rgba(79, 179, 255, 0.3);
+}
+
+.dtp-badge--lukewarm {
+  background: var(--clr-lukewarm-dim);
+  color: var(--clr-lukewarm);
+  border: 1px solid rgba(184, 139, 255, 0.3);
+}
+
+.dtp-badge__icon {
+  font-size: 0.5rem;
+}
+
+/* Result title */
+.dtp-result__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--clr-white);
+}
+
+.dtp-result--hot   .dtp-result__title { color: var(--clr-hot); }
+.dtp-result--cold  .dtp-result__title { color: var(--clr-cold); }
+.dtp-result--lukewarm .dtp-result__title { color: var(--clr-lukewarm); }
+
+.dtp-result__verdict {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--clr-white);
+  opacity: 0.85;
+}
+
+.dtp-result__body {
+  font-size: 1rem;
+  color: var(--clr-muted);
+  line-height: 1.85;
+  max-width: 54ch;
+}
+
+/* Tip block */
+.dtp-result__tip {
+  margin-top: 0.5rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255,255,255,0.03);
+  border-left: 3px solid var(--clr-accent);
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.dtp-result--hot  .dtp-result__tip { border-left-color: var(--clr-hot); }
+.dtp-result--cold .dtp-result__tip { border-left-color: var(--clr-cold); }
+.dtp-result--lukewarm .dtp-result__tip { border-left-color: var(--clr-lukewarm); }
+
+.dtp-tip__label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clr-accent);
+}
+
+.dtp-result--hot  .dtp-tip__label { color: var(--clr-hot); }
+.dtp-result--cold .dtp-tip__label { color: var(--clr-cold); }
+.dtp-result--lukewarm .dtp-tip__label { color: var(--clr-lukewarm); }
+
+.dtp-tip__text {
+  font-size: 0.95rem;
+  color: var(--clr-muted);
+  line-height: 1.75;
+  font-style: italic;
+}
+
+/* Restart button */
+.dtp-restart {
+  margin-top: 0.75rem;
+  align-self: flex-start;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media (max-width: 640px) {
+  .dtp-card,
+  .dtp-question,
+  .dtp-result__card {
+    padding: 2rem 1.5rem;
+  }
+
+  .dtp-q__text {
+    margin-bottom: 1.5rem;
+  }
+}
