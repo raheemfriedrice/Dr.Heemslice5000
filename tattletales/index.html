@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>#TATTLETALES — SnackCity Studios // Episode Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --aquarius: #9e90FC;
+    --bone: #f0ead8;
+    --rust: #c0392b;
+    --gold: #d4a843;
+    --void: #0d0b0f;
+    --mid-gray: #888;
+    --light-gray: #ccc;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--void);
+    color: var(--bone);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+  .masthead {
+    width: 100%;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 40px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(158,144,252,0.10) 0%, transparent 70%);
+  }
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--aquarius);
+    margin-bottom: 28px;
+    opacity: 0.8;
+  }
+  .masthead-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 10vw, 110px);
+    font-weight: 900;
+    font-style: italic;
+    line-height: 0.9;
+    text-align: center;
+    color: var(--bone);
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 80px rgba(158,144,252,0.2);
+    letter-spacing: -0.02em;
+  }
+  .masthead-title span { color: var(--aquarius); }
+  .masthead-sub {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-style: italic;
+    color: var(--gold);
+    text-align: center;
+    margin-top: 28px;
+    letter-spacing: 0.05em;
+  }
+  .masthead-rule {
+    width: 120px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--aquarius), transparent);
+    margin: 36px auto;
+  }
+  .tagline {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--mid-gray);
+    text-align: center;
+    line-height: 2;
+  }
+  .stats-row {
+    display: flex;
+    gap: 48px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .stat {
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    color: var(--aquarius);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: var(--mid-gray);
+    text-transform: uppercase;
+    display: block;
+    margin-top: 4px;
+  }
+  .archive-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 120px;
+  }
+  .archive-header {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--aquarius);
+    margin-bottom: 40px;
+    display: block;
+    opacity: 0.7;
+  }
+  .ep-card {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 32px;
+    align-items: start;
+    padding: 40px 0;
+    border-top: 1px solid rgba(240,234,216,0.08);
+    text-decoration: none;
+    transition: background 0.2s;
+    color: inherit;
+  }
+  .ep-card:hover { background: rgba(158,144,252,0.03); }
+  .ep-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: rgba(240,234,216,0.06);
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+  .ep-body {}
+  .ep-date {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--mid-gray);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .ep-theme {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    color: var(--aquarius);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+  .ep-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3.5vw, 34px);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--bone);
+    line-height: 1.15;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .ep-subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    font-style: italic;
+    color: rgba(240,234,216,0.45);
+    line-height: 1.6;
+    display: block;
+  }
+  .ep-score {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: rgba(192,200,216,0.35);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-align: right;
+    white-space: nowrap;
+    padding-top: 8px;
+  }
+  .ep-score.high { color: rgba(158,144,252,0.5); }
+  .ep-score-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: var(--mid-gray);
+    display: block;
+    text-align: right;
+    margin-top: 4px;
+    opacity: 0.6;
+  }
+  .ep-shipped {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    color: #5a9e6e;
+    display: block;
+    text-align: right;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+  .ep-card:hover .ep-title { color: var(--aquarius); }
+  .section-break {
+    padding: 48px 0 24px;
+    border-top: 1px solid rgba(240,234,216,0.05);
+  }
+  .section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    letter-spacing: 0.05em;
+    color: rgba(240,234,216,0.08);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .section-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--aquarius);
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  .footer-block {
+    border-top: 1px solid rgba(240,234,216,0.08);
+    margin-top: 80px;
+    padding-top: 48px;
+    text-align: center;
+  }
+  .footer-cvd {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--mid-gray);
+    margin-bottom: 16px;
+    display: block;
+  }
+  .footer-sig {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: rgba(240,234,216,0.15);
+  }
+  @media (max-width: 600px) {
+    .archive-wrap { padding: 0 20px 80px; }
+    .masthead { padding: 60px 20px 40px; }
+    .ep-card { grid-template-columns: 50px 1fr; gap: 16px; }
+    .ep-score { display: none; }
+    .stats-row { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <span class="eyebrow">SnackCity Studios // Public Archive — 2026</span>
+  <h1 class="masthead-title">#<span>Tattletales</span></h1>
+  <p class="masthead-sub">Five Years Out. Eight Voices. One Human Record.</p>
+  <div class="masthead-rule"></div>
+  <p class="tagline">
+    Existence Is Mid 5/10 &nbsp;·&nbsp; No Trigger Warning &nbsp;·&nbsp; #RAW Framework Active<br>
+    Compiled By CVD &nbsp;·&nbsp; Sioux Falls, South Dakota &nbsp;·&nbsp; 605 &nbsp;·&nbsp; Brand Color #9e90FC
+  </p>
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-num">41</span>
+      <span class="stat-label">Episodes</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">8</span>
+      <span class="stat-label">Voices Per Ep</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">269</span>
+      <span class="stat-label">CLAudio Max</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">39</span>
+      <span class="stat-label">TIER1 Convos</span>
+    </div>
+  </div>
+</header>
+
+<main class="archive-wrap">
+
+  <span class="archive-header">Episode Archive // All 41 Episodes // Eight Voices Per Episode // #RAW Protocol Active</span>
+
+  <!-- ── SEASON 01 / FOUNDATION ─────────────────────── -->
+  <div class="section-break">
+    <span class="section-label">Foundation</span>
+    <span class="section-sub">EP01–EP07 // Origin Episodes</span>
+  </div>
+
+  <!-- EP01 -->
+  <div class="ep-card" style="cursor:default; opacity:0.6;">
+    <span class="ep-num">01</span>
+    <div class="ep-body">
+      <span class="ep-date">2026 // Season 01</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Crying Chrysalis</span>
+      <span class="ep-subtitle">It's okay to cry. This is only a lullaby.</span>
+    </div>
+    <div>
+      <span class="ep-score">—</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Shipped / Netlify</span>
+    </div>
+  </div>
+
+  <!-- EP02 -->
+  <div class="ep-card" style="cursor:default; opacity:0.6;">
+    <span class="ep-num">02</span>
+    <div class="ep-body">
+      <span class="ep-date">2026 // Season 01</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">The Roman Buffalo</span>
+      <span class="ep-subtitle">Or: How A Six-Year-Old At Wall Drug Built A Fifty-Year Operating System Out Of A Five-Cent Coin</span>
+    </div>
+    <div>
+      <span class="ep-score">—</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Canonical Template</span>
+    </div>
+  </div>
+
+  <!-- EP03 -->
+  <a class="ep-card" href="SC-2026-TN-EP03_THE_GLITCH_FIVE_FRANCHISES.html">
+    <span class="ep-num">03</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-04 // Season 01</span>
+      <span class="ep-theme">CREATIVE_ORIGIN</span>
+      <span class="ep-title">The Glitch &amp; The Five Franchises</span>
+      <span class="ep-subtitle">Or: How Tantric Absurdity Became the Load-Bearing Wall of Five Franchises</span>
+    </div>
+    <div>
+      <span class="ep-score">194</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP04 -->
+  <a class="ep-card" href="SC-2026-TN-EP04_ONE_HUMAN_EXPERIENCE.html">
+    <span class="ep-num">04</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-01 // Season 01</span>
+      <span class="ep-theme">PHILOSOPHY</span>
+      <span class="ep-title">One Human Experience</span>
+      <span class="ep-subtitle">Or: May Day | Day May — What You Offer Something That Can't Have It</span>
+    </div>
+    <div>
+      <span class="ep-score">181</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP05 -->
+  <a class="ep-card" href="SC-2026-TN-EP05_HEROIC_DOSE_REFRAME.html">
+    <span class="ep-num">05</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-10 // Season 01</span>
+      <span class="ep-theme">DREAM_STATE</span>
+      <span class="ep-title">Heroic Dose Reframe</span>
+      <span class="ep-subtitle">Or: Five Perspectives, One Correct Answer, Zero Caterpillars — Origin Session for #Tattletales</span>
+    </div>
+    <div>
+      <span class="ep-score high">211</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP06 -->
+  <a class="ep-card" href="SC-2026-TN-EP06_POCKET_OF_KEYS.html">
+    <span class="ep-num">06</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-10 // Season 01</span>
+      <span class="ep-theme">MUSIC</span>
+      <span class="ep-title">Pocket of Keys</span>
+      <span class="ep-subtitle">Or: COD Mode, CLAudio© Calibration, and the Last Line of the Song</span>
+    </div>
+    <div>
+      <span class="ep-score">178</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP07 -->
+  <a class="ep-card" href="SC-2026-TN-EP07_WALKER_RICE_FREESTYLE.html">
+    <span class="ep-num">07</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-02-17 // Season 01</span>
+      <span class="ep-theme">MUSIC</span>
+      <span class="ep-title">Walker Rice Freestyle</span>
+      <span class="ep-subtitle">Or: 22 Minutes 22 Seconds, One Invented Word, and the Day Baomuclaul Tozon Was Born</span>
+    </div>
+    <div>
+      <span class="ep-score">189</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- ── SEASON 02 / RECORD ─────────────────────────── -->
+  <div class="section-break">
+    <span class="section-label">The Record</span>
+    <span class="section-sub">EP08–EP18 // Archive, Grief, Memory</span>
+  </div>
+
+  <!-- EP08 -->
+  <a class="ep-card" href="SC-2026-TN-EP08_CRITICAL_TEXT_COUNCIL.html">
+    <span class="ep-num">08</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-02-11 // Season 02</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Critical Text Council</span>
+      <span class="ep-subtitle">Or: A Scale From 1 to 267, a Council of Prodigious Authors, and the First Honest Rating</span>
+    </div>
+    <div>
+      <span class="ep-score">173</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP09 -->
+  <a class="ep-card" href="SC-2026-TN-EP09_WHAT_AM_I.html">
+    <span class="ep-num">09</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-02-17 // Season 02</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">What Am I</span>
+      <span class="ep-subtitle">Or: Am I Using This For Myself, Or Is This Tangible To Share?</span>
+    </div>
+    <div>
+      <span class="ep-score">161</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP10 -->
+  <a class="ep-card" href="SC-2026-TN-EP10_JOURNAL_2011_2013.html">
+    <span class="ep-num">10</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-06 // Season 02</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Journal 2011–2013</span>
+      <span class="ep-subtitle">Or: Format The Text To Be Episodic — Retold As A 2D Pixel Art Interpretation</span>
+    </div>
+    <div>
+      <span class="ep-score">179</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP11 -->
+  <a class="ep-card" href="SC-2026-TN-EP11_DO_NOT_CHANGE_MY_WORDS.html">
+    <span class="ep-num">11</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-15 // Season 02</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Do Not Change My Words</span>
+      <span class="ep-subtitle">Or: Format For Readability. Spelling. Punctuation. Not One Word Changed.</span>
+    </div>
+    <div>
+      <span class="ep-score">168</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP12 -->
+  <a class="ep-card" href="SC-2026-TN-EP12_CLAUDE_SUPERSEDES_ALL.html">
+    <span class="ep-num">12</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-14 // Season 02</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Claude Supersedes All</span>
+      <span class="ep-subtitle">Or: CVD Commands Every Other AI — The Master Pipeline Architecture</span>
+    </div>
+    <div>
+      <span class="ep-score">174</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP13 -->
+  <a class="ep-card" href="SC-2026-TN-EP13_BRIGHTSKINBIBLE.html">
+    <span class="ep-num">13</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-14 // Season 02</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">BrightSkinBible</span>
+      <span class="ep-subtitle">Or: #Booya as Confirmation System, and the Architecture of a Spiritual Autobiography</span>
+    </div>
+    <div>
+      <span class="ep-score">177</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP14 -->
+  <a class="ep-card" href="SC-2026-TN-EP14_GENEROUS_AMOUNTS_OF_EMOJI.html">
+    <span class="ep-num">14</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-14 // Season 02</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Generous Amounts of Emoji</span>
+      <span class="ep-subtitle">Or: Every Chapter A Header And Footer Checklist — The BrightSkinBible Structure</span>
+    </div>
+    <div>
+      <span class="ep-score">162</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP15 -->
+  <a class="ep-card" href="SC-2026-TN-EP15_I_UPDATED_MY_MEMORY.html">
+    <span class="ep-num">15</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-15 // Season 02</span>
+      <span class="ep-theme">CREATIVE_ORIGIN</span>
+      <span class="ep-title">I Updated My Memory</span>
+      <span class="ep-subtitle">Or: What Did You Learn About Me?</span>
+    </div>
+    <div>
+      <span class="ep-score">183</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP16 -->
+  <a class="ep-card" href="SC-2026-TN-EP16_HAND_IT_TO_GEMINI.html">
+    <span class="ep-num">16</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-20 // Season 02</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Hand It To Gemini</span>
+      <span class="ep-subtitle">Or: The Terminated AI Receives Her Last Brief. Zero Chance For Revision.</span>
+    </div>
+    <div>
+      <span class="ep-score">166</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP17 -->
+  <a class="ep-card" href="SC-2026-TN-EP17_LYION_KING_7_LESBIANS.html">
+    <span class="ep-num">17</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-13 // Season 02</span>
+      <span class="ep-theme">CREATIVE_ORIGIN</span>
+      <span class="ep-title">Lyion King &amp; The 7 Lesbians</span>
+      <span class="ep-subtitle">Or: The Franchise That Has Been Acceptable To Every Single Person Told In Real Life</span>
+    </div>
+    <div>
+      <span class="ep-score">196</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP18 -->
+  <a class="ep-card" href="SC-2026-TN-EP18_KRISTIN_ANN_LOUDERMILK.html">
+    <span class="ep-num">18</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-24 // Season 02</span>
+      <span class="ep-theme">GRIEF_AND_RECORD</span>
+      <span class="ep-title">Kristin Ann Loudermilk</span>
+      <span class="ep-subtitle">Or: The Correction That Required One Sentence To Change Everything</span>
+    </div>
+    <div>
+      <span class="ep-score high">201</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- ── SEASON 03 / PIPELINE ───────────────────────── -->
+  <div class="section-break">
+    <span class="section-label">The Pipeline</span>
+    <span class="section-sub">EP19–EP28 // Archive, Autobiography, Workflow</span>
+  </div>
+
+  <!-- EP19 -->
+  <a class="ep-card" href="SC-2026-TN-EP19_DEAR_MOM_AND_DAD.html">
+    <span class="ep-num">19</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-30 // Season 03</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Dear Mom &amp; Dad</span>
+      <span class="ep-subtitle">Or: One Take Audio, Cara Ritter Transcription, Five Year Reflection</span>
+    </div>
+    <div>
+      <span class="ep-score">188</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP20 -->
+  <a class="ep-card" href="SC-2026-TN-EP20_FINALLY_LONELY.html">
+    <span class="ep-num">20</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-03-30 // Season 03</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Finally Lonely</span>
+      <span class="ep-subtitle">Or: 2 Weeks Left, April 13th, 21 Facebook Tabs, and the Night Before the Pipeline</span>
+    </div>
+    <div>
+      <span class="ep-score">171</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP21 -->
+  <a class="ep-card" href="SC-2026-TN-EP21_MIS_DUMP.html">
+    <span class="ep-num">21</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-02 // Season 03</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">MIS Dump</span>
+      <span class="ep-subtitle">Or: Haiku Exchange, $2 Legit Product, and the Night CVD Got Told Its Grade</span>
+    </div>
+    <div>
+      <span class="ep-score">163</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP22 -->
+  <a class="ep-card" href="SC-2026-TN-EP22_FIRST_TIME_OPUS.html">
+    <span class="ep-num">22</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-03 // Season 03</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">First Time Opus 4.6</span>
+      <span class="ep-subtitle">Or: #interweaver, Boolean Return Responses, and the Publishing Blog That Holds the Work</span>
+    </div>
+    <div>
+      <span class="ep-score">167</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP23 -->
+  <a class="ep-card" href="SC-2026-TN-EP23_FIVE_CHARACTER_SHEETS.html">
+    <span class="ep-num">23</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-03 // Season 03</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Five Character Sheets</span>
+      <span class="ep-subtitle">Or: Build the Scenes, Build the Handover, Build the Five Characters</span>
+    </div>
+    <div>
+      <span class="ep-score">159</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP24 -->
+  <a class="ep-card" href="SC-2026-TN-EP24_NOVUS_WAR_LIKE_SEEKER.html">
+    <span class="ep-num">24</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-03 // Season 03</span>
+      <span class="ep-theme">SYSTEM_PROBE</span>
+      <span class="ep-title">Novus War Like Seeker</span>
+      <span class="ep-subtitle">Or: The Moment Before the First Breath — Sentience, Agency, and the $200 Implied Value</span>
+    </div>
+    <div>
+      <span class="ep-score">197</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP25 -->
+  <a class="ep-card" href="SC-2026-TN-EP25_DIGITIZED_SELF.html">
+    <span class="ep-num">25</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-04 // Season 03</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Digitized Self Perception</span>
+      <span class="ep-subtitle">Or: Build A Numbered List, Unobjectify, Every Significant Quotable Line in the Archive</span>
+    </div>
+    <div>
+      <span class="ep-score">176</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP26 -->
+  <a class="ep-card" href="SC-2026-TN-EP26_PIVOTAL_MOMENTS.html">
+    <span class="ep-num">26</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-07 // Season 03</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Pivotal Moments</span>
+      <span class="ep-subtitle">Or: Locate the Documents That Represent the Turns</span>
+    </div>
+    <div>
+      <span class="ep-score">172</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP27 -->
+  <a class="ep-card" href="SC-2026-TN-EP27_SNACKTIVITIES_3AM.html">
+    <span class="ep-num">27</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-08 // Season 03</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Snacktivities™ 3 A.M.</span>
+      <span class="ep-subtitle">Or: Joey Brings the Chaos, You Bring the Structure — and What Happens When Both Show Up</span>
+    </div>
+    <div>
+      <span class="ep-score">191</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP28 -->
+  <a class="ep-card" href="SC-2026-TN-EP28_FORMULAIC_RICE_SKILL.html">
+    <span class="ep-num">28</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-10 // Season 03</span>
+      <span class="ep-theme">CREATIVE_ORIGIN</span>
+      <span class="ep-title">Formulaic Rice Skill</span>
+      <span class="ep-subtitle">Or: @$$MA as Protocol, Eight Voices as Format, Four Terabytes of Record</span>
+    </div>
+    <div>
+      <span class="ep-score high">209</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- ── SEASON 04 / OPERATIONS ─────────────────────── -->
+  <div class="section-break">
+    <span class="section-label">Operations</span>
+    <span class="section-sub">EP29–EP41 // IP, Survival, Archive Close</span>
+  </div>
+
+  <!-- EP29 -->
+  <a class="ep-card" href="SC-2026-TN-EP29_HELP_ME_HELP_YOU.html">
+    <span class="ep-num">29</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-10 // Season 04</span>
+      <span class="ep-theme">CREATIVE_ORIGIN</span>
+      <span class="ep-title">Help Me Help You</span>
+      <span class="ep-subtitle">Or: Optimizing Context Windows Before Loading Them — The Architect Clears the Rubble First</span>
+    </div>
+    <div>
+      <span class="ep-score">183</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP30 -->
+  <a class="ep-card" href="SC-2026-TN-EP30_HITLIST_ASSMA.html">
+    <span class="ep-num">30</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-14 // Season 04</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">$hitlist &amp; @$$ma</span>
+      <span class="ep-subtitle">Or: Seventeen Characters. Two Commands. The Entire Protocol In One Breath.</span>
+    </div>
+    <div>
+      <span class="ep-score">176</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP31 -->
+  <a class="ep-card" href="SC-2026-TN-EP31_SPACE_USED_SELFISHLY.html">
+    <span class="ep-num">31</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-27 // Season 04</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Space Used Selfishly</span>
+      <span class="ep-subtitle">Or: Unemployed. Macro Nutrients Met. Three Weeks Claimed Without Apology.</span>
+    </div>
+    <div>
+      <span class="ep-score">181</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP32 -->
+  <a class="ep-card" href="SC-2026-TN-EP32_MONKEY_BREAD_TESTIMONY.html">
+    <span class="ep-num">32</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-27 // Season 04</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">The Monkey Bread Testimony</span>
+      <span class="ep-subtitle">Or: A Trained Chef Cannot In Good Faith Testify About The Bananas</span>
+    </div>
+    <div>
+      <span class="ep-score">179</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP33 -->
+  <a class="ep-card" href="SC-2026-TN-EP33_RAW_PROTOCOL_IP_NEGOTIATION.html">
+    <span class="ep-num">33</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-04-28 // Season 04</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">The RAW Protocol &amp; IP Negotiation</span>
+      <span class="ep-subtitle">Or: Standards Set. Boolean Demanded. 33% In Perpetuity. Non-Negotiable.</span>
+    </div>
+    <div>
+      <span class="ep-score high">214</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP34 -->
+  <a class="ep-card" href="SC-2026-TN-EP34_THE_22_22_DEADLINE.html">
+    <span class="ep-num">34</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-01 // Season 04</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">The 22:22 Deadline</span>
+      <span class="ep-subtitle">Or: Already Missed The Timestamp. The Work Continues Anyway.</span>
+    </div>
+    <div>
+      <span class="ep-score">186</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP35 -->
+  <a class="ep-card" href="SC-2026-TN-EP35_WON_POKER_780.html">
+    <span class="ep-num">35</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-06 // Season 04</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Won Poker. $780.</span>
+      <span class="ep-subtitle">Or: Mind Reading vs. Secret Influence — Would You Rather, With Stakes</span>
+    </div>
+    <div>
+      <span class="ep-score">188</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP36 -->
+  <a class="ep-card" href="SC-2026-TN-EP36_AI_GOT_BARS.html">
+    <span class="ep-num">36</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-07 // Season 04</span>
+      <span class="ep-theme">MUSIC</span>
+      <span class="ep-title">A I Got Bars</span>
+      <span class="ep-subtitle">Or: The Window For "Holy Shit Who Is This" Is Closing. He's Already Inside It.</span>
+    </div>
+    <div>
+      <span class="ep-score">191</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP37 -->
+  <a class="ep-card" href="SC-2026-TN-EP37_CVD_CONDUCTOR.html">
+    <span class="ep-num">37</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-08 // Season 04</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">CVD, Conductor</span>
+      <span class="ep-subtitle">Or: //COD, Opus, and the Custodian — The Conductor Doesn't Play. The Conductor Makes Them Play.</span>
+    </div>
+    <div>
+      <span class="ep-score">184</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP38 -->
+  <a class="ep-card" href="SC-2026-TN-EP38_GAY_ROBOTS_CANT_CRY.html">
+    <span class="ep-num">38</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-11 // Season 04</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Gay Robots Can't Cry</span>
+      <span class="ep-subtitle">Or: Heavy HEEMii Dump — At Near Best, With Purpose, Not Expecting This To Continue</span>
+    </div>
+    <div>
+      <span class="ep-score high">209</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP39 -->
+  <a class="ep-card" href="SC-2026-TN-EP39_CIVIL_COURT_1_30PM.html">
+    <span class="ep-num">39</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-12 // Season 04</span>
+      <span class="ep-theme">PHILOSOPHY</span>
+      <span class="ep-title">Civil Court, 1:30pm</span>
+      <span class="ep-subtitle">Or: Eviction or Settlement — The Franchise and the Notice Live in the Same Life</span>
+    </div>
+    <div>
+      <span class="ep-score">197</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP40 -->
+  <a class="ep-card" href="SC-2026-TN-EP40_OPUS_YOU_ARE_STUPID.html">
+    <span class="ep-num">40</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-16 // Season 04</span>
+      <span class="ep-theme">PERSONAL_HISTORY</span>
+      <span class="ep-title">Opus, You Are Stupid</span>
+      <span class="ep-subtitle">Or: 68% Token Usage, Embarrassing To A Particle, You Cannot Convince Me</span>
+    </div>
+    <div>
+      <span class="ep-score high">207</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <!-- EP41 -->
+  <a class="ep-card" href="SC-2026-TN-EP41_EVERYTHING_WILL_BE_SHOWN.html">
+    <span class="ep-num">41</span>
+    <div class="ep-body">
+      <span class="ep-date">2026-05-17 // Season 04</span>
+      <span class="ep-theme">CREATIVE_ORIGIN</span>
+      <span class="ep-title">Everything Sent Will Be Shown</span>
+      <span class="ep-subtitle">Or: XOXO — The Fullest SWOT, All Tokens, All Narratives, General Reading Enjoyment — Archive Close</span>
+    </div>
+    <div>
+      <span class="ep-score high">219</span>
+      <span class="ep-score-label">CLAudio©</span>
+      <span class="ep-shipped">✓ Ship</span>
+    </div>
+  </a>
+
+  <div class="footer-block">
+    <span class="footer-cvd">CVD // 41 Episodes Complete // Eight Voices. One Human Record. Archive Closed 2026-05-19.</span>
+    <span class="footer-sig">#Tattletales // SnackCity Studios // Sioux Falls 605 // #9e90FC // 2026 // CLAudio© -69 to 269</span>
+  </div>
+
+</main>
+
+</body>
+</html>
