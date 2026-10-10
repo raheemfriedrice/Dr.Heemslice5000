@@ -1,0 +1,29 @@
+[
+  {
+    "id": "track-01",
+    "title": "Track 01",
+    "subtitle": "Coming Soon",
+    "file": "assets/audio/track-01.mp3",
+    "artwork": "assets/images/drop-01.png",
+    "duration": null,
+    "released": false
+  },
+  {
+    "id": "track-02",
+    "title": "Track 02",
+    "subtitle": "Coming Soon",
+    "file": "assets/audio/track-02.mp3",
+    "artwork": "assets/images/drop-02.png",
+    "duration": null,
+    "released": false
+  },
+  {
+    "id": "track-03",
+    "title": "Track 03",
+    "subtitle": "Coming Soon",
+    "file": "assets/audio/track-03.mp3",
+    "artwork": "assets/images/drop-03.png",
+    "duration": null,
+    "released": false
+  }
+]
