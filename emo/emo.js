@@ -342,8 +342,15 @@ function burst() {
 
 // ── Boot ─────────────────────────────────────────────────────
 function init() {
-  if (IS_APP) $('tip').hidden = true;
-  buildGenesis();
+  if (IS_APP) {
+    // Store-app build: hide the tip (store payment rules) and the Genesis
+    // list (user-generated-style content shipped inside the binary is what
+    // reviewers judge). The website keeps both intact.
+    $('tip').hidden = true;
+    const gc = $('genesis-card'); if (gc) gc.hidden = true;
+  } else {
+    buildGenesis();
+  }
 
   const lock = readLock();
   if (lock && lock.name) {
