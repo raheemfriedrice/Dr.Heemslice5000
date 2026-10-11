@@ -1,0 +1,6 @@
+<svg viewBox="0 0 1000 1000">
+    <defs><path id="c" d="M500,500 m-360,0 a360,360 0 1,1 720,0 a360,360 0 1,1 -720,0"/></defs>
+    <circle cx="500" cy="500" r="440" fill="none" stroke="#ff6b00" stroke-width="18"/>
+    <circle cx="500" cy="500" r="300" fill="#ff6b00"/>
+    <text font-family="Bebas Neue" font-size="78" fill="#ff6b00"><textPath href="#c" startOffset="0" textLength="2240" lengthAdjust="spacing">SNACKMASTER RICE · DR. HEEMSLICE 5000 · 605 ·</textPath></text>
+    <text x="500" y="575" text-anchor="middle" font-family="Bebas Neue" font-size="260" fill="#080808">SMR</text></svg>
