@@ -12,3 +12,4 @@ node_modules/
 
 # Netlify CLI link state (never commit)
 .netlify/
+_site/

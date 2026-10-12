@@ -1,8 +1,9 @@
-# Static site: no build step. Netlify serves the repo root as-is,
-# the same files GitHub Pages serves.
+# Static site: no build step beyond copying. The visible site files go
+# into _site/ and only that folder is published, so hidden folders like
+# .git and .github can never be served. Same files GitHub Pages serves.
 [build]
-  publish = "."
-  command = "echo 'Static site: nothing to build.'"
+  publish = "_site"
+  command = "rm -rf _site && mkdir _site && find . -mindepth 1 -maxdepth 1 ! -name '.*' ! -name _site ! -name netlify.toml -exec cp -r {} _site/ \\;"
 
 # Service workers must always be re-checked. If a CDN caches one,
 # phones keep running the old app and never see an update.
