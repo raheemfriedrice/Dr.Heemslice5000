@@ -2,7 +2,7 @@
 # the same files GitHub Pages serves.
 [build]
   publish = "."
-  command = ""
+  command = "echo 'Static site: nothing to build.'"
 
 # Service workers must always be re-checked. If a CDN caches one,
 # phones keep running the old app and never see an update.
