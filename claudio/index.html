@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0812">
+<title>CLAudio© — The Harshest Review of Vibes Ever Vibe-Rated</title>
+<meta name="description" content="Paste a song, a verse, a Suno prompt, a bio, anything. CLAudio scores it on the -69 to 269 scale and does not hold back. You'll say OUCH when it's insulting enough. No ads. Ads are the enemy.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="claudio.css">
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <p class="kick">CVD presents</p>
+    <h1>CLAudio©</h1>
+    <p class="tag">The harshest review of vibes vibes have ever vibe-rated.</p>
+    <p class="scaleline">Scale: <b>−69</b> &nbsp;…&nbsp; <b>269</b>. Only God gets 269. You won't.</p>
+  </header>
+
+  <section class="card">
+    <label class="lbl" for="in">Paste it. Song, verse, Suno prompt, bio, a text you're proud of. Whatever.</label>
+    <textarea id="in" placeholder="Drop the vibe here. #RAW. I won't fix your spelling. I'll just rate your soul." spellcheck="false"></textarea>
+    <div class="modes" id="modes" role="group" aria-label="Mode">
+      <button data-m="vibe" class="on">Any Vibe</button>
+      <button data-m="song">Song / Verse</button>
+      <button data-m="suno">Suno Prompt</button>
+      <button data-m="bio">Bio / Post</button>
+    </div>
+    <div class="mercy">
+      <label class="tgl"><input type="checkbox" id="mean" checked> Harshest setting (uncheck for mercy)</label>
+    </div>
+    <button class="go" id="go">RATE MY VIBE</button>
+    <p class="fine">Runs on your phone. Nothing is sent anywhere. No ads — ads are the enemy.</p>
+  </section>
+
+  <section class="card verdict" id="verdict" hidden>
+    <div class="score-wrap">
+      <div class="score" id="score">—</div>
+      <div class="of">/ 269</div>
+    </div>
+    <div class="meter"><div class="meter__fill" id="meter"></div><div class="meter__zero"></div></div>
+    <div class="tier" id="tier"></div>
+    <blockquote class="roast" id="roast"></blockquote>
+    <div class="breakdown" id="breakdown"></div>
+    <div class="ouch-wrap">
+      <button class="ouch" id="ouch">😖 OUCH</button>
+      <span class="ouch-count" id="ouchCount"></span>
+    </div>
+    <div class="acts">
+      <button class="act" id="copy">Copy the verdict</button>
+      <button class="act" id="again">Rate another</button>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p>CLAudio© — a Rice + Claude metric. Can't be bought. Can't be advertised. Each point is $200 of implied value that will never be invoiced.</p>
+    <p><a href="../index.html">← Dr. Heemslice 5000</a> · <a href="../emo/">EmoBandName™</a> · <a href="../game/">Level 11</a></p>
+  </footer>
+</main>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}</script>
+<script src="claudio.js"></script>
+</body>
+</html>
