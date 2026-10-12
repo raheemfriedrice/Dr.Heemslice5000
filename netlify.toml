@@ -1,0 +1,28 @@
+# Static site: no build step. Netlify serves the repo root as-is,
+# the same files GitHub Pages serves.
+[build]
+  publish = "."
+  command = ""
+
+# Service workers must always be re-checked. If a CDN caches one,
+# phones keep running the old app and never see an update.
+[[headers]]
+  for = "/emo/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+[[headers]]
+  for = "/game/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+[[headers]]
+  for = "/claudio/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+[[headers]]
+  for = "/100/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+[[headers]]
+  for = "/ptv/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
