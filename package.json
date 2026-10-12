@@ -1,0 +1,12 @@
+{
+  "name": "dr-heemslice5000",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SnackMaster RICE — Dr. Heemslice 5000 official site",
+  "scripts": {
+    "lint": "htmlhint index.html claudit/index.html oo0/index.html"
+  },
+  "devDependencies": {
+    "htmlhint": "^1.1.4"
+  }
+}

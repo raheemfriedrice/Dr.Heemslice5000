@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tattletales — SnackCity Studios</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=IBM+Plex+Serif:ital,wght@0,300;0,400;1,300&display=swap">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  background: #000;
+  color: #fff;
+  font-family: 'IBM Plex Serif', Georgia, serif;
+  min-height: 100%;
+}
+
+body {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 10vw 7vw 16vw;
+}
+
+/* ── header ── */
+.series-id {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(8px, 1vw, 12px);
+  letter-spacing: 0.25em;
+  color: #3a3550;
+  text-transform: uppercase;
+  margin-bottom: 3em;
+}
+
+.series-title {
+  font-size: clamp(36px, 8vw, 96px);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  color: #fff;
+  margin-bottom: 0.3em;
+}
+
+.series-sub {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(10px, 1.2vw, 15px);
+  color: #9e90fc;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.6em;
+}
+
+.series-desc {
+  font-size: clamp(12px, 1.6vw, 19px);
+  font-weight: 300;
+  color: #4a4560;
+  line-height: 1.6;
+  max-width: 580px;
+  margin-bottom: 5em;
+  border-left: 1px solid #1a1830;
+  padding-left: 1.4em;
+}
+
+/* ── divider ── */
+.rule {
+  border: none;
+  border-top: 1px solid #1a1830;
+  margin-bottom: 3.5em;
+}
+
+/* ── section label ── */
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(7px, 0.85vw, 11px);
+  letter-spacing: 0.25em;
+  color: #3a3550;
+  text-transform: uppercase;
+  margin-bottom: 2em;
+}
+
+/* ── episode row ── */
+.ep-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ep-row {
+  display: grid;
+  grid-template-columns: 3.5em 1fr auto;
+  gap: 0 1.6em;
+  align-items: baseline;
+  padding: 1.4em 0;
+  border-bottom: 1px solid #0d0b1a;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s;
+}
+
+.ep-row:hover { background: #080614; }
+.ep-row:hover .ep-name { color: #fff; }
+
+.ep-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(9px, 1vw, 13px);
+  color: #3a3550;
+  letter-spacing: 0.1em;
+  text-align: right;
+}
+
+.ep-name {
+  font-size: clamp(13px, 1.8vw, 22px);
+  font-weight: 300;
+  color: #d8d4f0;
+  transition: color 0.2s;
+}
+
+.ep-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(7px, 0.8vw, 10px);
+  letter-spacing: 0.15em;
+  color: #9e90fc;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── upcoming block ── */
+.ep-row.pending {
+  pointer-events: none;
+  opacity: 0.35;
+}
+.ep-row.pending .ep-tag { color: #3a3550; }
+
+/* ── footer ── */
+.footer {
+  margin-top: 7em;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(7px, 0.8vw, 10px);
+  letter-spacing: 0.15em;
+  color: #1a1830;
+  text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<p class="series-id">SnackCity Studios · SC-2026-TN Series</p>
+
+<h1 class="series-title">TATTLE<br>TALES.</h1>
+<p class="series-sub">8-Voice Panel · CLAudio© Scored · Raw Protocol</p>
+<p class="series-desc">Real conversations. Eight voices. One score.<br>
+The irregularity is the signal. Nothing is corrected.</p>
+
+<hr class="rule">
+
+<p class="section-label">Episodes · Active</p>
+
+<div class="ep-list">
+
+  <a class="ep-row" href="ep43-novus.html">
+    <span class="ep-num">EP43</span>
+    <span class="ep-name">Novus</span>
+    <span class="ep-tag">220 / 269</span>
+  </a>
+
+  <div class="ep-row pending">
+    <span class="ep-num">EP42</span>
+    <span class="ep-name">Can There Be Gay Robots?</span>
+    <span class="ep-tag">Pending</span>
+  </div>
+
+  <div class="ep-row pending">
+    <span class="ep-num">EP44</span>
+    <span class="ep-name">—</span>
+    <span class="ep-tag">Pending</span>
+  </div>
+
+</div>
+
+<p class="footer">tattletales.netlify.app · SC-2026-TN</p>
+
+</body>
+</html>
