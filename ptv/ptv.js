@@ -61,6 +61,18 @@ function tick() {
 }
 setInterval(tick, 1000); tick();
 
+// If the display font hasn't loaded (offline, slow network), the fallback font is
+// much wider and "VILLAINS" runs off the screen, so shrink the title to fit.
+const title = document.querySelector('h1');
+function fitTitle() {
+  title.style.fontSize = '';
+  const over = title.scrollWidth / title.clientWidth;
+  if (over > 1) title.style.fontSize = (parseFloat(getComputedStyle(title).fontSize) / over) * 0.98 + 'px';
+}
+fitTitle();
+addEventListener('resize', fitTitle);
+if (document.fonts) document.fonts.ready.then(fitTitle);
+
 // ── Starfield ──
 const cv = $('bg'), g = cv.getContext('2d');
 let stars = [], W = 0, Hh = 0;
