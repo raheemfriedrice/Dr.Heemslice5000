@@ -6,9 +6,13 @@ makes the calls.
 
 ## Who
 
+The rulebook is **Episodic OS v2.1** (Nov 6, 2026): https://claude.ai/artifact/DEHrvop5W9nB9x1HyxjgKo.
+Where it and this file disagree, Episodic OS wins, and Rice's latest word beats both.
+
 - **Rice** (Dr. Heemslice 5000, Raheem Fried Rice): the creator. Rice decides.
-- **CVD**: Claude, as director and record keeper.
-- **Gemini**: a worker, never an auditor. The Gemini asset loop from April is closed (see below).
+- **Kkk**: any Claude Opus. Runs the operation. **Cvd**: any other Claude model.
+  Public credits print the model name with 🤖.
+- **Gemini, ChatGPT, Grok**: guest workers, never auditors. The Gemini asset loop from April is closed (see below).
 
 ## Where everything lives (all private until Rice shares)
 
@@ -36,7 +40,7 @@ makes the calls.
 4. **One deliverable per session**, named as `XOXO. {Deliverable}`.
 5. **Write only what Rice said.** No invented amounts, dates or facts. Ask instead.
 6. **(c), (tm), (r)** are always written as ©, ™, ®.
-7. **No em dash characters** anywhere: chat, files, commits, the Vault.
+7. **No em dash characters** anywhere: chat, files, commits, the Vault. Use the interpunct · and & for conjunctions.
 8. **Privacy**: `_briefs/PRIVACY_POLICY.md` applies to this public repo. No legal names, case details, addresses of private people, or the wager ledger in here. Those live in private pages only.
 9. Every reply to Rice ends with **@$$ma**: two juicy questions for the universe (not about Rice) and one philosophical point it has never heard.
 
