@@ -18,6 +18,9 @@
 /* ---- Page ---- */
 .dtp-page { background: var(--clr-bg); }
 
+/* Component display rules (e.g. flex cards) would otherwise override the hidden attribute */
+.dtp-page [hidden] { display: none !important; }
+
 /* =====================================================
    HERO
    ===================================================== */
@@ -486,6 +489,92 @@ h3 .t-mean {
 .dtp-restart { margin-top: 0.75rem; align-self: flex-start; }
 
 /* =====================================================
+   SHARE + SIGNUP
+   ===================================================== */
+.dtp-share,
+.dtp-signup {
+  max-width: 680px;
+  margin: 1.5rem auto 0;
+  padding: 2rem 2.5rem;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dtp-share__label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--clr-accent);
+}
+
+.mean-mode .dtp-share__label { color: var(--clr-mean); }
+
+.dtp-share__preview {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  color: var(--clr-white);
+}
+
+.dtp-share__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.dtp-share__status {
+  font-size: 0.85rem;
+  color: var(--clr-muted);
+  min-height: 1.2em;
+  overflow-wrap: anywhere;
+}
+
+.dtp-signup__sub {
+  font-size: 0.95rem;
+  color: var(--clr-muted);
+  line-height: 1.7;
+}
+
+.dtp-signup__row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.dtp-signup__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.875rem 1rem;
+  background: var(--clr-bg);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius);
+  color: var(--clr-white);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+
+.dtp-signup__input:focus {
+  outline: none;
+  border-color: var(--clr-accent);
+}
+
+.mean-mode .dtp-signup__input:focus { border-color: var(--clr-mean); }
+
+.dtp-signup__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* =====================================================
    RESPONSIVE
    ===================================================== */
 @media (max-width: 640px) {
@@ -493,4 +582,7 @@ h3 .t-mean {
   .dtp-result__card { padding: 2rem 1.5rem; }
   .dtp-q__text      { margin-bottom: 1.5rem; }
   .dtp-mode-toggle  { flex-direction: column; }
+  .dtp-share,
+  .dtp-signup       { padding: 1.5rem; }
+  .dtp-signup__row  { flex-direction: column; }
 }

@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="#DrownthatPuppy™ — A tool to help you decide: Hot or Cold?" />
+  <meta property="og:title" content="#DrownthatPuppy™ — Hot water or cold?" />
+  <meta property="og:description" content="Six questions. One verdict. For every good boy who still thinks there's a chance." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
   <title>#DrownthatPuppy™ | Dr. Heemslice 5000</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -390,6 +394,30 @@
 
           <button class="btn btn--ghost dtp-restart" id="restartBtnLukewarm">Take it again</button>
         </div>
+
+        <!-- SHARE -->
+        <div class="dtp-share">
+          <p class="dtp-share__label">Send it to the group chat</p>
+          <p class="dtp-share__preview" id="sharePreview"></p>
+          <div class="dtp-share__actions">
+            <button class="btn btn--primary" id="shareBtn">Share my result</button>
+            <a class="btn btn--ghost" id="shareX" target="_blank" rel="noopener">Post on X</a>
+          </div>
+          <p class="dtp-share__status" id="shareStatus" aria-live="polite"></p>
+        </div>
+
+        <!-- EMAIL CAPTURE -->
+        <form class="dtp-signup" id="signupForm">
+          <p class="dtp-share__label">Get the next drop first</p>
+          <p class="dtp-signup__sub">New editions, merch, and the full #DrownthatPuppy&trade; playbook. No spam &mdash; we're not him.</p>
+          <div class="dtp-signup__row">
+            <label class="dtp-signup__sr" for="signupEmail">Email</label>
+            <input class="dtp-signup__input" id="signupEmail" name="email" type="email" required placeholder="you@email.com" autocomplete="email" />
+            <input type="hidden" name="result" id="signupResult" />
+            <button class="btn btn--primary" type="submit">I'm in</button>
+          </div>
+          <p class="dtp-share__status" id="signupStatus" aria-live="polite"></p>
+        </form>
 
       </div>
 

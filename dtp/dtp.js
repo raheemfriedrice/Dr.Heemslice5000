@@ -9,6 +9,26 @@
   const STATS_KEY  = "dtp_stats";
   const ADVANCE_MS = 2000;
 
+  /* Paste a Formspree / Buttondown / Kit form endpoint here to collect emails.
+     While empty, signups fall back to a pre-filled email to the contact inbox. */
+  const SIGNUP_ENDPOINT = "";
+  const FALLBACK_INBOX  = "hello@snackmasterrice.com";
+
+  const SHARE_TEXT = {
+    "result-hot": {
+      nice: "I got HOT WATER on #DrownthatPuppy™. One kind, honest conversation and we're good.",
+      mean: "#DrownthatPuppy™ said HOT WATER: one sentence, out loud, today. Then I walk away.",
+    },
+    "result-cold": {
+      nice: "I got COLD WATER on #DrownthatPuppy™. My peace comes first.",
+      mean: "#DrownthatPuppy™ looked at me and said \"Baby. Stop. Engaging.\" COLD WATER.",
+    },
+    "result-lukewarm": {
+      nice: "I got LUKEWARM on #DrownthatPuppy™. One real conversation, then I'll know.",
+      mean: "#DrownthatPuppy™ said I already know and I'm just procrastinating. It's right.",
+    },
+  };
+
   /* Seed data — realistic initial pool so stats feel live from day one.
      Q1 includes value 4 = "two nostrils" option. */
   const SEED = {
@@ -32,6 +52,7 @@
 
   let scores  = [];
   let isMean  = false;
+  let currentResultId = null;
 
   /* ============================================================
      MODE TOGGLE
@@ -44,6 +65,7 @@
     modeMean.classList.toggle("dtp-mode-btn--active",  mean);
 
     if (meanBanner) meanBanner.hidden = !mean;
+    if (currentResultId) prepareShare(currentResultId);
   }
 
   modeNice?.addEventListener("click", () => setMode(false));
@@ -189,6 +211,7 @@
     else                    id = "result-lukewarm";
 
     document.getElementById(id).hidden = false;
+    prepareShare(id);
 
     const navH = document.getElementById("nav")?.offsetHeight || 72;
     const top  = result.getBoundingClientRect().top + window.scrollY - navH - 24;
@@ -196,10 +219,85 @@
   }
 
   /* ============================================================
+     SHARE
+     ============================================================ */
+  const shareBtn     = document.getElementById("shareBtn");
+  const shareX       = document.getElementById("shareX");
+  const sharePreview = document.getElementById("sharePreview");
+  const shareStatus  = document.getElementById("shareStatus");
+  const pageUrl      = location.origin + location.pathname;
+
+  let shareText = "";
+
+  function prepareShare(resultId) {
+    currentResultId = resultId;
+    shareText = SHARE_TEXT[resultId][isMean ? "mean" : "nice"];
+    sharePreview.textContent = "“" + shareText + "”";
+    shareStatus.textContent  = "";
+    shareX.href = "https://twitter.com/intent/tweet?text=" +
+      encodeURIComponent(shareText) + "&url=" + encodeURIComponent(pageUrl);
+    document.getElementById("signupResult").value = resultId.replace("result-", "") +
+      (isMean ? " (mean)" : "");
+  }
+
+  shareBtn?.addEventListener("click", async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "#DrownthatPuppy™", text: shareText, url: pageUrl });
+        return;
+      } catch (err) {
+        if (err.name === "AbortError") return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(shareText + " " + pageUrl);
+      shareStatus.textContent = "Copied. Paste it in the group chat.";
+    } catch (_) {
+      shareStatus.textContent = shareText + " " + pageUrl;
+    }
+  });
+
+  /* ============================================================
+     EMAIL SIGNUP
+     ============================================================ */
+  const signupForm   = document.getElementById("signupForm");
+  const signupStatus = document.getElementById("signupStatus");
+
+  signupForm?.addEventListener("submit", async e => {
+    e.preventDefault();
+    const data = new FormData(signupForm);
+
+    if (!SIGNUP_ENDPOINT) {
+      const body = "Add me to the #DrownthatPuppy list.\n\nEmail: " + data.get("email") +
+        "\nMy result: " + data.get("result");
+      location.href = "mailto:" + FALLBACK_INBOX +
+        "?subject=" + encodeURIComponent("#DrownthatPuppy signup") +
+        "&body=" + encodeURIComponent(body);
+      signupStatus.textContent = "Your email app should open. Hit send and you're on the list.";
+      return;
+    }
+
+    signupStatus.textContent = "Sending...";
+    try {
+      const res = await fetch(SIGNUP_ENDPOINT, {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+      if (!res.ok) throw new Error(res.status);
+      signupForm.reset();
+      signupStatus.textContent = "You're in. Next drop hits your inbox first.";
+    } catch (_) {
+      signupStatus.textContent = "That didn't go through. Try again in a sec.";
+    }
+  });
+
+  /* ============================================================
      RESTART
      ============================================================ */
   function restart() {
     scores = [];
+    currentResultId = null;
     document.querySelectorAll(".dtp-result__card").forEach(c => (c.hidden = true));
     clearStatBars();
     result.hidden = true;
