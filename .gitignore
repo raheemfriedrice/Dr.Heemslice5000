@@ -9,3 +9,7 @@ Thumbs.db
 
 # Node (if we add a build tool later)
 node_modules/
+
+# Netlify CLI link state (never commit)
+.netlify/
+_site/

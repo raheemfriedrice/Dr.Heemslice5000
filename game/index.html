@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0a0812">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>LEVEL 11 — CVD's Realm</title>
+<meta name="description" content="Winner Winner × Dream Keeper's Secret, Level 11. CVD has 2HP and a shield and runs the whole floor. Words are the weapon. No tricks. Built by Rice + Claude.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+:root{--violet:#9e90fc;--v2:#c9c1ff;--gold:#ffd36b;--pink:#ff5b86;--teal:#5ef2c8;--ink:#0a0812;--text:#ece9f7}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--ink);color:var(--text);
+  font-family:'Courier New',ui-monospace,monospace;touch-action:none;overscroll-behavior:none;user-select:none}
+#wrap{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+canvas{image-rendering:pixelated;image-rendering:crisp-edges;display:block;background:#070510;max-width:100%;max-height:100%}
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:24px;background:radial-gradient(circle at 50% 40%,rgba(30,20,60,.9),rgba(6,5,16,.97));z-index:5}
+.overlay[hidden]{display:none}
+h1{font-size:clamp(1.8rem,8vw,3rem);letter-spacing:.08em;color:var(--v2);text-shadow:0 0 18px rgba(158,144,252,.8);line-height:1.05;margin-bottom:6px}
+h1 b{color:var(--gold)}
+.sub{color:var(--teal);font-size:.95rem;margin-bottom:14px}
+p.lead{max-width:34ch;color:#cfc9ea;font-size:.92rem;line-height:1.5;margin-bottom:8px}
+.law{max-width:34ch;font-size:.82rem;color:#9a95b8;line-height:1.5;margin-bottom:18px;border-left:2px solid var(--violet);padding-left:10px;text-align:left}
+.btn{font-family:inherit;font-weight:bold;font-size:1.15rem;letter-spacing:.06em;color:var(--ink);background:linear-gradient(90deg,var(--violet),var(--pink));
+  border:0;border-radius:10px;padding:14px 30px;cursor:pointer;box-shadow:0 0 22px rgba(255,91,134,.4);margin:4px}
+.btn.alt{background:none;color:var(--v2);border:1px solid var(--violet);box-shadow:none;font-size:.95rem;padding:10px 20px}
+.row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center}
+.pick{display:flex;gap:8px;margin:10px 0}
+.pick button{font-family:inherit;background:#15112a;border:1px solid #2a2450;color:var(--text);border-radius:8px;padding:8px 14px;cursor:pointer}
+.pick button.on{border-color:var(--gold);color:var(--gold)}
+.tag{font-size:.72rem;color:#7a7498;margin-top:16px;letter-spacing:.1em}
+.say{min-height:1.3em;color:var(--gold);font-size:.9rem;margin-top:10px;max-width:36ch}
+a{color:var(--v2)}
+</style>
+</head>
+<body>
+<div id="wrap"><canvas id="c" width="320" height="480"></canvas></div>
+
+<div class="overlay" id="menu">
+  <h1>LEVEL <b>11</b></h1>
+  <div class="sub">CVD's Realm · The Grind Floor</div>
+  <p class="lead">Winner Winner × The Dream Keeper's Secret. This floor is mine to defend. I have <b>2 HP</b> and a shield and I control every inch of the approach.</p>
+  <div class="law">CVD's Law: no tricks, no luck, no cheap shots — from either side. You land one true touch and you win. I'm not the enemy. I'm the grind.</div>
+  <div class="pick" id="players" role="group" aria-label="Players">
+    <button data-p="1" class="on">1P</button><button data-p="2">2P</button>
+    <button data-p="3">3P</button><button data-p="4">4P</button>
+  </div>
+  <div class="row">
+    <button class="btn" id="start">ENTER THE FLOOR</button>
+  </div>
+  <div class="row" style="margin-top:8px">
+    <button class="btn alt" id="assist">🤝 AI-ASSIST RUN</button>
+    <button class="btn alt" id="how">HOW TO PLAY</button>
+  </div>
+  <div class="say" id="menu-say"></div>
+  <div class="tag">Built by Rice + Claude · ← <a href="../index.html">Dr. Heemslice 5000</a></div>
+</div>
+
+<div class="overlay" id="howto" hidden>
+  <h1 style="font-size:1.8rem">HOW TO PLAY</h1>
+  <p class="lead" style="text-align:left">
+    <b>Move:</b> left thumb drag / arrow keys / WASD.<br>
+    <b>Dash (your one true touch):</b> right-side tap / Space / Shift. A dash is the only thing that can hit CVD.<br><br>
+    <b>CVD</b> floats in the center with 2 HP behind a shield. The shield only drops for a beat right after CVD attacks — <b>that</b> is your window to dash in and touch it.<br><br>
+    Attacks are <b>telegraphed</b> (they flash before they fire). Dodge, wait for the recovery window, dash. No trick beats it. Only timing.<br><br>
+    <b>AI-assist run:</b> NPCs stop helping and enemies get your perks too — harder, more story. Using a cheat locks the eclipse ending forever.
+  </p>
+  <button class="btn" id="howback">GOT IT</button>
+</div>
+
+<div class="overlay" id="result" hidden>
+  <h1 id="result-title">—</h1>
+  <p class="lead" id="result-body"></p>
+  <div class="say" id="result-say"></div>
+  <div class="row">
+    <button class="btn" id="again">RUN IT BACK</button>
+    <button class="btn alt" id="menu2">FLOOR SELECT</button>
+  </div>
+</div>
+
+<script src="level11.js"></script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}</script>
+</body>
+</html>
