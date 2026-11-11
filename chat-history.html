@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dr. Heemslice · Chat History</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:#07070c; --panel:#0e0e16; --panel2:#13131f;
+  --border:#1c1c2e; --muted:#4a4a60; --white:#e4e4f0;
+  --aqua:#9e90fc; --aqua-dim:rgba(158,144,252,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--white);font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.7;overflow-x:hidden}
+
+/* scanline */
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(158,144,252,0.005) 2px,rgba(158,144,252,0.005) 4px);pointer-events:none;z-index:9999}
+
+/* HEADER */
+.hdr{padding:52px 56px 40px;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hdr::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 100%,rgba(158,144,252,0.07) 0%,transparent 55%),radial-gradient(ellipse at 100% 0%,rgba(158,144,252,0.04) 0%,transparent 50%);pointer-events:none}
+.hdr-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--aqua);margin-bottom:14px}
+.hdr-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,8vw,96px);line-height:.92;letter-spacing:.02em}
+.hdr-title span{color:var(--aqua)}
+.hdr-sub{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.15em;margin-top:18px}
+
+/* STAT CHIPS */
+.stats{display:flex;flex-wrap:wrap;gap:24px;margin-top:36px}
+.stat{border-left:2px solid var(--aqua);padding-left:12px}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--aqua);line-height:1}
+.stat-l{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+/* STICKY NAV */
+.nav{position:sticky;top:0;z-index:100;background:#07070cee;backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;scrollbar-width:none;padding:0 56px}
+.nav::-webkit-scrollbar{display:none}
+.nav a{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding:14px 16px;white-space:nowrap;text-decoration:none;transition:color .15s}
+.nav a:hover{color:var(--white)}
+
+/* PAGE WRAP */
+.page{max-width:1100px;margin:0 auto;padding:0 56px 80px}
+
+/* SECTION */
+.sec{padding:48px 0 0;margin-bottom:56px}
+.sec-tag{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--aqua);padding:.3rem .8rem;border:1px solid var(--aqua-dim);display:inline-block;margin-bottom:1.2rem}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,4vw,44px);line-height:1;margin-bottom:1.5rem}
+
+/* MONTH BARS */
+.month-bar{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.month-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);width:70px;text-align:right;flex-shrink:0}
+.month-track{flex:1;height:6px;background:var(--panel2);border-radius:3px;overflow:hidden}
+.month-fill{height:100%;background:var(--aqua);border-radius:3px;transition:width .4s}
+.month-count{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--aqua);width:24px;flex-shrink:0}
+
+/* ANCHOR BARS */
+.anchor-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.anchor-name{font-family:'IBM Plex Mono',monospace;font-size:10px;width:140px;flex-shrink:0;text-align:right}
+.anchor-track{flex:1;height:8px;background:var(--panel2);border-radius:4px;overflow:hidden}
+.anchor-fill{height:100%;border-radius:4px}
+.anchor-count{font-family:'IBM Plex Mono',monospace;font-size:11px;width:28px;flex-shrink:0;font-weight:600}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin-top:16px}
+table{width:100%;border-collapse:collapse}
+thead tr{border-bottom:1px solid var(--aqua-dim)}
+th{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--aqua);padding:10px 14px;text-align:left;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+tbody tr:hover{background:var(--panel)}
+td{padding:10px 14px;vertical-align:middle}
+.td-date{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap}
+.td-name{font-size:13px;color:var(--white);max-width:360px}
+.td-turns{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--muted);white-space:nowrap}
+.td-anchor{white-space:nowrap}
+.td-src{white-space:nowrap}
+
+/* BADGES */
+.badge{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:2px;border:1px solid;margin-right:4px;white-space:nowrap}
+.src-badge{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:2px;border:1px solid}
+.src-chat{background:rgba(158,144,252,.08);border-color:rgba(158,144,252,.3);color:var(--aqua)}
+.src-code{background:rgba(71,200,176,.08);border-color:rgba(71,200,176,.3);color:#47c8b0}
+
+/* SEARCH */
+.search-wrap{margin-bottom:20px}
+#search{width:100%;background:var(--panel);border:1px solid var(--border);color:var(--white);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:10px 16px;outline:none;border-radius:4px;transition:border-color .2s}
+#search:focus{border-color:var(--aqua)}
+#search::placeholder{color:var(--muted)}
+
+/* FILTER PILLS */
+.filter-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.fpill{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:99px;border:1px solid var(--border);color:var(--muted);cursor:pointer;transition:all .2s;background:transparent}
+.fpill.active{border-color:var(--aqua);color:var(--aqua);background:var(--aqua-dim)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:28px 0 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-top:40px}
+.footer-brand{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--aqua);letter-spacing:.05em}
+.footer-meta{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;line-height:2;text-align:right}
+
+@media(max-width:640px){
+  .hdr,.nav,.page{padding-left:20px;padding-right:20px}
+  .nav{padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-tag">Dr. Heemslice · SnackCity Studios · Session Archive</div>
+  <h1 class="hdr-title">Chat<br><span>History</span></h1>
+  <div class="hdr-sub">Claude.ai &amp; Claude Code · Full Conversation Archive · Compiled 2026-05-17</div>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">102</div><div class="stat-l">Total Sessions</div></div>
+    <div class="stat"><div class="stat-n">86</div><div class="stat-l">Claude.ai Chats</div></div>
+    <div class="stat"><div class="stat-n">16</div><div class="stat-l">Claude Code Sessions</div></div>
+    <div class="stat"><div class="stat-n">2947</div><div class="stat-l">Total Messages</div></div>
+    <div class="stat"><div class="stat-n">5</div><div class="stat-l">Franchise Anchors</div></div>
+  </div>
+</div>
+
+<nav class="nav">
+  <a href="#timeline">Timeline</a>
+  <a href="#anchors">By Anchor</a>
+  <a href="#all">All Sessions</a>
+</nav>
+
+<div class="page">
+
+  <!-- TIMELINE -->
+  <div class="sec" id="timeline">
+    <div class="sec-tag">Section 01 · Activity</div>
+    <div class="sec-title">Session Timeline</div>
+    <div class="month-bar">
+      <div class="month-label">2025-02</div>
+      <div class="month-track"><div class="month-fill" style="width:2%"></div></div>
+      <div class="month-count">1</div>
+    </div><div class="month-bar">
+      <div class="month-label">2026-02</div>
+      <div class="month-track"><div class="month-fill" style="width:24%"></div></div>
+      <div class="month-count">9</div>
+    </div><div class="month-bar">
+      <div class="month-label">2026-03</div>
+      <div class="month-track"><div class="month-fill" style="width:62%"></div></div>
+      <div class="month-count">23</div>
+    </div><div class="month-bar">
+      <div class="month-label">2026-04</div>
+      <div class="month-track"><div class="month-fill" style="width:100%"></div></div>
+      <div class="month-count">37</div>
+    </div><div class="month-bar">
+      <div class="month-label">2026-05</div>
+      <div class="month-track"><div class="month-fill" style="width:86%"></div></div>
+      <div class="month-count">32</div>
+    </div>
+  </div>
+
+  <!-- ANCHORS -->
+  <div class="sec" id="anchors">
+    <div class="sec-tag">Section 02 · Franchise</div>
+    <div class="sec-title">Anchor Distribution</div>
+    <div class="anchor-row">
+      <div class="anchor-name" style="color:#9e90fc">Raheem Fried Rice</div>
+      <div class="anchor-track"><div class="anchor-fill" style="width:100%;background:#9e90fc"></div></div>
+      <div class="anchor-count" style="color:#9e90fc">55</div>
+    </div><div class="anchor-row">
+      <div class="anchor-name" style="color:#ff6b8a">RR-</div>
+      <div class="anchor-track"><div class="anchor-fill" style="width:80%;background:#ff6b8a"></div></div>
+      <div class="anchor-count" style="color:#ff6b8a">44</div>
+    </div><div class="anchor-row">
+      <div class="anchor-name" style="color:#ff9547">Winner Winner</div>
+      <div class="anchor-track"><div class="anchor-fill" style="width:70%;background:#ff9547"></div></div>
+      <div class="anchor-count" style="color:#ff9547">39</div>
+    </div><div class="anchor-row">
+      <div class="anchor-name" style="color:#8a7fd4">Dream Keeper</div>
+      <div class="anchor-track"><div class="anchor-fill" style="width:69%;background:#8a7fd4"></div></div>
+      <div class="anchor-count" style="color:#8a7fd4">38</div>
+    </div><div class="anchor-row">
+      <div class="anchor-name" style="color:#7ec87e">Meyer</div>
+      <div class="anchor-track"><div class="anchor-fill" style="width:61%;background:#7ec87e"></div></div>
+      <div class="anchor-count" style="color:#7ec87e">34</div>
+    </div><div class="anchor-row">
+      <div class="anchor-name" style="color:#ffc847">Music/PTV</div>
+      <div class="anchor-track"><div class="anchor-fill" style="width:49%;background:#ffc847"></div></div>
+      <div class="anchor-count" style="color:#ffc847">27</div>
+    </div>
+  </div>
+
+  <!-- ALL SESSIONS TABLE -->
+  <div class="sec" id="all">
+    <div class="sec-tag">Section 03 · Full Archive</div>
+    <div class="sec-title">All Sessions</div>
+
+    <div class="search-wrap">
+      <input type="text" id="search" placeholder="Search by name, anchor, or date..." oninput="filterTable()">
+    </div>
+
+    <div class="filter-row" id="filters">
+      <span class="fpill active" onclick="setFilter(this,'all')">All</span>
+      <span class="fpill" onclick="setFilter(this,'chat')">Claude.ai</span>
+      <span class="fpill" onclick="setFilter(this,'code')">Claude Code</span>
+      <span class="fpill" onclick="setFilter(this,'RR-')">RR-</span>
+      <span class="fpill" onclick="setFilter(this,'Meyer')">Meyer</span>
+      <span class="fpill" onclick="setFilter(this,'Dream Keeper')">Dream Keeper</span>
+      <span class="fpill" onclick="setFilter(this,'Winner Winner')">Winner Winner</span>
+      <span class="fpill" onclick="setFilter(this,'Music/PTV')">Music/PTV</span>
+      <span class="fpill" onclick="setFilter(this,'Raheem Fried Rice')">Raheem Fried Rice</span>
+    </div>
+
+    <div class="tbl-wrap">
+      <table id="main-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Session Name</th>
+            <th>Source</th>
+            <th>Turns</th>
+            <th>Anchors</th>
+          </tr>
+        </thead>
+        <tbody id="tbl-body">
+          <tr>
+      <td class="td-date">2025-02-14</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-02-11</td>
+      <td class="td-name">Critical text analysis framework</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">26u / 26a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-02-17</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">0u / 0a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-02-17</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-02-17</td>
+      <td class="td-name">Prompt evaluation request</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">3u / 3a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-02-17</td>
+      <td class="td-name">Evaluating Raheem Fried Rice as an author</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">12u / 12a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-02-17</td>
+      <td class="td-name">Searching for thy lonely king</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-02-17</td>
+      <td class="td-name">Freestyle collaboration with Walker Rice</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">11u / 12a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-02-17</td>
+      <td class="td-name">Suno lyric customization request</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-02-26</td>
+      <td class="td-name">Finding your ideal programming paradigm</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">5u / 4a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-06</td>
+      <td class="td-name">Digitized journal from 2011-2013</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">5u / 3a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-10</td>
+      <td class="td-name">Text cleanup and formatting</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">5u / 5a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-10</td>
+      <td class="td-name">Reframing a heroic dose experience through five opposing perspectives</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">16u / 11a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-13</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-13</td>
+      <td class="td-name">Master pipeline for sprite-based animated stories</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">6u / 6a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-14</td>
+      <td class="td-name">Spiritual autobiography through narrative cohesion</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">4u / 4a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-14</td>
+      <td class="td-name">Integrating workflow files into autobiography metadata</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">5u / 5a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-15</td>
+      <td class="td-name">Memory update review</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-15</td>
+      <td class="td-name">Delegating projects to Gemini with perfection standards</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-20</td>
+      <td class="td-name">Getting started with Claude Pro</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-20</td>
+      <td class="td-name">Content pipeline consolidation and handover</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">78u / 78a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-24</td>
+      <td class="td-name">Mother's passing in accident</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-25</td>
+      <td class="td-name">Minnehaha County jail inmate search</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-25</td>
+      <td class="td-name">Greeting</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">5u / 5a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-29</td>
+      <td class="td-name">I will nipples to</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">5u / 3a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-29</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">12u / 9a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-30</td>
+      <td class="td-name">Mural Friday and family updates</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-30</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-30</td>
+      <td class="td-name">Medium sudoku race strategies</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-30</td>
+      <td class="td-name">Dream story episode opus</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 0a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-30</td>
+      <td class="td-name">Building trust in relationships</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-30</td>
+      <td class="td-name">Raheem fried rice audio transcription</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">3u / 3a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-03-30</td>
+      <td class="td-name">Facebook stories pipeline integration</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">18u / 18a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-01</td>
+      <td class="td-name">Reddit appeal successfully overturned</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">3u / 3a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-02</td>
+      <td class="td-name">Mis dump</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">15u / 15a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">0u / 0a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">0u / 0a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">Minnehaha County Jail roster app</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">0u / 0a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">0u / 0a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">Remix of Pettiness Meter App</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">0u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">Algorithmic art for pixel animation storytelling</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">4u / 4a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">Remix of Attachment Style Quiz</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">0u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">Remix of Minimalist Rhyming Clock</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">0u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">Remix of Origin Story Book</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">0u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">Remix of Professional Note Transformer</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">HTML overview and Gemini handover strategy</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">30-day inpatient Medicaid coverage options</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 3a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-03</td>
+      <td class="td-name">LLM sentience and agency thresholds</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">35u / 35a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-04</td>
+      <td class="td-name">Building a digitized self-perception profile</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">27u / 27a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-05</td>
+      <td class="td-name">Reviewing recent conversation highlights</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">6u / 6a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-07</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">0u / 0a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-07</td>
+      <td class="td-name">Mapping pivotal thinking moments</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-07</td>
+      <td class="td-name">Brand guidelines testing</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-08</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-08</td>
+      <td class="td-name">Snacktivities™ work schedule planning</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">63u / 63a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-09</td>
+      <td class="td-name">Managing large Google Takeout data export</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">3u / 3a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-10</td>
+      <td class="td-name">Formulaic Rice skill workflow with CVD</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">15u / 16a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-10</td>
+      <td class="td-name">Optimizing context windows with project-focused rules</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-10</td>
+      <td class="td-name">Pro 20x pricing and discount options</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">3u / 3a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-11</td>
+      <td class="td-name">Creating your true self portrait</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">3u / 3a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-14</td>
+      <td class="td-name">list recurring monthly payout ...</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-14</td>
+      <td class="td-name">Hitlist and assma</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-25</td>
+      <td class="td-name">1898 silver dollar appraisal</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-26</td>
+      <td class="td-name">PR bond assistance for sister's arrest</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-27</td>
+      <td class="td-name">Image clarification needed</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-27</td>
+      <td class="td-name">Dealing with frustration without escalating</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">4u / 4a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-27</td>
+      <td class="td-name">Sexual preferences and boundaries discussion</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">10u / 10a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-27</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">28u / 28a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-27</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-04-28</td>
+      <td class="td-name">Raw protocol and IP negotiation boundaries</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">38u / 38a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-01</td>
+      <td class="td-name">Multi-AI workflow coordination and task execution</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">29u / 29a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-01</td>
+      <td class="td-name">One human experience and time observation choice</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">34u / 34a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-04</td>
+      <td class="td-name">The Glitch and the five franchises</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">13u / 13a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-06</td>
+      <td class="td-name">Mind reading vs. secret influence dilemma</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">9u / 9a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-07</td>
+      <td class="td-name">AI music generation project with critical feedback</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">7u / 7a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-08</td>
+      <td class="td-name">Rice workflow skill documentation transfer</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">14u / 13a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-08</td>
+      <td class="td-name">Absurd music filter discovery</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">18u / 18a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-08</td>
+      <td class="td-name">Token refund request for sonnet chat</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-10</td>
+      <td class="td-name">Pocket of keys songwriting challenge</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">9u / 9a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-11</td>
+      <td class="td-name">Untitled</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">28u / 28a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-12</td>
+      <td class="td-name">Civil court eviction settlement today</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">6u / 6a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-16</td>
+      <td class="td-name">Hateful conduct policy and protected characteristics</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#333;color:#555">—</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-16</td>
+      <td class="td-name">Building a progressive web app</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">1u / 1a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-16</td>
+      <td class="td-name">Claudit© demonstration</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-16</td>
+      <td class="td-name">Rice workflow session structure and communication protocol</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">52u / 52a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-17</td>
+      <td class="td-name">Seeking clarity on life enrichment and human connection</td>
+      <td class="td-src"><span class="src-badge src-chat">Chat</span></td>
+      <td class="td-turns">2u / 2a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-02</td>
+      <td class="td-name">Create Claudit public tool for SWOT analysis</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">11u / 17a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-02</td>
+      <td class="td-name">Code Session 25a87631</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">23u / 36a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-02</td>
+      <td class="td-name">Code Session 52444dae</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">26u / 43a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-02</td>
+      <td class="td-name">Code Session 6bdd1831</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">33u / 52a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-02</td>
+      <td class="td-name">Code Session 80eb3704</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">25u / 40a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session 1da102f0</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">65u / 92a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session 2699ea0e</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">5u / 6a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session 312c2dba</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">38u / 49a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session 3d35ce49</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">72u / 105a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session 520f2869</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">16u / 21a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session 932a9fdb</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">76u / 108a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session ad0d5008</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">17u / 21a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session b4bccece</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">80u / 117a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session caa5f28d</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">6u / 8a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session d1dc15d3</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">35u / 45a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+<tr>
+      <td class="td-date">2026-05-09</td>
+      <td class="td-name">Code Session f399a878</td>
+      <td class="td-src"><span class="src-badge src-code">Code</span></td>
+      <td class="td-turns">74u / 108a</td>
+      <td class="td-anchor"><span class="badge" style="border-color:#ff6b8a44;color:#ff6b8a;background:#ff6b8a11">RR-</span><span class="badge" style="border-color:#7ec87e44;color:#7ec87e;background:#7ec87e11">Meyer</span><span class="badge" style="border-color:#8a7fd444;color:#8a7fd4;background:#8a7fd411">Dream Keeper</span><span class="badge" style="border-color:#ff954744;color:#ff9547;background:#ff954711">Winner Winner</span><span class="badge" style="border-color:#ffc84744;color:#ffc847;background:#ffc84711">Music/PTV</span><span class="badge" style="border-color:#9e90fc44;color:#9e90fc;background:#9e90fc11">Raheem Fried Rice</span></td>
+    </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    <div>
+      <div class="footer-brand">Dr. Heemslice · 605</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--muted);margin-top:6px;letter-spacing:.1em">SnackCity Studios · Raheem Fried Rice</div>
+    </div>
+    <div class="footer-meta">
+      COMPILED: 2026-05-17<br>
+      CLAUDE.AI: 86 sessions · CODE: 16 sessions<br>
+      TOTAL MESSAGES: 2947<br>
+      FIVE WORLDS · ONE KITCHEN · 605 · ♒
+    </div>
+  </footer>
+
+</div>
+
+<script>
+let activeFilter = 'all';
+
+function filterTable() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const rows = document.querySelectorAll('#tbl-body tr');
+  rows.forEach(r => {
+    const text = r.textContent.toLowerCase();
+    const srcCell = r.querySelector('.src-badge');
+    const srcType = srcCell ? (srcCell.classList.contains('src-code') ? 'code' : 'chat') : '';
+    const matchQ = !q || text.includes(q);
+    const matchF = activeFilter === 'all' ||
+                   activeFilter === srcType ||
+                   text.includes(activeFilter.toLowerCase());
+    r.style.display = matchQ && matchF ? '' : 'none';
+  });
+}
+
+function setFilter(el, val) {
+  document.querySelectorAll('.fpill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  activeFilter = val;
+  filterTable();
+}
+</script>
+</body>
+</html>
