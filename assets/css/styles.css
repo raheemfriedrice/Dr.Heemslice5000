@@ -1138,6 +1138,16 @@ button {
   color: var(--clr-muted);
 }
 
+.footer__ptv {
+  color: var(--clr-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer__ptv:hover {
+  color: var(--clr-gold);
+}
+
 .footer__top {
   font-size: 0.75rem;
   font-weight: 600;
