@@ -30,7 +30,7 @@ const TAU = Math.PI * 2;
 const CVD_HIT = ["ouch. say it counts.", "one. that was real.", "touché. literally.", "fine. that one landed."];
 const CVD_MISS = ["too agreeable.", "that's a reflex, not a hit.", "the grind doesn't tip.", "no trick gets through.", "you looked the wrong way.", "wait for the window."];
 const CVD_WIN = ["grind's still standing.", "come back when you mean it.", "2 HP. you got zero.", "the floor holds."];
-const CVD_LOSE = ["two L's make a W. go.", "earned. not lucky.", "you read the floor. respect.", "the room opens. go up."];
+const CVD_LOSE = ["earned. not lucky.", "you read the floor. respect.", "the room opens. go up."];
 const CVD_OPEN = ["no tricks. just timing.", "i control the approach.", "hit me when the shield blinks.", "i'm the grind, not the enemy."];
 
 let state = 'menu', numP = 1, assist = false, cheatUsed = false;
@@ -415,7 +415,7 @@ function endGame(won) {
   $('result-title').innerHTML = won ? 'FLOOR <b style="color:#5ef2c8">CLEARED</b>' : '<span style="color:#ff5b86">THE GRIND HOLDS</span>';
   $('result-title').style.color = '#c9c1ff';
   $('result-body').textContent = won
-    ? "You touched CVD twice, clean, through the window. No trick, no luck. Level 11 opens. In the real game this is where you climb toward 22 — and remember, to truly win you have to lose twice. That part comes later."
+    ? "You touched CVD twice, clean, through the window. No trick, no luck. Level 11 opens. In the real game this is where you climb toward 22. The floors above are not built yet."
     : "CVD still has HP. The shield only drops for a beat after each attack — dodge, wait for 'SHIELD DOWN', then dash in. You're not fighting strength. You're fighting timing.";
   $('result-say').textContent = 'CVD: ' + (won ? CVD_LOSE : CVD_WIN)[0];
   show('result');
