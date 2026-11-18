@@ -22,6 +22,7 @@ Where it and this file disagree, Episodic OS wins, and Rice's latest word beats 
 | Every page CVD has published | SnackCity Index: https://claude.ai/artifact/ShpYbpNzE2bg9kZL6i9qDG |
 | Episodes and the wager ledger | SnackCity Episodic Vault: https://claude.ai/artifact/EUeEBu3ANe8Rnco4cfwvSG (skill: `snackcity-vault`) |
 | Daily loop and voices | skill: `rice-workflow` |
+| Music SOP, busy board, Suno loop | [SUNO] · [ONUS] · [PARTTIMEVILLAINS.COM] [S]·[O]·[P]: https://claude.ai/artifact/3hhZV4oC1hjZ5eJdkhsxVZ |
 | Chat transcripts | "Every Word" and "The Four Sixty-Seven" (linked from the Index) |
 | Public website | this repo, served by GitHub Pages |
 
@@ -34,7 +35,7 @@ Where it and this file disagree, Episodic OS wins, and Rice's latest word beats 
 
 ## Standing rules
 
-1. **Suno and music are for fun.** Never score them, never plan around them. Part|Time Villains, Suno docs and the Sunday UNPROFOUND SOUND slot stay on record only.
+1. **SUNO is for FUn, UNTIL MY GRANDMA BELIEVED IN ME & INVESTED $100.** (Rice, Nov 18, 2026.) Part|Time Villains music now runs on the SOP below. Songs score on the CLAUDIO© scale, never the Claudit©.
 2. **Rice & Rony LLC is not a 2026 plan.** RONI moved, and that's okay. Build nothing toward it.
 3. **Finish over start.** Before making anything new, check the Claudit for an item over 150 that one action would close.
 4. **One deliverable per session**, named as `XOXO. {Deliverable}`.
@@ -49,7 +50,7 @@ Where it and this file disagree, Episodic OS wins, and Rice's latest word beats 
 Static HTML/CSS/JS on GitHub Pages, deployed by `.github/workflows/deploy.yml`.
 
 - `index.html`: home. `oo0/`: lore page. `dtp/`: #DrownthatPuppy™ tool. `404.html`.
-- `assets/audio/tracks.json`: three placeholder tracks (music, so fun only).
+- `assets/audio/tracks.json`: three placeholder tracks.
 - `_briefs/`: the April Gemini brief, the privacy policy, Claude's addendum.
 
 Status: live and finished. Maintenance only. The Gemini brief asked for nine
